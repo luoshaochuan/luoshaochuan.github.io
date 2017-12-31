@@ -1,0 +1,533 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>二叉搜索树 | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="BST二叉查找树它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；   
+
+若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；  
+它的左、右子树也分别为二叉搜索树。性质:中序遍历为有序数组。
+
+例1.判断二叉树https://leetcode.com/problems/validate-binary-search-tree/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉搜索树">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/09/11/二叉搜索树/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="BST二叉查找树它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；   
+
+若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；  
+它的左、右子树也分别为二叉搜索树。性质:中序遍历为有序数组。
+
+例1.判断二叉树https://leetcode.com/problems/validate-binary-search-tree/">
+<meta property="og:updated_time" content="2017-12-31T08:26:09.534Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二叉搜索树">
+<meta name="twitter:description" content="BST二叉查找树它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；   
+
+若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；  
+它的左、右子树也分别为二叉搜索树。性质:中序遍历为有序数组。
+
+例1.判断二叉树https://leetcode.com/problems/validate-binary-search-tree/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/11/二叉搜索树/" title="二叉搜索树" itemprop="url">二叉搜索树</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-11T12:00:00.000Z" itemprop="datePublished"> 发表于 2017-09-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#BST"><span class="toc-number">1.</span> <span class="toc-text">BST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例1-判断二叉树"><span class="toc-number">2.</span> <span class="toc-text">例1.判断二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例2-Unique-Binary-Search-Trees"><span class="toc-number">3.</span> <span class="toc-text">例2.Unique Binary Search Trees</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">4.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例3-Unique-Binary-Search-Trees-II"><span class="toc-number">5.</span> <span class="toc-text">例3.Unique Binary Search Trees II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#99-Recover-Binary-Search-Tree"><span class="toc-number">6.</span> <span class="toc-text">99. Recover Binary Search Tree</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="BST"><a href="#BST" class="headerlink" title="BST"></a>BST</h3><p>二叉查找树它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；   </p>
+<ul>
+<li>若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；  </li>
+<li>它的左、右子树也分别为二叉搜索树。<br><strong>性质</strong>:中序遍历为有序数组。</li>
+</ul>
+<h3 id="例1-判断二叉树"><a href="#例1-判断二叉树" class="headerlink" title="例1.判断二叉树"></a>例1.判断二叉树</h3><p><a href="https://leetcode.com/problems/validate-binary-search-tree/description/" target="_blank" rel="external">https://leetcode.com/problems/validate-binary-search-tree/description/</a><br>采用中序遍历判断<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!root)<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        <span class="built_in">stack</span>&lt;TreeNode*&gt; st;</div><div class="line">        TreeNode *p=<span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">while</span>(root||!st.empty())&#123;</div><div class="line">            <span class="keyword">while</span>(root)&#123;</div><div class="line">                st.push(root);</div><div class="line">                root=root-&gt;left;</div><div class="line">            &#125;</div><div class="line">            root=st.top();</div><div class="line">            st.pop();</div><div class="line">            <span class="keyword">if</span>(p&amp;&amp;root-&gt;val&lt;=p-&gt;val)<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            p=root;</div><div class="line">            root=root-&gt;right;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;     </div><div class="line">        <span class="keyword">return</span> isValid(root,<span class="literal">NULL</span>,<span class="literal">NULL</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/*判断某个节点是否处于对应范围*/</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValid</span><span class="params">(TreeNode* root,TreeNode* minNode,TreeNode* maxNode)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(!root)<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        <span class="keyword">if</span>((minNode&amp;&amp;root-&gt;val&lt;=minNode-&gt;val)||(maxNode&amp;&amp;root-&gt;val&gt;=maxNode-&gt;val))<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="keyword">return</span> isValid(root-&gt;left,minNode,root)&amp;&amp;isValid(root-&gt;right,root,maxNode);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="例2-Unique-Binary-Search-Trees"><a href="#例2-Unique-Binary-Search-Trees" class="headerlink" title="例2.Unique Binary Search Trees"></a>例2.Unique Binary Search Trees</h3><p><a href="https://leetcode.com/problems/unique-binary-search-trees/description/" target="_blank" rel="external">https://leetcode.com/problems/unique-binary-search-trees/description/</a><br>DFS,DP,卡特兰数</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>对于一个长度为n的有序数组来建二叉搜索树，我们可以依次枚举第i个元素来作为根节点，则1~i-1的元素就构成其左子树，i+1到n就构成右子树，依次递归即可。<br>令dp[i][j]表示i到j之间的元素可以构成的二叉搜索树数目，则可以采用记忆化搜索如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;dp)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(i&gt;j)<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(dp[i][j])<span class="keyword">return</span> dp[i][j];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k=i;k&lt;=j;++k)</div><div class="line">            dp[i][j]+=dfs(i,k<span class="number">-1</span>,dp)*dfs(k+<span class="number">1</span>,j,dp);</div><div class="line">        <span class="keyword">return</span> dp[i][j];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n+<span class="number">1</span>,<span class="number">0</span>));</div><div class="line">        dfs(<span class="number">1</span>,n,dp);</div><div class="line">        <span class="keyword">return</span> dp[<span class="number">1</span>][n];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>进一步思考，令G(n)表示长度为n有序数组建成二叉搜索树的数目，令F(i,n)表示以第i个元素为根节点的二叉搜索树数组，则：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">G(n)=F(1,n)+F(2,n)+..+F(n,n)</div></pre></td></tr></table></figure></p>
+<p>又因为以第i个元素为根节点时，其左右子树分别为1~i-1和i+1~n建立二叉树的数目，所以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">F(i,n)=G(i-1)*G(n-i)</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">G(n)=G(0)*G(n-1)+G(1)*G(n-2)+...+G(n-1)*G(0)</div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp(n+<span class="number">1</span>,<span class="number">0</span>);</div><div class="line">        dp[<span class="number">0</span>]=<span class="number">1</span>;dp[<span class="number">1</span>]=<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;i;++j)</div><div class="line">                dp[i]+=dp[j]*dp[i-j<span class="number">-1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dp[n];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上面G(n)的公式其实就是卡塔兰数递推公式，卡特兰数还有等价公式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">G(n)=\frac&#123;2(2n-1))&#125;&#123;n+1&#125;G(n-1)</div></pre></td></tr></table></figure></p>
+<p>这样我们可以使用O(n)复杂度算出来。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> res=<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i)&#123;</div><div class="line">            res=<span class="number">1L</span>L*(<span class="number">4</span>*i<span class="number">-2</span>)*res/(i+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="例3-Unique-Binary-Search-Trees-II"><a href="#例3-Unique-Binary-Search-Trees-II" class="headerlink" title="例3.Unique Binary Search Trees II"></a>例3.Unique Binary Search Trees II</h3><p><a href="https://leetcode.com/problems/unique-binary-search-trees-ii/description/" target="_blank" rel="external">https://leetcode.com/problems/unique-binary-search-trees-ii/description/</a><br>可以同上采用递归的方式来解决。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;TreeNode*&gt; generate(<span class="keyword">int</span> l,<span class="keyword">int</span> r)&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;TreeNode*&gt; root;</div><div class="line">        <span class="keyword">if</span>(r&lt;l)&#123;</div><div class="line">            root.push_back(<span class="literal">NULL</span>);</div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=l;i&lt;=r;++i)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;TreeNode*&gt; left=generate(l,i<span class="number">-1</span>);</div><div class="line">            <span class="built_in">vector</span>&lt;TreeNode*&gt; right=generate(i+<span class="number">1</span>,r);</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> lc:left)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">auto</span> rc:right)</div><div class="line">                &#123;</div><div class="line">                    TreeNode *node=<span class="keyword">new</span> TreeNode(i);</div><div class="line">                    node-&gt;left=lc;node-&gt;right=rc;</div><div class="line">                    root.push_back(node);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">vector</span>&lt;TreeNode*&gt; generateTrees(<span class="keyword">int</span> n) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;TreeNode*&gt; res;</div><div class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;<span class="keyword">return</span> res;&#125;</div><div class="line">        res=generate(<span class="number">1</span>,n);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="99-Recover-Binary-Search-Tree"><a href="#99-Recover-Binary-Search-Tree" class="headerlink" title="99. Recover Binary Search Tree"></a><a href="https://leetcode.com/problems/recover-binary-search-tree/description/" target="_blank" rel="external">99. Recover Binary Search Tree</a></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">recoverTree</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="comment">//1 2 6 4 5 3 7</span></div><div class="line">        <span class="comment">//关键是用中序遍历找到；两个下降点</span></div><div class="line">        TreeNode *cur=root,*last=<span class="literal">NULL</span>,*pre=<span class="literal">NULL</span>,*first=<span class="literal">NULL</span>,*second=<span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">while</span>(cur)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(cur-&gt;left==<span class="literal">NULL</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(last!=<span class="literal">NULL</span>&amp;&amp;cur-&gt;val&lt;last-&gt;val)</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span>(first==<span class="literal">NULL</span>)first=last;</div><div class="line">                    second=cur;  </div><div class="line">                &#125;</div><div class="line">                last=cur;</div><div class="line">                cur=cur-&gt;right;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                pre=cur-&gt;left;</div><div class="line">                <span class="keyword">while</span>(pre-&gt;right&amp;&amp;pre-&gt;right!=cur)pre=pre-&gt;right;</div><div class="line">                <span class="keyword">if</span>(pre-&gt;right==<span class="literal">NULL</span>)</div><div class="line">                &#123;</div><div class="line">                    pre-&gt;right=cur;</div><div class="line">                    cur=cur-&gt;left;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                &#123;</div><div class="line">                    pre-&gt;right=<span class="literal">NULL</span>;</div><div class="line">                    <span class="keyword">if</span>(last!=<span class="literal">NULL</span>&amp;&amp;cur-&gt;val&lt;last-&gt;val)</div><div class="line">                    &#123;</div><div class="line">                        <span class="keyword">if</span>(first==<span class="literal">NULL</span>)first=last;</div><div class="line">                        second=cur;  </div><div class="line">                    &#125;</div><div class="line">                    last=cur;</div><div class="line">                    cur=cur-&gt;right;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        swap(first-&gt;val,second-&gt;val);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/二叉搜索树/">二叉搜索树</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/09/11/二叉搜索树/" data-title="二叉搜索树 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/09/14/欧拉路/" title="欧拉路">
+  <strong>上一篇：</strong><br/>
+  <span>
+  欧拉路</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/09/07/二叉树/"  title="二叉树">
+ <strong>下一篇：</strong><br/> 
+ <span>二叉树
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#BST"><span class="toc-number">1.</span> <span class="toc-text">BST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例1-判断二叉树"><span class="toc-number">2.</span> <span class="toc-text">例1.判断二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例2-Unique-Binary-Search-Trees"><span class="toc-number">3.</span> <span class="toc-text">例2.Unique Binary Search Trees</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">4.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例3-Unique-Binary-Search-Trees-II"><span class="toc-number">5.</span> <span class="toc-text">例3.Unique Binary Search Trees II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#99-Recover-Binary-Search-Tree"><span class="toc-number">6.</span> <span class="toc-text">99. Recover Binary Search Tree</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二叉树/" title="二叉树">二叉树<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -1,0 +1,548 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>二叉树 | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="二叉树1.建立二叉树给定前序中序和后序中序遍历可以唯一的确定一棵二叉树。105. Construct Binary Tree from Preorder and Inorder Traversal123456789101112131415161718192021class Solution &amp;#123;public:        TreeNode* build(vector&amp;lt;int&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/09/07/二叉树/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="二叉树1.建立二叉树给定前序中序和后序中序遍历可以唯一的确定一棵二叉树。105. Construct Binary Tree from Preorder and Inorder Traversal123456789101112131415161718192021class Solution &amp;#123;public:        TreeNode* build(vector&amp;lt;int&amp;gt;">
+<meta property="og:updated_time" content="2017-12-31T08:24:53.799Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二叉树">
+<meta name="twitter:description" content="二叉树1.建立二叉树给定前序中序和后序中序遍历可以唯一的确定一棵二叉树。105. Construct Binary Tree from Preorder and Inorder Traversal123456789101112131415161718192021class Solution &amp;#123;public:        TreeNode* build(vector&amp;lt;int&amp;gt;">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/07/二叉树/" title="二叉树" itemprop="url">二叉树</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-07T12:00:00.000Z" itemprop="datePublished"> 发表于 2017-09-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二叉树"><span class="toc-number">1.</span> <span class="toc-text">二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-建立二叉树"><span class="toc-number">2.</span> <span class="toc-text">1.建立二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-遍历二叉树"><span class="toc-number">3.</span> <span class="toc-text">2.遍历二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#非递归遍历"><span class="toc-number">3.1.</span> <span class="toc-text">非递归遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Morris遍历"><span class="toc-number">3.2.</span> <span class="toc-text">Morris遍历</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><h3 id="1-建立二叉树"><a href="#1-建立二叉树" class="headerlink" title="1.建立二叉树"></a>1.建立二叉树</h3><p>给定前序中序和后序中序遍历可以唯一的确定一棵二叉树。<br><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/" target="_blank" rel="external">105. Construct Binary Tree from Preorder and Inorder Traversal</a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    </div><div class="line">    <span class="function">TreeNode* <span class="title">build</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; preorder, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; inorder,<span class="keyword">int</span> pre_left,<span class="keyword">int</span> in_left,<span class="keyword">int</span> length)</span></span></div><div class="line">    &#123;</div><div class="line">        TreeNode* root=<span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">if</span>(length&gt;<span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> pos=in_left;</div><div class="line">            <span class="keyword">while</span>(pos-in_left&lt;length&amp;&amp;inorder[pos]!=preorder[pre_left])++pos;</div><div class="line">            root=<span class="keyword">new</span> TreeNode(inorder[pos]);</div><div class="line">            root-&gt;left=build(preorder,inorder,pre_left+<span class="number">1</span>,in_left,pos-in_left);</div><div class="line">            root-&gt;right=build(preorder,inorder,pre_left+pos-in_left+<span class="number">1</span>,pos+<span class="number">1</span>,length-(pos-in_left)<span class="number">-1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div><div class="line">    <span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; preorder, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; inorder)</span> </span>&#123;</div><div class="line">        TreeNode* root=build(preorder,inorder,<span class="number">0</span>,<span class="number">0</span>,inorder.size());</div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><a href="https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/" target="_blank" rel="external">106. Construct Binary Tree from Inorder and Postorder Traversal
+</a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">TreeNode* <span class="title">build</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; inorder, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; postorder,<span class="keyword">int</span> in_left,<span class="keyword">int</span> post_left,<span class="keyword">int</span> length)</span></span></div><div class="line">    &#123;</div><div class="line">        TreeNode* root=<span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">if</span>(length&gt;<span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> pos=in_left;</div><div class="line">            <span class="keyword">while</span>(pos-in_left&lt;length&amp;&amp;inorder[pos]!=postorder[post_left+length<span class="number">-1</span>])++pos;</div><div class="line">            root=<span class="keyword">new</span> TreeNode(inorder[pos]);</div><div class="line">            root-&gt;left=build(inorder,postorder,in_left,post_left,pos-in_left);</div><div class="line">            root-&gt;right=build(inorder,postorder,pos+<span class="number">1</span>,post_left+pos-in_left,length-(pos-in_left)<span class="number">-1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; inorder, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; postorder)</span> </span>&#123;</div><div class="line">        TreeNode*root=build(inorder,postorder,<span class="number">0</span>,<span class="number">0</span>,inorder.size());</div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="2-遍历二叉树"><a href="#2-遍历二叉树" class="headerlink" title="2.遍历二叉树"></a>2.遍历二叉树</h3><h4 id="非递归遍历"><a href="#非递归遍历" class="headerlink" title="非递归遍历"></a>非递归遍历</h4><p>前序：<a href="https://leetcode.com/problems/binary-tree-preorder-traversal/description/" target="_blank" rel="external">144. Binary Tree Preorder Traversal</a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        <span class="built_in">stack</span>&lt;TreeNode*&gt; st;</div><div class="line">        <span class="keyword">while</span>(root || !st.empty())</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">while</span>(root)</div><div class="line">            &#123;</div><div class="line">                res.push_back(root-&gt;val);</div><div class="line">                st.push(root);</div><div class="line">                root=root-&gt;left;</div><div class="line">            &#125;</div><div class="line">            root=st.top();</div><div class="line">            root=root-&gt;right;</div><div class="line">            st.pop();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>中序：<a href="https://leetcode.com/problems/binary-tree-inorder-traversal/description/" target="_blank" rel="external">94. Binary Tree Inorder Traversal</a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        <span class="built_in">stack</span>&lt;TreeNode*&gt; st;</div><div class="line">        <span class="keyword">while</span>(root||!st.empty())</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">while</span>(root)</div><div class="line">            &#123;</div><div class="line">                st.push(root);</div><div class="line">                root=root-&gt;left;</div><div class="line">            &#125;</div><div class="line">            root=st.top();</div><div class="line">            res.push_back(root-&gt;val);</div><div class="line">            st.pop();</div><div class="line">            root=root-&gt;right;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>后序:<a href="https://leetcode.com/problems/binary-tree-postorder-traversal/description/" target="_blank" rel="external">145. Binary Tree Postorder Traversal</a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; postorderTraversal(TreeNode* root) &#123;</div><div class="line">        <span class="comment">//模拟递归过程，关键是判断左子树和右子树是否已经遍历完,即出栈的是不是当前元素的左节点或者右节点</span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        <span class="built_in">stack</span>&lt;TreeNode*&gt; st;</div><div class="line">        TreeNode *pre=<span class="literal">NULL</span>,*cur=root;</div><div class="line">        <span class="keyword">while</span>(cur||!st.empty())</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">while</span>(cur)</div><div class="line">            &#123;</div><div class="line">                st.push(cur);</div><div class="line">                cur=cur-&gt;left;</div><div class="line">            &#125;</div><div class="line">            cur=st.top();</div><div class="line">            <span class="keyword">if</span>(cur-&gt;right&amp;&amp;cur-&gt;right!=pre)</div><div class="line">                cur=cur-&gt;right;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                res.push_back(cur-&gt;val);</div><div class="line">                st.pop();</div><div class="line">                pre=cur;</div><div class="line">                cur=<span class="literal">NULL</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;     </div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h4 id="Morris遍历"><a href="#Morris遍历" class="headerlink" title="Morris遍历"></a>Morris遍历</h4><p>中序：<a href="https://leetcode.com/problems/binary-tree-inorder-traversal/description/" target="_blank" rel="external">94. Binary Tree Inorder Traversal</a><br>核心思想是利用当前节点左子树的最右节点的右指针指向当前节点。之所以要找当前节点左子树的最右节点，是因为该节点是当前节点中序遍历的前驱节点。<br><strong>步骤：</strong></p>
+<ol>
+<li><p>如果当前节点的左孩子为空，则输出当前节点并将其右孩子作为当前节点。</p>
+</li>
+<li><p>如果当前节点的左孩子不为空，在当前节点的左子树中找到当前节点在中序遍历下的前驱节点。</p>
+<p>a) 如果前驱节点的右孩子为空，将它的右孩子设置为当前节点。当前节点更新为当前节点的左孩子。</p>
+<p>b) 如果前驱节点的右孩子为当前节点，将它的右孩子重新设为空（恢复树的形状）。输出当前节点。当前节点更新为当前节点的右孩子。</p>
+</li>
+<li><p>重复以上1、2直到当前节点为空。</p>
+</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">算法伪码：</div><div class="line"></div><div class="line"><span class="function"><span class="title">MorrisInOrder</span><span class="params">()</span></span>：</div><div class="line">while 没有结束</div><div class="line">   如果当前节点没有左后代</div><div class="line">     访问该节点</div><div class="line">     转向右节点</div><div class="line">   否则</div><div class="line">     找到左后代的最右节点，且使最右节点的右指针指向当前节点，转向左后代节点。</div><div class="line">     如果右指针已经指向当前节点，则将其置为空，转向右子树节点。</div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        TreeNode *cur=root,*pre=<span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">while</span>(cur)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">/*左节点为空，输出当前节点，转向其右节点*/</span></div><div class="line">            <span class="keyword">if</span>(cur-&gt;left==<span class="literal">NULL</span>)</div><div class="line">            &#123;</div><div class="line">                res.push_back(cur-&gt;val);</div><div class="line">                cur=cur-&gt;right;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                pre=cur-&gt;left;</div><div class="line">                <span class="keyword">while</span>(pre-&gt;right&amp;&amp;pre-&gt;right!=cur)pre=pre-&gt;right;</div><div class="line">                <span class="keyword">if</span>(pre-&gt;right==<span class="literal">NULL</span>)</div><div class="line">                &#123;</div><div class="line">                    pre-&gt;right=cur;</div><div class="line">                    cur=cur-&gt;left;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                &#123;</div><div class="line">                    pre-&gt;right=<span class="literal">NULL</span>;</div><div class="line">                    res.push_back(cur-&gt;val);</div><div class="line">                    cur=cur-&gt;right;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>前序：<a href="https://leetcode.com/problems/binary-tree-preorder-traversal/description/" target="_blank" rel="external">144. Binary Tree Preorder Traversal</a><br>关键还是找前序遍历的前驱结点。前序遍历是根左右，所以根的右节点的前驱节点为左子树的最右节点。<br><strong>步骤：</strong></p>
+<ol>
+<li><p>如果当前节点的左孩子为空，则输出当前节点并将其右孩子作为当前节点。</p>
+</li>
+<li><p>如果当前节点的左孩子不为空，在当前节点的左子树中找到当前节点在中序遍历下的前驱节点。</p>
+<p>a) 如果前驱节点的右孩子为空，将它的右孩子设置为当前节点。输出当前节点（在这里输出，这是与中序遍历唯一一点不同）。当前节点更新为当前节点的左孩子。</p>
+<p>b) 如果前驱节点的右孩子为当前节点，将它的右孩子重新设为空。当前节点更新为当前节点的右孩子。</p>
+</li>
+<li><p>重复以上1、2直到当前节点为空。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        TreeNode *cur=root,*pre=<span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">while</span>(cur)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(cur-&gt;left==<span class="literal">NULL</span>)</div><div class="line">            &#123;</div><div class="line">                res.push_back(cur-&gt;val);</div><div class="line">                cur=cur-&gt;right; </div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                pre=cur-&gt;left;</div><div class="line">                <span class="keyword">while</span>(pre-&gt;right&amp;&amp;pre-&gt;right!=cur)pre=pre-&gt;right;</div><div class="line">                <span class="keyword">if</span>(pre-&gt;right==<span class="literal">NULL</span>)</div><div class="line">                &#123;</div><div class="line">                    res.push_back(cur-&gt;val);<span class="comment">//进入左子树前</span></div><div class="line">                    pre-&gt;right=cur;</div><div class="line">                    cur=cur-&gt;left;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                &#123;</div><div class="line">                    pre-&gt;right=<span class="literal">NULL</span>;</div><div class="line">                    cur=cur-&gt;right;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>后序：<a href="https://leetcode.com/problems/binary-tree-postorder-traversal/description/" target="_blank" rel="external">145. Binary Tree Postorder Traversal</a><br>后续遍历稍显复杂，需要建立一个临时节点dump，令其左孩子是root。并且还需要一个子过程，就是倒序输出某两个节点之间路径上的各个节点。</p>
+<p><strong>步骤：</strong></p>
+<p>当前节点设置为临时节点dummy。</p>
+<ol>
+<li><p>如果当前节点的左孩子为空，则将其右孩子作为当前节点。</p>
+</li>
+<li><p>如果当前节点的左孩子不为空，在当前节点的左子树中找到当前节点在中序遍历下的前驱节点。</p>
+<p>a) 如果前驱节点的右孩子为空，将它的右孩子设置为当前节点。当前节点更新为当前节点的左孩子。</p>
+<p>b) 如果前驱节点的右孩子为当前节点，将它的右孩子重新设为空。倒序输出从当前节点的左孩子到该前驱节点这条路径上的所有节点。当前节点更新为当前节点的右孩子。</p>
+</li>
+<li><p>重复以上1、2直到当前节点为空。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(TreeNode *from,TreeNode *to)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(from==to)<span class="keyword">return</span>;</div><div class="line">        TreeNode *p=from,*q=from-&gt;right;</div><div class="line">        <span class="keyword">while</span>(p!=to)</div><div class="line">        &#123;</div><div class="line">            TreeNode* temp=q-&gt;right;</div><div class="line">            q-&gt;right=p;</div><div class="line">            p=q;</div><div class="line">            q=temp;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print_reverse</span><span class="params">(TreeNode *from,TreeNode *to)</span></span></div><div class="line">    &#123;</div><div class="line">        reverse(from,to);</div><div class="line">        TreeNode *p = to;</div><div class="line">        <span class="keyword">while</span>(p!=from)&#123;</div><div class="line">            res.push_back(p-&gt;val);</div><div class="line">            p=p-&gt;right;</div><div class="line">        &#125;</div><div class="line">        res.push_back(p-&gt;val);</div><div class="line">        reverse(to,from);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; postorderTraversal(TreeNode* root) </div><div class="line">    &#123;</div><div class="line">        <span class="function">TreeNode <span class="title">dummy</span><span class="params">(<span class="number">0</span>)</span></span>;</div><div class="line">        dummy.left=root;</div><div class="line">        TreeNode *cur=&amp;dummy,*pre=<span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">while</span>(cur)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(cur-&gt;left==<span class="literal">NULL</span>)</div><div class="line">            &#123;</div><div class="line">                cur=cur-&gt;right;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                pre=cur-&gt;left;</div><div class="line">                <span class="keyword">while</span>(pre-&gt;right&amp;&amp;pre-&gt;right!=cur)pre=pre-&gt;right;</div><div class="line">                <span class="keyword">if</span>(pre-&gt;right==<span class="literal">NULL</span>)</div><div class="line">                &#123;</div><div class="line">                    pre-&gt;right=cur;</div><div class="line">                    cur=cur-&gt;left;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                &#123;</div><div class="line">                    </div><div class="line">                    print_reverse(cur-&gt;left,pre);</div><div class="line">                    pre-&gt;right=<span class="literal">NULL</span>;</div><div class="line">                    cur=cur-&gt;right;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/二叉树/">二叉树</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/09/07/二叉树/" data-title="二叉树 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/09/11/二叉搜索树/" title="二叉搜索树">
+  <strong>上一篇：</strong><br/>
+  <span>
+  二叉搜索树</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/08/31/hihocoder1141/"  title="区间逆序对">
+ <strong>下一篇：</strong><br/> 
+ <span>区间逆序对
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二叉树"><span class="toc-number">1.</span> <span class="toc-text">二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-建立二叉树"><span class="toc-number">2.</span> <span class="toc-text">1.建立二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-遍历二叉树"><span class="toc-number">3.</span> <span class="toc-text">2.遍历二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#非递归遍历"><span class="toc-number">3.1.</span> <span class="toc-text">非递归遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Morris遍历"><span class="toc-number">3.2.</span> <span class="toc-text">Morris遍历</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二叉树/" title="二叉树">二叉树<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

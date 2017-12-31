@@ -1,0 +1,534 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>动态规划总结（四）：背包问题九讲笔记 | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="01背包问题
+有 N 件物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的价值是 Vi。求解将哪些物品装入背包可使价值总和最大。  
+
+分析：令F[i][j]表示从前i件物品里选物品放入容量为j的背包中所能获得的最大价值。则状态转移方程为：F[i][j]=max{F[i-1][j-k*Wi]+k*Vi|0&amp;lt;=k&amp;lt;=1}。该状态方程的含义是：若放入第i件物品，问题转化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划总结（四）：背包问题九讲笔记">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/07/13/动态规划总结(四）/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="01背包问题
+有 N 件物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的价值是 Vi。求解将哪些物品装入背包可使价值总和最大。  
+
+分析：令F[i][j]表示从前i件物品里选物品放入容量为j的背包中所能获得的最大价值。则状态转移方程为：F[i][j]=max{F[i-1][j-k*Wi]+k*Vi|0&amp;lt;=k&amp;lt;=1}。该状态方程的含义是：若放入第i件物品，问题转化">
+<meta property="og:updated_time" content="2017-10-25T12:22:44.434Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划总结（四）：背包问题九讲笔记">
+<meta name="twitter:description" content="01背包问题
+有 N 件物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的价值是 Vi。求解将哪些物品装入背包可使价值总和最大。  
+
+分析：令F[i][j]表示从前i件物品里选物品放入容量为j的背包中所能获得的最大价值。则状态转移方程为：F[i][j]=max{F[i-1][j-k*Wi]+k*Vi|0&amp;lt;=k&amp;lt;=1}。该状态方程的含义是：若放入第i件物品，问题转化">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/13/动态规划总结(四）/" title="动态规划总结（四）：背包问题九讲笔记" itemprop="url">动态规划总结（四）：背包问题九讲笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-13T14:07:00.000Z" itemprop="datePublished"> 发表于 2017-07-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#01背包问题"><span class="toc-number">1.</span> <span class="toc-text">01背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析："><span class="toc-number">1.1.</span> <span class="toc-text">分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化："><span class="toc-number">1.2.</span> <span class="toc-text">初始化：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最大价值："><span class="toc-number">1.3.</span> <span class="toc-text">最大价值：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完全背包问题"><span class="toc-number">2.</span> <span class="toc-text">完全背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析：-1"><span class="toc-number">2.1.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多重背包问题"><span class="toc-number">3.</span> <span class="toc-text">多重背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">3.1.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多重部分和问题"><span class="toc-number">4.</span> <span class="toc-text">多重部分和问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">4.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优化"><span class="toc-number">4.2.</span> <span class="toc-text">优化</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="01背包问题"><a href="#01背包问题" class="headerlink" title="01背包问题"></a>01背包问题</h2><blockquote>
+<p>有 N 件物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的<br>价值是 Vi。求解将哪些物品装入背包可使价值总和最大。  </p>
+</blockquote>
+<h3 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h3><p>令F[i][j]表示从前i件物品里选物品放入容量为j的背包中所能获得的最大价值。则状态转移方程为：<code>F[i][j]=max{F[i-1][j-k*Wi]+k*Vi|0&lt;=k&lt;=1}</code>。<br>该状态方程的含义是：若放入第i件物品，问题转化为从前i-1件中选物品，背包容量为j-Wi所能装入的最大价值。如不放入第i件物品，问题转化为从前i-1件中选物品，背包容量为j所能装入的最大价值。</p>
+<h3 id="初始化："><a href="#初始化：" class="headerlink" title="初始化："></a>初始化：</h3><p>F[0][0…N]=0 如果背包不需装满<br>F[0][0]=0,F[0][1…N]=-∞ 如果背包必须装满<br>如果背包必需装满，则初始情况下只有容量为0的背包恰好被0件物品装满这一合法解，其余解均为非合法解。如果背包不需装满，则初始情况下任何容量的背包均能装入0件物品获得最大价值0。</p>
+<h3 id="最大价值："><a href="#最大价值：" class="headerlink" title="最大价值："></a>最大价值：</h3><p>F[N][C]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">问题描述：</div><div class="line">给定N个物品，重量和价值分别为w1,v1,...,wn,vn.</div><div class="line">给定一个背包。容量为C。</div><div class="line">求该背包能装的最大价值的物品。</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">//O(CN)空间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> *w,<span class="keyword">int</span> *v,<span class="keyword">int</span> C,<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> **F = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((num+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num+<span class="number">1</span>; ++i)</div><div class="line">		F[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((C+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line"></div><div class="line">	<span class="comment">//初始化</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		F[<span class="number">0</span>][j] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = w[i]<span class="number">-1</span>; j &lt; C; ++j)</div><div class="line">		&#123;</div><div class="line">			F[i + <span class="number">1</span>][j + <span class="number">1</span>] = max(F[i][j + <span class="number">1</span>], F[i][j + <span class="number">1</span> - w[i]] + v[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[num][C];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num + <span class="number">1</span>; ++i)</div><div class="line">		<span class="built_in">free</span>(F[i]);</div><div class="line">	<span class="built_in">free</span>(F);</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//O(C)空间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> *w, <span class="keyword">int</span> *v, <span class="keyword">int</span> C, <span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> *F = <span class="keyword">new</span> <span class="keyword">int</span>[C + <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; C + <span class="number">1</span>; ++i)</div><div class="line">		F[i] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = C; j &gt;= w[i]; --j)</div><div class="line">			F[j] = max(F[j], F[j - w[i]] + v[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[C];</div><div class="line">	<span class="keyword">delete</span>[]F;</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"Knapsack.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"Knapsack.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line">	<span class="keyword">int</span> C, num;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; C &gt;&gt; num;</div><div class="line">	<span class="keyword">int</span> *w = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">int</span> *v = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> ww;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; ww;</div><div class="line">		w[i] = ww;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> vv;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; vv;</div><div class="line">		v[i] = vv;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; dp(w,v,C,num)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">delete</span>[]w;</div><div class="line">	<span class="keyword">delete</span>[]v;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="完全背包问题"><a href="#完全背包问题" class="headerlink" title="完全背包问题"></a>完全背包问题</h2><blockquote>
+<p>有 N 种物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的<br>价值是 Vi。在每种物品都有无限件可以选择时，求解将哪些物品装入背包可使价值总和最大。  </p>
+</blockquote>
+<h3 id="分析：-1"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h3><p>F[i][j]=max{F[i-1][j-k<em>w[i]]+k</em>v[i]|k&gt;=0}<br>=max{F[i-1][j],max{F[i-1][j-k<em>w[i]]+k</em>v[i]|k&gt;=1}}<br>=max{F[i-1][j],max{F[i-1][j-w[i]-k<em>w[i]]+k</em>v[i]|k&gt;=0}+v[i]}<br>=max{F[i-1][j],F[i][j-w[i]]+v[i]}<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">//O(VN)空间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> *w,<span class="keyword">int</span> *v,<span class="keyword">int</span> C,<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> **F = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((num+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num + <span class="number">1</span>; ++i)</div><div class="line">		F[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((C+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		F[<span class="number">0</span>][j] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (j &lt; w[i])</div><div class="line">				F[i + <span class="number">1</span>][j] = F[i][j];</div><div class="line">			<span class="keyword">else</span></div><div class="line">				F[i + <span class="number">1</span>][j] = max(F[i][j],F[i+<span class="number">1</span>][j-w[i]]+v[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[num][C];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num + <span class="number">1</span>; ++i)</div><div class="line">		<span class="built_in">free</span>(F[i]);</div><div class="line">	<span class="built_in">free</span>(F);</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//O(V)时间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> *w, <span class="keyword">int</span> *v, <span class="keyword">int</span> C, <span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> *F = <span class="keyword">new</span> <span class="keyword">int</span>[C + <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; C + <span class="number">1</span>; ++i)</div><div class="line">		F[i] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = w[i]; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">			F[j] = max(F[j],F[j-w[i]]+v[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[C];</div><div class="line">	<span class="keyword">delete</span>[] F;</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"Knapsack.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"Knapsack.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line"></div><div class="line">	<span class="keyword">int</span> C, num;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; C &gt;&gt; num;</div><div class="line">	<span class="keyword">int</span> *w = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">int</span> *v = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> ww;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; ww;</div><div class="line">		w[i] = ww;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> vv;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; vv;</div><div class="line">		v[i] = vv;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; dp(w,v,C,num)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">delete</span>[]w;</div><div class="line">	<span class="keyword">delete</span>[]v;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="多重背包问题"><a href="#多重背包问题" class="headerlink" title="多重背包问题"></a>多重背包问题</h2><p>完全背包问题</p>
+<blockquote>
+<p>有 N 种物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的<br>价值是 Vi。在每种物品有Mi件可以选择时，求解将哪些物品装入背包可使价值总和最大。  </p>
+</blockquote>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>多重背包主要利用了二进制分解思想。对于任意物品件数Mi，可以分解为2^0^,2^1^,…,2^k-1^,Mi-2^k^+1堆物品，且 k 是满足 Mi − 2k + 1 &gt; 0 的最大整数。这些堆可以组合成任意小于等于Mi的整数。这样我们就可以把这个问题转换成01背包问题，对应着每堆物品选还是不选。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; V;</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; W;</div><div class="line"></div><div class="line"><span class="keyword">int</span> w[<span class="number">10</span>];</div><div class="line"><span class="keyword">int</span> v[<span class="number">10</span>];</div><div class="line"><span class="keyword">int</span> m[<span class="number">10</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">devide</span><span class="params">(<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> k = <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (m[i]-k&gt;=<span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			V.push_back(k*v[i]);</div><div class="line">			W.push_back(k*w[i]);</div><div class="line">			m[i] -= k;</div><div class="line">			k *= <span class="number">2</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (m[i])</div><div class="line">			V.push_back(m[i]*v[i]),W.push_back(m[i]*w[i]);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> w[],<span class="keyword">int</span> v[],<span class="keyword">int</span> m[],<span class="keyword">int</span> C,<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	devide(num);</div><div class="line">	<span class="keyword">int</span> R = V.size();</div><div class="line">	<span class="keyword">int</span> **dp = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((R+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; R + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		dp[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((C + <span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			dp[i][j] = <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; R + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			dp[i][j] = max(dp[i - <span class="number">1</span>][j], dp[i - <span class="number">1</span>][j - W[i<span class="number">-1</span>]] + V[i<span class="number">-1</span>]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[R][C];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="多重部分和问题"><a href="#多重部分和问题" class="headerlink" title="多重部分和问题"></a>多重部分和问题</h2><blockquote>
+<p>有n种不同的数字ai,每种数字有Mi个，判断是否可以从这些数字中选出若各个使它们的和恰好为K.</p>
+</blockquote>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>如果dp[i+1][j]表示前i种数字可否凑成数字j。如果使用第i种数字可以得到j,前i-1种数字必须凑出j-k<em>ai,0&lt;=k&lt;=Mi.所以dp[i+1][j]=max{0,dp[i][j-k</em>ai]|0&lt;=k&lt;=Mi}.算法复杂度为<code>O(NK∑Mi)</code><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> **dp = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((N + <span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		dp[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((K+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; K + <span class="number">1</span>; ++j)</div><div class="line">			dp[i][j] = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = A[i]; j &lt;= K; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; j - k*A[i] &gt;= <span class="number">0</span> &amp;&amp; k&lt;=M[i]; ++k)</div><div class="line">				dp[i + <span class="number">1</span>][j] = max(<span class="number">0</span>,dp[i][j-k*A[i]]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>dp[i+1][j]表示能否的话提供的信息太少了，如果另dp[i+1][j]表示前i种数字凑出j第i种最多还剩的数量，初始化为-1，dp[0][0]=0.给定i,对于数字j,只需要关心能否凑出j-ai,若凑不出j-ai，则必定凑不出j.若能凑出j-ai且第i种数字还有的话，则必定能凑出j.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">dp[i+1][j]=</div><div class="line">\left\&#123;\begin&#123;matrix&#125;</div><div class="line">Mi,dp[i][j]&gt;=0\\</div><div class="line">-1,j&lt;Ai || dp[i+1][j-Ai]&lt;=0\\ </div><div class="line">dp[i+1][j-Ai]-1</div><div class="line">\end&#123;matrix&#125;\right.</div></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span>** dp = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((N+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		dp[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((K+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			dp[i][j] = <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = A[i]; j &lt;= K; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (dp[i][j] &gt;= <span class="number">0</span>)</div><div class="line">				dp[i + <span class="number">1</span>][j] = M[i];</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (dp[i + <span class="number">1</span>][j - A[i]] &gt; <span class="number">0</span>)</div><div class="line">			&#123;</div><div class="line">				dp[i + <span class="number">1</span>][j] = dp[i + <span class="number">1</span>][j - A[i]]<span class="number">-1</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[N][K] &gt;= <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-动态规划/">算法 动态规划</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/07/13/动态规划总结(四）/" data-title="动态规划总结（四）：背包问题九讲笔记 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/07/14/动态规划总结(五）/" title="动态规划总结（五）：计数DP">
+  <strong>上一篇：</strong><br/>
+  <span>
+  动态规划总结（五）：计数DP</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/12/动态规划总结(三)/"  title="动态规划总结（三）：划分（区间）动态规划">
+ <strong>下一篇：</strong><br/> 
+ <span>动态规划总结（三）：划分（区间）动态规划
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#01背包问题"><span class="toc-number">1.</span> <span class="toc-text">01背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析："><span class="toc-number">1.1.</span> <span class="toc-text">分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化："><span class="toc-number">1.2.</span> <span class="toc-text">初始化：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最大价值："><span class="toc-number">1.3.</span> <span class="toc-text">最大价值：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完全背包问题"><span class="toc-number">2.</span> <span class="toc-text">完全背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析：-1"><span class="toc-number">2.1.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多重背包问题"><span class="toc-number">3.</span> <span class="toc-text">多重背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">3.1.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多重部分和问题"><span class="toc-number">4.</span> <span class="toc-text">多重部分和问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">4.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优化"><span class="toc-number">4.2.</span> <span class="toc-text">优化</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二叉树/" title="二叉树">二叉树<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

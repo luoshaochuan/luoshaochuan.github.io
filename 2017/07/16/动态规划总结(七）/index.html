@@ -1,0 +1,574 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>动态规划总结（七）：概率型DP | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="概率型DP1.Not So Randomhttps://codejam.withgoogle.com/codejam/contest/5254486/dashboard#s=p2
+题意
+有N个连续的随机发生器，其机制是对于输入X,与一个固定的数K,按一定概率A/100选择操作按位与&amp;amp;,B/100选择按位或|，C/100概率选择按位异或^,前一个发生器的输出作为后一个发生器的输入，求第N个发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划总结（七）：概率型DP">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/07/16/动态规划总结(七）/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="概率型DP1.Not So Randomhttps://codejam.withgoogle.com/codejam/contest/5254486/dashboard#s=p2
+题意
+有N个连续的随机发生器，其机制是对于输入X,与一个固定的数K,按一定概率A/100选择操作按位与&amp;amp;,B/100选择按位或|，C/100概率选择按位异或^,前一个发生器的输出作为后一个发生器的输入，求第N个发">
+<meta property="og:updated_time" content="2017-10-25T12:30:24.556Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划总结（七）：概率型DP">
+<meta name="twitter:description" content="概率型DP1.Not So Randomhttps://codejam.withgoogle.com/codejam/contest/5254486/dashboard#s=p2
+题意
+有N个连续的随机发生器，其机制是对于输入X,与一个固定的数K,按一定概率A/100选择操作按位与&amp;amp;,B/100选择按位或|，C/100概率选择按位异或^,前一个发生器的输出作为后一个发生器的输入，求第N个发">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/16/动态规划总结(七）/" title="动态规划总结（七）：概率型DP" itemprop="url">动态规划总结（七）：概率型DP</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-16T14:03:11.000Z" itemprop="datePublished"> 发表于 2017-07-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概率型DP"><span class="toc-number">1.</span> <span class="toc-text">概率型DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Not-So-Random"><span class="toc-number">1.1.</span> <span class="toc-text">1.Not So Random</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意"><span class="toc-number">1.1.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分析"><span class="toc-number">1.1.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态转移方程"><span class="toc-number">1.1.3.</span> <span class="toc-text">状态转移方程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优化"><span class="toc-number">1.1.4.</span> <span class="toc-text">优化</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="概率型DP"><a href="#概率型DP" class="headerlink" title="概率型DP"></a>概率型DP</h2><h3 id="1-Not-So-Random"><a href="#1-Not-So-Random" class="headerlink" title="1.Not So Random"></a>1.Not So Random</h3><p><a href="https://codejam.withgoogle.com/codejam/contest/5254486/dashboard#s=p2" target="_blank" rel="external">https://codejam.withgoogle.com/codejam/contest/5254486/dashboard#s=p2</a></p>
+<h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><blockquote>
+<p>有N个连续的随机发生器，其机制是对于输入X,与一个固定的数K,按一定概率A/100选择操作按位与<code>&amp;</code>,B/100选择按位或<code>|</code>，C/100概率选择按位异或<code>^</code>,前一个发生器的输出作为后一个发生器的输入，求第N个发生器输出的期望。</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>由于按位操作每一位均独立，所以可以单独考虑每一位，计算每一位经过N次操作后为0或为1的概率。则期望为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">E=\sum_&#123;j=0&#125;^&#123;31&#125;P\left \&#123; Y_&#123;j&#125;=1 \right \&#125;*(1&lt;&lt;j)</div></pre></td></tr></table></figure></p>
+<p>P{Yj=1}表示输出结果第j位为1的概率。<br>每一位根据该位比x特和K对应位比特k执行按位操作可能发生的状态转移如下:<br><strong>k=0</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>x</th>
+<th>&amp;</th>
+<th>\</th>
+<th></th>
+<th>^</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>k=1</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>x</th>
+<th>&amp;</th>
+<th>\</th>
+<th></th>
+<th>^</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h4 id="状态转移方程"><a href="#状态转移方程" class="headerlink" title="状态转移方程"></a>状态转移方程</h4><p>令dp[i][j][s]表示第i个发生器的输出结果的第j位为s的概率，则：<br><strong>k=0</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dp[i+1][j][0]=P\left \&#123; A\right \&#125;+dp[i][j][0]\ast P\left \&#123; B\right \&#125;+dp[i][j][0]\ast P\left \&#123; C\right \&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dp[i+1][j][1]=dp[i][j][1]\ast P\left \&#123; B\right \&#125;+dp[i][j][1]\ast P\left \&#123; C\right \&#125;</div></pre></td></tr></table></figure>
+<p><strong>k=1</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dp[i+1][j][0]=dp[i][j][0]\ast P\left \&#123; A\right \&#125;+dp[i][j][1]\ast P\left \&#123; C\right \&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dp[i+1][j][1]=P\left \&#123; B\right \&#125;+dp[i][j][1]\ast P\left \&#123; A\right \&#125;+dp[i][j][0]\ast P\left \&#123; C\right \&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">1e5</span> + <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> N, X, K, A, B, C;</div><div class="line"></div><div class="line"><span class="keyword">double</span> dp[MAXN][<span class="number">32</span>][<span class="number">2</span>];</div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">double</span> Pa = (<span class="keyword">double</span>)A / <span class="number">100</span>, Pb = (<span class="keyword">double</span>)B / <span class="number">100</span>, Pc = (<span class="keyword">double</span>)C / <span class="number">100</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (X&amp;(<span class="number">1</span> &lt;&lt; i))</div><div class="line">			dp[<span class="number">0</span>][i][<span class="number">1</span>] = <span class="number">1</span>, dp[<span class="number">0</span>][i][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			dp[<span class="number">0</span>][i][<span class="number">0</span>] = <span class="number">1</span>, dp[<span class="number">0</span>][i][<span class="number">1</span>] = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">32</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (K&amp;(<span class="number">1</span> &lt;&lt; j))</div><div class="line">			&#123;</div><div class="line">				dp[i + <span class="number">1</span>][j][<span class="number">0</span>] = dp[i][j][<span class="number">0</span>] * Pa + dp[i][j][<span class="number">1</span>] * Pc;</div><div class="line">				dp[i + <span class="number">1</span>][j][<span class="number">1</span>] = Pb+dp[i][j][<span class="number">1</span>]*Pa+dp[i][j][<span class="number">0</span>]*Pc;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span></div><div class="line">			&#123;</div><div class="line">				dp[i + <span class="number">1</span>][j][<span class="number">0</span>] = Pa + dp[i][j][<span class="number">0</span>] * Pb + dp[i][j][<span class="number">0</span>] * Pc;</div><div class="line">				dp[i + <span class="number">1</span>][j][<span class="number">1</span>] = dp[i][j][<span class="number">1</span>] * Pb + dp[i][j][<span class="number">1</span>] * Pc;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">double</span> ans = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">31</span>; ++i)</div><div class="line">		ans += (dp[N][i][<span class="number">1</span>]*(<span class="number">1</span>&lt;&lt;i));</div><div class="line">	<span class="keyword">return</span> ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p>由于各位相互独立，上面两个循环可以交换次序，即对给定位j,一次性算完通N个发生器最后的概率，由于给定位j,K在该位上的状态转移矩阵是定的：<br><strong>k=0</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">\left [ \begin&#123;matrix&#125;</div><div class="line">dp[i+1][j][0]\\dp[i+1][j][1]</div><div class="line">\end&#123;matrix&#125; \right ]</div><div class="line">=</div><div class="line">\left [ \begin&#123;matrix&#125;</div><div class="line"> 1 &amp; P\left \&#123; A \right \&#125;\\ </div><div class="line"> 0 &amp; P\left \&#123; B \right \&#125;+P\left \&#123; C \right \&#125;</div><div class="line">\end&#123;matrix&#125; \right ]</div><div class="line">\left [ \begin&#123;matrix&#125;</div><div class="line">dp[i][j][0]\\dp[i][j][1] </div><div class="line">\end&#123;matrix&#125; \right ]</div></pre></td></tr></table></figure></p>
+<p><strong>k=1</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">\left [ \begin&#123;matrix&#125;</div><div class="line">dp[i+1][j][0]\\dp[i+1][j][1]</div><div class="line">\end&#123;matrix&#125; \right ]</div><div class="line">=</div><div class="line">\left [ \begin&#123;matrix&#125;</div><div class="line"> P\left \&#123; A \right \&#125;&amp; P\left \&#123; C \right \&#125;\\ </div><div class="line"> P\left \&#123; B \right \&#125;+P\left \&#123; C \right \&#125;&amp; P\left \&#123; B \right \&#125;+P\left \&#123; A \right \&#125;</div><div class="line">\end&#123;matrix&#125; \right ]</div><div class="line">\left [ \begin&#123;matrix&#125;</div><div class="line">dp[i][j][0]\\dp[i][j][1] </div><div class="line">\end&#123;matrix&#125; \right ]</div></pre></td></tr></table></figure></p>
+<p>类似于马尔科夫链，P~n~=M^n^P~0~,只需要要计算转移矩阵的n次幂即可，而矩阵求幂可以利用快速求幂算法：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">#include&lt;iostream&gt;</div><div class="line"></div><div class="line">using namespace std;</div><div class="line"></div><div class="line">int N, X, K, A, B, C;</div><div class="line"></div><div class="line">struct mat</div><div class="line">&#123;</div><div class="line">	int row=2, col=2;</div><div class="line">	double m[2][2];</div><div class="line">	mat()</div><div class="line">	&#123;</div><div class="line">		m[0][0] = 0;</div><div class="line">		m[0][1] = 0;</div><div class="line">		m[1][0] = 0;</div><div class="line">		m[1][1] = 0;</div><div class="line">	&#125;;</div><div class="line">	mat(double a,double b,double c,double d)</div><div class="line">	&#123;</div><div class="line">		m[0][0] = a;</div><div class="line">		m[0][1] = b;</div><div class="line">		m[1][0] = c;</div><div class="line">		m[1][1] = d;</div><div class="line">	&#125;;</div><div class="line">	mat operator*(mat &amp;mtx)const</div><div class="line">	&#123;</div><div class="line">		mat ans;</div><div class="line">		for (int i = 0; i &lt; row; ++i)</div><div class="line">		&#123;</div><div class="line">			for (int j = 0; j &lt; mtx.col; ++j)</div><div class="line">			&#123;</div><div class="line">				for (int k = 0; k &lt; col; ++k)</div><div class="line">					ans.m[i][j] += m[i][k] * mtx.m[k][j];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		ans.col = col;</div><div class="line">		ans.row = mtx.col;</div><div class="line">		return ans;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*y=x^n*/</div><div class="line">mat mat_pow(mat x,int n)</div><div class="line">&#123;</div><div class="line">	mat y(1.0, 0, 0, 1.0),base=x;</div><div class="line">	while (n)</div><div class="line">	&#123;</div><div class="line">		if (n &amp; 1) y = y*base; </div><div class="line">		n &gt;&gt;= 1;</div><div class="line">		base = base*base;</div><div class="line">	&#125;</div><div class="line">	return y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">double solve()</div><div class="line">&#123;</div><div class="line">	double Pa = (double)A / 100;</div><div class="line">	double Pb = (double)B / 100;</div><div class="line">	double Pc = (double)C / 100;</div><div class="line">	mat K0(1,Pa,0,Pb+Pc);//k=0转移矩阵</div><div class="line">	mat K1(Pa,Pc,Pb+Pc,Pb+Pa);//k=1转移矩阵</div><div class="line">	double ans = 0;</div><div class="line">	for (int j = 0; j &lt; 32; ++j)</div><div class="line">	&#123;</div><div class="line">		if (K&amp;(1 &lt;&lt; j))</div><div class="line">		&#123;</div><div class="line">			mat m = mat_pow(K1, N);</div><div class="line">			if (X&amp;(1 &lt;&lt; j))ans+=(m.m[1][1]*(1&lt;&lt;j));</div><div class="line">			else ans+=(m.m[1][0]*(1&lt;&lt;j));</div><div class="line">		&#125;</div><div class="line">		else</div><div class="line">		&#123;</div><div class="line">			mat m = mat_pow(K0, N);</div><div class="line">			if (X&amp;(1 &lt;&lt; j))ans += (m.m[1][1] * (1 &lt;&lt; j));</div><div class="line">			else ans += (m.m[1][0] * (1 &lt;&lt; j));</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-动态规划/">算法 动态规划</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/07/16/动态规划总结(七）/" data-title="动态规划总结（七）：概率型DP | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/07/17/动态规划总结(八）/" title="动态规划总结（八）：DAG上的动态规划">
+  <strong>上一篇：</strong><br/>
+  <span>
+  动态规划总结（八）：DAG上的动态规划</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/15/动态规划总结(六）/"  title="动态规划总结（六）：状压DP">
+ <strong>下一篇：</strong><br/> 
+ <span>动态规划总结（六）：状压DP
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概率型DP"><span class="toc-number">1.</span> <span class="toc-text">概率型DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Not-So-Random"><span class="toc-number">1.1.</span> <span class="toc-text">1.Not So Random</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意"><span class="toc-number">1.1.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分析"><span class="toc-number">1.1.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态转移方程"><span class="toc-number">1.1.3.</span> <span class="toc-text">状态转移方程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优化"><span class="toc-number">1.1.4.</span> <span class="toc-text">优化</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二叉树/" title="二叉树">二叉树<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

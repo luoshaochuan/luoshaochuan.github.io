@@ -1,0 +1,519 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>数论基础 | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="数论基础1.模1234567(a+b)mod(n)=((a)mod(n)+(b)mod(n))mod(n)  (a-b)mod(n)=((a)mod(n)-(b)mod(n)+n)mod(n)(a*b)mod(n)=((a)mod(n)*(b)mod(n))mod(n)(i+m)^&amp;#123;A&amp;#125;(mod\ m)=i^&amp;#123;A&amp;#125;(mod\ m)
+123456int mul">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数论基础">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/08/15/数论基础/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="数论基础1.模1234567(a+b)mod(n)=((a)mod(n)+(b)mod(n))mod(n)  (a-b)mod(n)=((a)mod(n)-(b)mod(n)+n)mod(n)(a*b)mod(n)=((a)mod(n)*(b)mod(n))mod(n)(i+m)^&amp;#123;A&amp;#125;(mod\ m)=i^&amp;#123;A&amp;#125;(mod\ m)
+123456int mul">
+<meta property="og:updated_time" content="2017-12-31T08:00:56.342Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数论基础">
+<meta name="twitter:description" content="数论基础1.模1234567(a+b)mod(n)=((a)mod(n)+(b)mod(n))mod(n)  (a-b)mod(n)=((a)mod(n)-(b)mod(n)+n)mod(n)(a*b)mod(n)=((a)mod(n)*(b)mod(n))mod(n)(i+m)^&amp;#123;A&amp;#125;(mod\ m)=i^&amp;#123;A&amp;#125;(mod\ m)
+123456int mul">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/08/15/数论基础/" title="数论基础" itemprop="url">数论基础</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-15T13:08:56.000Z" itemprop="datePublished"> 发表于 2017-08-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数论基础"><span class="toc-number">1.</span> <span class="toc-text">数论基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-模"><span class="toc-number">1.1.</span> <span class="toc-text">1.模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-辗转相除法"><span class="toc-number">1.2.</span> <span class="toc-text">2.辗转相除法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-同余"><span class="toc-number">1.3.</span> <span class="toc-text">3.同余</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-快速幂取模"><span class="toc-number">1.4.</span> <span class="toc-text">4.快速幂取模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-扩展欧几里得算法"><span class="toc-number">1.5.</span> <span class="toc-text">5.扩展欧几里得算法</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="数论基础"><a href="#数论基础" class="headerlink" title="数论基础"></a>数论基础</h2><h3 id="1-模"><a href="#1-模" class="headerlink" title="1.模"></a>1.模</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(a+b)mod(n)=((a)mod(n)+(b)mod(n))mod(n)  </div><div class="line"></div><div class="line">(a-b)mod(n)=((a)mod(n)-(b)mod(n)+n)mod(n)</div><div class="line"></div><div class="line">(a*b)mod(n)=((a)mod(n)*(b)mod(n))mod(n)</div><div class="line"></div><div class="line">(i+m)^&#123;A&#125;(mod\ m)=i^&#123;A&#125;(mod\ m)</div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">mul_mod</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b,<span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">    a=a%n;</div><div class="line">    b=b%n;</div><div class="line">    <span class="keyword">return</span> ((<span class="keyword">long</span> <span class="keyword">long</span>)a*b%n);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-辗转相除法"><a href="#2-辗转相除法" class="headerlink" title="2.辗转相除法"></a>2.辗转相除法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//ab=gcd(a,b)*lcm(a,b)</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(b==<span class="number">0</span>)<span class="keyword">return</span> a;</div><div class="line">    <span class="keyword">return</span> gcd(b,a%b);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-同余"><a href="#3-同余" class="headerlink" title="3.同余"></a>3.同余</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a\ mod\ m=c\ mod \ m =&gt;a\equiv c(mod\ m)</div></pre></td></tr></table></figure>
+<h3 id="4-快速幂取模"><a href="#4-快速幂取模" class="headerlink" title="4.快速幂取模"></a>4.快速幂取模</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a^&#123;b&#125;(mod\ m)</div></pre></td></tr></table></figure>
+<p>将b表示成二进制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">b=p(n-1)2^&#123;n-1&#125;+p(n-2)2^&#123;n-2&#125;+...+p(0)</div></pre></td></tr></table></figure></p>
+<p>所以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a^&#123;b&#125;=a^&#123;p(n-1)2^&#123;n-1&#125;+p(n-2)2^&#123;n-2&#125;+...+p(0)&#125;=a^&#123;p(n-1)2^&#123;n-1&#125;&#125;*a^&#123;p(n-2)2^&#123;n-2&#125;&#125;*...*a^&#123;p(0)&#125;</div></pre></td></tr></table></figure></p>
+<p>若p(k)=0,则：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a^&#123;p(k)2^&#123;k&#125;&#125;=1</div></pre></td></tr></table></figure></p>
+<p>若p(k)=1,则：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a^&#123;2^&#123;k&#125;&#125;=a^&#123;2^&#123;k-1&#125;*2&#125;=(a^&#123;2^&#123;k-1&#125;&#125;)^&#123;2&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*快速幂取模*/</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fast_pow_mod</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">long</span> <span class="keyword">long</span> r = <span class="number">1</span>, aa = a;</div><div class="line">	<span class="keyword">while</span> (n)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (n &amp; <span class="number">1</span>)r = (r*aa) % m;</div><div class="line">		n &gt;&gt;= <span class="number">1</span>;</div><div class="line">		aa = (aa*aa) % m;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> r;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="5-扩展欧几里得算法"><a href="#5-扩展欧几里得算法" class="headerlink" title="5.扩展欧几里得算法"></a>5.扩展欧几里得算法</h3><blockquote>
+<p>扩展欧几里得算法是用来求解满足ax+by=gcd(a,b)的一组解(贝祖等式)。<br>假设x1,y1是这个方程的一组解，即<br>ax1+by1=gcd(a,b)<br>假设x2,y2是方程bx+(a%b)y=gcd(b,a%b)的一组解，即：<br>bx2+(a%b)y2=gcd(b,a%b)<br>因为gcd(a,b)=gcd(b,a%b)<br>所以ax1+by1=bx2+(a-a/bb)y2=ay2+b(x2-a/by2)<br>所以y2=x1,x2-[a/b]y2=y1是方程组的解<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*扩展欧几里得算法*/</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">extgcd</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b,<span class="keyword">int</span> &amp;x,<span class="keyword">int</span> &amp;y)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> d = a;</div><div class="line">	<span class="keyword">if</span> (b==<span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		x = <span class="number">1</span>;</div><div class="line">		y = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span></div><div class="line">	&#123;</div><div class="line">		d = extgcd(b, a%b, y, x);</div><div class="line">		y -= a / b*x;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> d;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/数论/">数论</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/08/15/数论基础/" data-title="数论基础 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/08/16/树状数组/" title="树状数组">
+  <strong>上一篇：</strong><br/>
+  <span>
+  树状数组</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/08/05/gBallon/"  title="gBallon">
+ <strong>下一篇：</strong><br/> 
+ <span>gBallon
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数论基础"><span class="toc-number">1.</span> <span class="toc-text">数论基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-模"><span class="toc-number">1.1.</span> <span class="toc-text">1.模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-辗转相除法"><span class="toc-number">1.2.</span> <span class="toc-text">2.辗转相除法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-同余"><span class="toc-number">1.3.</span> <span class="toc-text">3.同余</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-快速幂取模"><span class="toc-number">1.4.</span> <span class="toc-text">4.快速幂取模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-扩展欧几里得算法"><span class="toc-number">1.5.</span> <span class="toc-text">5.扩展欧几里得算法</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二叉树/" title="二叉树">二叉树<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

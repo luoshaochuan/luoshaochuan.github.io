@@ -1,0 +1,537 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>二分搜索 | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="二分搜索如果问题具有单调有序的性质，则可以使用二分查找来搜索满足题目条件的某个值。
+1.从有序数组中查找某个值
+给定长度为n的单调不降数组a0,a1,…,an-1,求满足ai&amp;gt;=k的最小的i,不存在的时候输出n。
+
+12345678910111213int lowb(vector&amp;lt;int&amp;gt; &amp;amp;A, int K)&amp;#123;	int l = 0, r = A.size();">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分搜索">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/08/01/二分搜索/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="二分搜索如果问题具有单调有序的性质，则可以使用二分查找来搜索满足题目条件的某个值。
+1.从有序数组中查找某个值
+给定长度为n的单调不降数组a0,a1,…,an-1,求满足ai&amp;gt;=k的最小的i,不存在的时候输出n。
+
+12345678910111213int lowb(vector&amp;lt;int&amp;gt; &amp;amp;A, int K)&amp;#123;	int l = 0, r = A.size();">
+<meta property="og:updated_time" content="2017-10-25T13:16:35.912Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二分搜索">
+<meta name="twitter:description" content="二分搜索如果问题具有单调有序的性质，则可以使用二分查找来搜索满足题目条件的某个值。
+1.从有序数组中查找某个值
+给定长度为n的单调不降数组a0,a1,…,an-1,求满足ai&amp;gt;=k的最小的i,不存在的时候输出n。
+
+12345678910111213int lowb(vector&amp;lt;int&amp;gt; &amp;amp;A, int K)&amp;#123;	int l = 0, r = A.size();">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/08/01/二分搜索/" title="二分搜索" itemprop="url">二分搜索</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-01T11:24:59.000Z" itemprop="datePublished"> 发表于 2017-08-01</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#二分搜索"><span class="toc-number">1.</span> <span class="toc-text">二分搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-从有序数组中查找某个值"><span class="toc-number">1.1.</span> <span class="toc-text">1.从有序数组中查找某个值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-判断某个解是否可行"><span class="toc-number">1.2.</span> <span class="toc-text">2.判断某个解是否可行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.3.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-最大化最小值"><span class="toc-number">1.4.</span> <span class="toc-text">3.最大化最小值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">1.5.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码略"><span class="toc-number">1.6.</span> <span class="toc-text">代码略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最大化平均值"><span class="toc-number">1.7.</span> <span class="toc-text">最大化平均值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-2"><span class="toc-number">1.8.</span> <span class="toc-text">分析</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h2><p>如果问题具有单调有序的性质，则可以使用二分查找来搜索满足题目条件的某个值。</p>
+<h3 id="1-从有序数组中查找某个值"><a href="#1-从有序数组中查找某个值" class="headerlink" title="1.从有序数组中查找某个值"></a>1.从有序数组中查找某个值</h3><blockquote>
+<p>给定长度为n的单调不降数组a0,a1,…,an-1,求满足ai&gt;=k的最小的i,不存在的时候输出n。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">lowb</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A, <span class="keyword">int</span> K)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> l = <span class="number">0</span>, r = A.size();</div><div class="line">	<span class="keyword">while</span> (l &lt; r)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (A[mid] &gt;= K)<span class="comment">//满足条件</span></div><div class="line">			r = mid;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			l = mid+<span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>给定长度为n的单调不降数组a0,a1,…,an-1,求满足ai&lt;=k的最大的i加1,不存在的时候输出-1。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">upb</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp;A, <span class="keyword">int</span> K)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> l = <span class="number">0</span>, r = A.size();</div><div class="line">	<span class="keyword">while</span> (l &lt; r)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (A[mid] &lt;= K)</div><div class="line">			l = mid + <span class="number">1</span>;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			r = mid;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> r;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>==注：STL中的low_bound和up_bound实现了相同的功能！==</p>
+<h3 id="2-判断某个解是否可行"><a href="#2-判断某个解是否可行" class="headerlink" title="2.判断某个解是否可行"></a>2.判断某个解是否可行</h3><blockquote>
+<p>有N根绳子，每根长度为Li,从这N根绳子中切割出K根的话，每根最多能有多长？</p>
+</blockquote>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>先将绳子排序，切出的绳子长度不会超过最长的绳子，依次二分绳子长度，看看是否满足K根即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> n, k;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10000</span>;</div><div class="line"><span class="keyword">double</span> L[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">C</span><span class="params">(<span class="keyword">double</span> m)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	rep(i, n)</div><div class="line">	&#123;</div><div class="line">		sum += <span class="keyword">int</span>(L[i] / m);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (sum &gt;= k)</div><div class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	sort(L, L + n);</div><div class="line">	<span class="keyword">double</span> l = <span class="number">0</span>, r = L[n - <span class="number">1</span>];</div><div class="line">	<span class="keyword">while</span> (r - l &gt; eps)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">double</span> mid = (l + r) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (C(mid))</div><div class="line">			l = mid;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			r = mid;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-最大化最小值"><a href="#3-最大化最小值" class="headerlink" title="3.最大化最小值"></a>3.最大化最小值</h3><blockquote>
+<p>农夫 John 建造了一座很长的畜栏，它包括N (2 &lt;= N &lt;= 100,000)个隔间，这些小隔间依次编号为x1,…,xN (0 &lt;= xi &lt;= 1,000,000,000).<br>但是，John的C (2 &lt;= C &lt;= N)头牛们并不喜欢这种布局，而且几头牛放在一个隔间里，他们就要发生争斗。为了不让牛互相伤害。John决定自己给牛分配隔间，使任意两头牛之间的最小距离尽可能的大，那么，这个最大的最小距离是什么呢？</p>
+</blockquote>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>先对舍坐标排序，显然最远距离不会超过第一个和最后一个牛舍的距离，二分距离判断是否可行即可。</p>
+<h3 id="代码略"><a href="#代码略" class="headerlink" title="代码略"></a>代码略</h3><h3 id="最大化平均值"><a href="#最大化平均值" class="headerlink" title="最大化平均值"></a>最大化平均值</h3><blockquote>
+<p>有N个物品重量和价值分别为Wi和Vi,从中选出K个物品使单位重量的价值最大。</p>
+</blockquote>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>起初我觉得将N个物品按单位价值排序取前K个即可，但是这样不对。正确的做法是令C(x)表示表示可以选择使得单位重量的价值不小于x。因此，原问题变成了求满足条件的最大的x。<br>因为v/w&gt;=x,所以v-x*w&gt;=0,所以可以按照v-x*w进行排序，看前k个的和是否大于等于0即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> n, k;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10001</span>;</div><div class="line"><span class="keyword">double</span> w[maxn];</div><div class="line"><span class="keyword">double</span> v[maxn];</div><div class="line"><span class="keyword">double</span> p[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">C</span><span class="params">(<span class="keyword">double</span> x)</span></span></div><div class="line">&#123;</div><div class="line">	rep(i, n)</div><div class="line">		p[i] = v[i] - w[i] * x;</div><div class="line">	sort(p, p + n, greater&lt;<span class="keyword">double</span>&gt;());</div><div class="line">	<span class="keyword">double</span> sum = <span class="number">0</span>;</div><div class="line">	rep(i, k)</div><div class="line">		sum += p[i];</div><div class="line">	<span class="keyword">return</span> sum &gt;= <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">double</span> l = <span class="number">0</span>, r = inf;</div><div class="line">	<span class="keyword">while</span> (r-l&gt;eps)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">double</span> mid = (r + l) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (C(mid))</div><div class="line">			l = mid;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			r = mid;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-挑战程序设计竞赛/">算法 挑战程序设计竞赛</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/08/01/二分搜索/" data-title="二分搜索 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/08/05/gBallon/" title="gBallon">
+  <strong>上一篇：</strong><br/>
+  <span>
+  gBallon</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/27/leetcode Stranger Printer/"  title="leetcode Coin Path">
+ <strong>下一篇：</strong><br/> 
+ <span>leetcode Coin Path
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#二分搜索"><span class="toc-number">1.</span> <span class="toc-text">二分搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-从有序数组中查找某个值"><span class="toc-number">1.1.</span> <span class="toc-text">1.从有序数组中查找某个值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-判断某个解是否可行"><span class="toc-number">1.2.</span> <span class="toc-text">2.判断某个解是否可行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.3.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-最大化最小值"><span class="toc-number">1.4.</span> <span class="toc-text">3.最大化最小值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">1.5.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码略"><span class="toc-number">1.6.</span> <span class="toc-text">代码略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最大化平均值"><span class="toc-number">1.7.</span> <span class="toc-text">最大化平均值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-2"><span class="toc-number">1.8.</span> <span class="toc-text">分析</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二叉树/" title="二叉树">二叉树<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
