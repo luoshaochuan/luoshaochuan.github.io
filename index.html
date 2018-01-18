@@ -74,111 +74,6 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/12/11/Python快速入门/" title="Python快速入门" itemprop="url">Python快速入门</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-12-11T12:17:03.000Z" itemprop="datePublished"> 发表于 2017-12-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <ol>
-<li><p>Hello World</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Hello World\n'</span>)</div></pre></td></tr></table></figure>
-</li>
-<li><p>基本运算</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">除法 print(<span class="number">7</span>/<span class="number">3</span>)<span class="comment">#0.233333</span></div><div class="line">整除 print(<span class="number">7</span>//<span class="number">3</span>)<span class="comment">#2</span></div><div class="line">取模 print(<span class="number">7</span>%<span class="number">3</span>)<span class="comment">#1</span></div><div class="line">乘方 print(<span class="number">2</span>**<span class="number">3</span>)<span class="comment">#8</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>格式化输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="string">'&#123;[占位符]:[f填充字符][格式控制符][width]&#125;'</span>.format()</div><div class="line"><span class="comment">#占位符</span></div><div class="line">print(<span class="string">'My name is&#123;0&#125;,and age is&#123;1&#125;'</span>.format(<span class="string">'Li'</span>,<span class="number">22</span>));</div><div class="line">print(<span class="string">'My name is &#123;name&#125;,and age is &#123;age&#125;'</span>.format(age=<span class="number">22</span>,name=<span class="string">'Li'</span>));</div><div class="line"><span class="comment">#填充与对齐</span></div><div class="line"><span class="comment">#^、&lt;、&gt;、分别表示左对齐,后面跟着宽度</span></div><div class="line"><span class="comment">#':'后面跟着用于填充的字符，默认是空格</span></div><div class="line">print(<span class="string">'&#123;:-&lt;10&#125;'</span>.format(<span class="number">22</span>))</div><div class="line"><span class="comment">#精度控制</span></div><div class="line">print(<span class="string">'&#123;:.3f&#125;'</span>.format(<span class="number">2</span>/<span class="number">3</span>))</div><div class="line"><span class="comment">###金额千元分隔符</span></div><div class="line">print(<span class="string">'&#123;:,&#125;'</span>.format(<span class="number">123456789</span>))</div></pre></td></tr></table></figure>
-</li>
-<li><p>条件语句</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> condition_1:</div><div class="line">    statement_block_1</div><div class="line"><span class="keyword">elif</span> condition_2:</div><div class="line">    statement_block_2</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    statement_block_3</div></pre></td></tr></table></figure>
-</li>
-<li><p>循环语句</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while循环</span></div><div class="line"><span class="comment">#while 判断条件：</span></div><div class="line"><span class="comment">#    语句</span></div><div class="line"><span class="comment">#else:</span></div><div class="line">sum=<span class="number">0</span></div><div class="line">cnt=<span class="number">1</span></div><div class="line"><span class="keyword">while</span> cnt&lt;=<span class="number">100</span>:</div><div class="line">    sum+=cnt</div><div class="line">    cnt+=<span class="number">1</span></div><div class="line">print(<span class="string">"1到100的和为&#123;&#125;"</span>.format(sum))</div><div class="line"><span class="comment">#for循环</span></div><div class="line"><span class="comment">#for &lt;variable&gt; in &lt;sequence&gt;:</span></div><div class="line"><span class="comment">#    &lt;statements&gt;</span></div><div class="line"><span class="comment">#else:</span></div><div class="line"><span class="comment">#    &lt;statements&gt;</span></div><div class="line">sum=<span class="number">0</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">101</span>):</div><div class="line">    sum+=i</div></pre></td></tr></table></figure>
-</li>
-<li><p>函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#def 函数名：</span></div><div class="line"><span class="comment">#    函数体</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a,b)</span>:</span></div><div class="line">    <span class="keyword">return</span> a+b</div><div class="line">c=add(<span class="number">1</span>,<span class="number">2</span>)</div><div class="line">print(c)</div></pre></td></tr></table></figure>
-</li>
-<li><p>类</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> 类名[<span class="params">(父类)</span>]:</span></div><div class="line">    val<span class="comment">#共有属性</span></div><div class="line">    __val<span class="comment">#私有属性</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span><span class="comment">#构造方法</span></div><div class="line">        self.val=<span class="number">100</span></div><div class="line">        self.__val=<span class="number">100</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self,v)</span>:</span><span class="comment">#成员函数</span></div><div class="line">        self.val=v</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> val</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span>:</span></div><div class="line">    name=<span class="string">''</span></div><div class="line">    age=<span class="number">0</span></div><div class="line">    __weight__=<span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,n,a,w)</span>:</span></div><div class="line">        self.name=n</div><div class="line">        self.age=a</div><div class="line">        self.__weight__=w</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">speak</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">"我叫&#123;&#125;，今年&#123;&#125;岁。"</span>.format(self.name,self.age))</div><div class="line">p=People(<span class="string">"李逍遥"</span>,<span class="number">18</span>,<span class="number">50</span>)</div><div class="line">p.speak()</div></pre></td></tr></table></figure>
-<ol>
-<li>列表<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">list=[<span class="string">"google"</span>,<span class="string">"apple"</span>,<span class="string">"microsoft"</span>,<span class="string">"amazon"</span>]</div><div class="line"><span class="comment">#索引</span></div><div class="line">print(list[<span class="number">0</span>:<span class="number">4</span>])<span class="comment">#</span></div><div class="line">print(list[<span class="number">-1</span>])</div><div class="line"><span class="comment">#拼接</span></div><div class="line">list+=[<span class="string">"baidu"</span>,<span class="string">"ali"</span>,<span class="string">"tecent"</span>]</div><div class="line"><span class="comment">#重复</span></div><div class="line">list+=[<span class="string">"netease"</span>]*<span class="number">2</span></div><div class="line"><span class="comment">#长度</span></div><div class="line">len(list)</div><div class="line"><span class="comment">#迭代</span></div><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> list:</div><div class="line">    print(x)</div><div class="line"><span class="comment">#弹出</span></div><div class="line">list.pop()</div><div class="line"><span class="comment">#追加</span></div><div class="line">list.append(<span class="string">"hulu"</span>)</div><div class="line"><span class="comment">#统计某个元素的个数</span></div><div class="line">list.count(<span class="string">"Hulu"</span>)</div><div class="line"><span class="comment">#排序</span></div><div class="line">list.sort()</div><div class="line"><span class="comment">#翻转</span></div><div class="line">list.reverse()</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>列表推导式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">squares=[x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)]</div><div class="line">numbers=[x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">100</span>) <span class="keyword">if</span> x%<span class="number">3</span>==<span class="number">0</span>]</div><div class="line">even=[x <span class="keyword">for</span> x <span class="keyword">in</span> rane(<span class="number">10</span>) <span class="keyword">if</span> x%<span class="number">2</span>==<span class="number">0</span>]</div><div class="line">odd=[x <span class="keyword">for</span> x int range(<span class="number">10</span>) <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> even]</div></pre></td></tr></table></figure></p>
-<ol>
-<li><p>元组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tup1=(<span class="number">50</span>,)</div><div class="line">tup2=(<span class="string">"Google"</span>,<span class="string">"Runoob"</span>)</div><div class="line">tup3=tup1+tup2</div><div class="line">tup4=(<span class="string">"Hi"</span>,)*<span class="number">4</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>字典<br>键必须不可变，可以为数字，字符串，元组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dict=&#123;&#125;</div><div class="line">dict=collections.defaultdict(int)</div><div class="line">d=&#123;<span class="number">1</span>:<span class="string">"Google"</span>,<span class="number">2</span>:<span class="string">"Amazon"</span>&#125;</div><div class="line">l1=d.items()<span class="comment">#</span></div><div class="line">l2=d.keys()</div></pre></td></tr></table></figure>
-</li>
-<li><p>集合</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s1=set()</div><div class="line">s2=&#123;<span class="string">"Google"</span>,<span class="string">"Amazon"</span>&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>迭代器与生成器<br>迭代器有两个函数，iter(),next(it)<br>iter用于创建一个迭代器对象，next()用于返回迭代器当前指向的值并将迭代器指向下一个值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#迭代器</span></div><div class="line">&gt;&gt;&gt;list=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>it = iter(list)    <span class="comment"># 创建迭代器对象</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> (next(it))   <span class="comment"># 输出迭代器的下一个元素</span></div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> (next(it))</div><div class="line"><span class="number">2</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>生成器</strong><br>yield就是 return 返回一个值，并且记住这个返回的位置，下次迭代就从这个位置后(下一行)开始。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></div><div class="line">    a,b,counter=<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span></div><div class="line">    <span class="keyword">while</span> counter&lt;=n:</div><div class="line">        <span class="keyword">yield</span> a</div><div class="line">        a,b,counter=b,a+b,counter+<span class="number">1</span></div><div class="line">    <span class="keyword">return</span></div><div class="line">it=fib(<span class="number">10</span>)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        print(next(it),end=<span class="string">","</span>)</div><div class="line">    <span class="keyword">except</span> StopIteration:</div><div class="line">        <span class="keyword">break</span></div></pre></td></tr></table></figure></p>
-<ol>
-<li><p>lambda表达式<br>lambda 函数的语法只包含一个语句，如下：<br>lambda [arg1 [,arg2,…..argn]]:expression</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">f=<span class="keyword">lambda</span> x:x+<span class="number">1</span><span class="comment">#lambda就是没有名字的单行函数</span></div><div class="line">print(f(<span class="number">1</span>))</div></pre></td></tr></table></figure>
-</li>
-<li><p>enumerate<br>可以同时得到索引和元素</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">list=[<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>]</div><div class="line"><span class="keyword">for</span> key,value <span class="keyword">in</span> enumerate(list):</div><div class="line">    print(key,value)</div></pre></td></tr></table></figure></li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Python/">Python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
       <a href="/2017/11/19/母函数法/" title="母函数法" itemprop="url">母函数法</a>
   </h1>
   <p class="article-author">By
@@ -700,6 +595,66 @@
 
 
 
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/21/尺取法/" title="滑动窗口" itemprop="url">滑动窗口</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-21T12:00:00.000Z" itemprop="datePublished"> 发表于 2017-09-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="滑动窗口””尺取法”"><a href="#滑动窗口””尺取法”" class="headerlink" title="滑动窗口””尺取法”"></a>滑动窗口””尺取法”</h3><p>==这种找某段连续子序列满足要求最长/最短的问题，通常可以使用<strong>尺取法</strong>解决==。对于大部分“子字符串”相关问题，即给出一个字符串要求找到它满足某些条件的子串，我们通常可以使用哈希表和双指针来维护一个滑动窗口解决。模板如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">findSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; hashmap(<span class="number">128</span>,<span class="number">0</span>);<span class="comment">//哈希表</span></div><div class="line">    <span class="keyword">int</span> counter;<span class="comment">//检查子串是否有效</span></div><div class="line">    <span class="keyword">int</span> begin=<span class="number">0</span>,end=<span class="number">0</span>;<span class="comment">//双指针，分别指向滑动窗口的两端</span></div><div class="line">    <span class="keyword">int</span> d;<span class="comment">//字符子串长度</span></div><div class="line">    <span class="keyword">for</span>()&#123;<span class="comment">/*初始化哈希表*/</span>&#125;</div><div class="line">    <span class="keyword">while</span>(end&lt;s.length())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(hashmap[s[end++]]--?)&#123;<span class="comment">/*在这里修改计数器*/</span>&#125;</div><div class="line">        <span class="keyword">while</span>(<span class="comment">/*计数器条件*/</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">/*如果发现最小值，在这里更新d*/</span></div><div class="line">            <span class="comment">//增加begin使其再次有效/失效</span></div><div class="line">            <span class="keyword">if</span>(<span class="built_in">map</span>[s[begin++]]++ ?)&#123; <span class="comment">/*modify counter here*/</span> &#125;</div><div class="line">        &#125;</div><div class="line">         <span class="comment">/* update d here if finding maximum*/</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> d;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="例1-Longest-Substring-Without-Repeating-Characters"><a href="#例1-Longest-Substring-Without-Repeating-Characters" class="headerlink" title="例1.Longest Substring Without Repeating Characters"></a>例1.Longest Substring Without Repeating Characters</h3><p><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/description/" target="_blank" rel="external">LeetCode 3</a></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>可以维护一个滑动窗口，窗口内没有重复字符时，右端移动，窗口内出现重复字符时，将窗口左端移至左边重复字符的下一个位置，为了判重，通常需要一个哈希表。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; table(<span class="number">256</span>,<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> res=<span class="number">0</span>,i=<span class="number">0</span>,j=<span class="number">0</span>,n=s.length();</div><div class="line">        <span class="keyword">while</span>(i&lt;n)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">while</span>(i&lt;n&amp;&amp;!table[s[i]])&#123;table[s[i]]=<span class="number">1</span>;++i;&#125;</div><div class="line">            res=max(res,i-j);</div><div class="line">            <span class="keyword">while</span>(j&lt;n&amp;&amp;s[j]!=s[i])&#123;table[s[j]]=<span class="number">0</span>;++j;&#125;;</div><div class="line">            table[s[j]]=<span class="number">0</span>;++j;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="例2-Minimum-Window-Substring"><a href="#例2-Minimum-Window-Substring" class="headerlink" title="例2.Minimum Window Substring"></a>例2.Minimum Window Substring</h3><p><a href="https://leetcode.com/problems/minimum-window-substring/description/" target="_blank" rel="external">LeetCode 76</a></p>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*尺取法*/</span></div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minWindow</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; hashmap(<span class="number">128</span>,<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> begin=<span class="number">0</span>,end=<span class="number">0</span>,min_len=INT_MAX,counter=t.length(),min_start=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> c:t)hashmap[c]++;<span class="comment">//统计t中各字符出现的次数</span></div><div class="line">        <span class="keyword">while</span>(end&lt;s.length())</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(hashmap[s[end]]&gt;<span class="number">0</span>)--counter;<span class="comment">//如果t中有此字符，将还需要找的字符数减1</span></div><div class="line">            hashmap[s[end]]--;<span class="comment">//将窗口内字符对应的数量减1，注意如果不是t中的字符，数量会变为负数</span></div><div class="line">            end++;<span class="comment">//窗口右移</span></div><div class="line">            <span class="keyword">while</span>(counter==<span class="number">0</span>)<span class="comment">//如果已经找齐所有字符，就开始移动窗口左端</span></div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(end-begin&lt;min_len)</div><div class="line">                &#123;</div><div class="line">                    min_len=end-begin;</div><div class="line">                    min_start=begin;</div><div class="line">                &#125;</div><div class="line">                hashmap[s[begin]]++;<span class="comment">//窗口左端增大，窗口内对应字符数量+1</span></div><div class="line">                <span class="keyword">if</span>(hashmap[s[begin]]&gt;<span class="number">0</span>)++counter;<span class="comment">//如果t中存在此字符，窗口左端移动后还需要再找一个此字符</span></div><div class="line">                begin++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> min_len==INT_MAX?<span class="string">""</span>:s.substr(min_start,min_len);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="例3：Longest-Substring-with-At-Most-Two-Distinct-Characters"><a href="#例3：Longest-Substring-with-At-Most-Two-Distinct-Characters" class="headerlink" title="例3：Longest Substring with At Most Two Distinct Characters"></a>例3：Longest Substring with At Most Two Distinct Characters</h3><p><strong>题意</strong><br>给定一个字符串，找到其最多包含两种字符的最长子串T。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstringTwoDistinct</span><span class="params">(<span class="built_in">string</span> s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dict(<span class="number">128</span>,<span class="number">0</span>);</div><div class="line">    <span class="keyword">int</span> start=<span class="number">0</span>,end=<span class="number">0</span>,count=<span class="number">0</span>,max_len=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(end&lt;s.length())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(end&lt;s.length()&amp;&amp;count&lt;=<span class="number">2</span>)<span class="comment">//窗口内字符种数不超过2</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(dict[s[end]]==<span class="number">0</span>)++count;<span class="comment">//窗口内不存在此字符</span></div><div class="line">            dict[s[end]]++;<span class="comment">//字符数加1</span></div><div class="line">            end++;</div><div class="line">        &#125;</div><div class="line">        max_len=max(max_len,end-start);</div><div class="line">        <span class="keyword">while</span>(dict[s[start]])</div><div class="line">        &#123;</div><div class="line">            dict[s[start]]--;</div><div class="line">            start++;</div><div class="line">        &#125;</div><div class="line">        --count;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> max_len;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/滑动窗口/">滑动窗口</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -782,7 +737,11 @@
 			
 		
 			
-				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
 			
 		
 			
@@ -790,7 +749,7 @@
 			
 		
 			
-				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
 			
 		
 			
@@ -806,19 +765,15 @@
 			
 		
 			
-				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/图论-欧拉路/" title="图论 欧拉路">图论 欧拉路<sup>1</sup></a></li>
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
 			
 		
 			
