@@ -1,0 +1,567 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Python快速入门 | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="Hello World
+1print(&apos;Hello World\n&apos;)
+
+基本运算
+1234除法 print(7/3)#0.233333整除 print(7//3)#2取模 print(7%3)#1乘方 print(2**3)#8
+
+格式化输出
+123456789101112&apos;&amp;#123;[占位符]:[f填充字符][格式控制符][width]&amp;#125;&apos;.format()#占位符print(&apos;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python快速入门">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/12/11/Python快速入门/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="Hello World
+1print(&apos;Hello World\n&apos;)
+
+基本运算
+1234除法 print(7/3)#0.233333整除 print(7//3)#2取模 print(7%3)#1乘方 print(2**3)#8
+
+格式化输出
+123456789101112&apos;&amp;#123;[占位符]:[f填充字符][格式控制符][width]&amp;#125;&apos;.format()#占位符print(&apos;">
+<meta property="og:updated_time" content="2018-01-18T12:27:39.724Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python快速入门">
+<meta name="twitter:description" content="Hello World
+1print(&apos;Hello World\n&apos;)
+
+基本运算
+1234除法 print(7/3)#0.233333整除 print(7//3)#2取模 print(7%3)#1乘方 print(2**3)#8
+
+格式化输出
+123456789101112&apos;&amp;#123;[占位符]:[f填充字符][格式控制符][width]&amp;#125;&apos;.format()#占位符print(&apos;">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/11/Python快速入门/" title="Python快速入门" itemprop="url">Python快速入门</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-11T12:17:03.000Z" itemprop="datePublished"> 发表于 2017-12-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<ol>
+<li><p>Hello World</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Hello World\n'</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>基本运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">除法 print(<span class="number">7</span>/<span class="number">3</span>)<span class="comment">#0.233333</span></div><div class="line">整除 print(<span class="number">7</span>//<span class="number">3</span>)<span class="comment">#2</span></div><div class="line">取模 print(<span class="number">7</span>%<span class="number">3</span>)<span class="comment">#1</span></div><div class="line">乘方 print(<span class="number">2</span>**<span class="number">3</span>)<span class="comment">#8</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>格式化输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="string">'&#123;[占位符]:[f填充字符][格式控制符][width]&#125;'</span>.format()</div><div class="line"><span class="comment">#占位符</span></div><div class="line">print(<span class="string">'My name is&#123;0&#125;,and age is&#123;1&#125;'</span>.format(<span class="string">'Li'</span>,<span class="number">22</span>));</div><div class="line">print(<span class="string">'My name is &#123;name&#125;,and age is &#123;age&#125;'</span>.format(age=<span class="number">22</span>,name=<span class="string">'Li'</span>));</div><div class="line"><span class="comment">#填充与对齐</span></div><div class="line"><span class="comment">#^、&lt;、&gt;、分别表示左对齐,后面跟着宽度</span></div><div class="line"><span class="comment">#':'后面跟着用于填充的字符，默认是空格</span></div><div class="line">print(<span class="string">'&#123;:-&lt;10&#125;'</span>.format(<span class="number">22</span>))</div><div class="line"><span class="comment">#精度控制</span></div><div class="line">print(<span class="string">'&#123;:.3f&#125;'</span>.format(<span class="number">2</span>/<span class="number">3</span>))</div><div class="line"><span class="comment">###金额千元分隔符</span></div><div class="line">print(<span class="string">'&#123;:,&#125;'</span>.format(<span class="number">123456789</span>))</div></pre></td></tr></table></figure>
+</li>
+<li><p>条件语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> condition_1:</div><div class="line">    statement_block_1</div><div class="line"><span class="keyword">elif</span> condition_2:</div><div class="line">    statement_block_2</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    statement_block_3</div></pre></td></tr></table></figure>
+</li>
+<li><p>循环语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while循环</span></div><div class="line"><span class="comment">#while 判断条件：</span></div><div class="line"><span class="comment">#    语句</span></div><div class="line"><span class="comment">#else:</span></div><div class="line">sum=<span class="number">0</span></div><div class="line">cnt=<span class="number">1</span></div><div class="line"><span class="keyword">while</span> cnt&lt;=<span class="number">100</span>:</div><div class="line">    sum+=cnt</div><div class="line">    cnt+=<span class="number">1</span></div><div class="line">print(<span class="string">"1到100的和为&#123;&#125;"</span>.format(sum))</div><div class="line"><span class="comment">#for循环</span></div><div class="line"><span class="comment">#for &lt;variable&gt; in &lt;sequence&gt;:</span></div><div class="line"><span class="comment">#    &lt;statements&gt;</span></div><div class="line"><span class="comment">#else:</span></div><div class="line"><span class="comment">#    &lt;statements&gt;</span></div><div class="line">sum=<span class="number">0</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">101</span>):</div><div class="line">    sum+=i</div></pre></td></tr></table></figure>
+</li>
+<li><p>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#def 函数名：</span></div><div class="line"><span class="comment">#    函数体</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a,b)</span>:</span></div><div class="line">    <span class="keyword">return</span> a+b</div><div class="line">c=add(<span class="number">1</span>,<span class="number">2</span>)</div><div class="line">print(c)</div></pre></td></tr></table></figure>
+</li>
+<li><p>类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> 类名[<span class="params">(父类)</span>]:</span></div><div class="line">    val<span class="comment">#共有属性</span></div><div class="line">    __val<span class="comment">#私有属性</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span><span class="comment">#构造方法</span></div><div class="line">        self.val=<span class="number">100</span></div><div class="line">        self.__val=<span class="number">100</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self,v)</span>:</span><span class="comment">#成员函数</span></div><div class="line">        self.val=v</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> val</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span>:</span></div><div class="line">    name=<span class="string">''</span></div><div class="line">    age=<span class="number">0</span></div><div class="line">    __weight__=<span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,n,a,w)</span>:</span></div><div class="line">        self.name=n</div><div class="line">        self.age=a</div><div class="line">        self.__weight__=w</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">speak</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">"我叫&#123;&#125;，今年&#123;&#125;岁。"</span>.format(self.name,self.age))</div><div class="line">p=People(<span class="string">"李逍遥"</span>,<span class="number">18</span>,<span class="number">50</span>)</div><div class="line">p.speak()</div></pre></td></tr></table></figure>
+<ol>
+<li>列表<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">list=[<span class="string">"google"</span>,<span class="string">"apple"</span>,<span class="string">"microsoft"</span>,<span class="string">"amazon"</span>]</div><div class="line"><span class="comment">#索引</span></div><div class="line">print(list[<span class="number">0</span>:<span class="number">4</span>])<span class="comment">#</span></div><div class="line">print(list[<span class="number">-1</span>])</div><div class="line"><span class="comment">#拼接</span></div><div class="line">list+=[<span class="string">"baidu"</span>,<span class="string">"ali"</span>,<span class="string">"tecent"</span>]</div><div class="line"><span class="comment">#重复</span></div><div class="line">list+=[<span class="string">"netease"</span>]*<span class="number">2</span></div><div class="line"><span class="comment">#长度</span></div><div class="line">len(list)</div><div class="line"><span class="comment">#迭代</span></div><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> list:</div><div class="line">    print(x)</div><div class="line"><span class="comment">#弹出</span></div><div class="line">list.pop()</div><div class="line"><span class="comment">#追加</span></div><div class="line">list.append(<span class="string">"hulu"</span>)</div><div class="line"><span class="comment">#统计某个元素的个数</span></div><div class="line">list.count(<span class="string">"Hulu"</span>)</div><div class="line"><span class="comment">#排序</span></div><div class="line">list.sort()</div><div class="line"><span class="comment">#翻转</span></div><div class="line">list.reverse()</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>列表推导式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">squares=[x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)]</div><div class="line">numbers=[x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">100</span>) <span class="keyword">if</span> x%<span class="number">3</span>==<span class="number">0</span>]</div><div class="line">even=[x <span class="keyword">for</span> x <span class="keyword">in</span> rane(<span class="number">10</span>) <span class="keyword">if</span> x%<span class="number">2</span>==<span class="number">0</span>]</div><div class="line">odd=[x <span class="keyword">for</span> x int range(<span class="number">10</span>) <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> even]</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>元组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tup1=(<span class="number">50</span>,)</div><div class="line">tup2=(<span class="string">"Google"</span>,<span class="string">"Runoob"</span>)</div><div class="line">tup3=tup1+tup2</div><div class="line">tup4=(<span class="string">"Hi"</span>,)*<span class="number">4</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>字典<br>键必须不可变，可以为数字，字符串，元组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dict=&#123;&#125;</div><div class="line">dict=collections.defaultdict(int)</div><div class="line">d=&#123;<span class="number">1</span>:<span class="string">"Google"</span>,<span class="number">2</span>:<span class="string">"Amazon"</span>&#125;</div><div class="line">l1=d.items()<span class="comment">#</span></div><div class="line">l2=d.keys()</div></pre></td></tr></table></figure>
+</li>
+<li><p>集合</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s1=set()</div><div class="line">s2=&#123;<span class="string">"Google"</span>,<span class="string">"Amazon"</span>&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>迭代器与生成器<br>迭代器有两个函数，iter(),next(it)<br>iter用于创建一个迭代器对象，next()用于返回迭代器当前指向的值并将迭代器指向下一个值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#迭代器</span></div><div class="line">&gt;&gt;&gt;list=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>it = iter(list)    <span class="comment"># 创建迭代器对象</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> (next(it))   <span class="comment"># 输出迭代器的下一个元素</span></div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> (next(it))</div><div class="line"><span class="number">2</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>生成器</strong><br>yield就是 return 返回一个值，并且记住这个返回的位置，下次迭代就从这个位置后(下一行)开始。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></div><div class="line">    a,b,counter=<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span></div><div class="line">    <span class="keyword">while</span> counter&lt;=n:</div><div class="line">        <span class="keyword">yield</span> a</div><div class="line">        a,b,counter=b,a+b,counter+<span class="number">1</span></div><div class="line">    <span class="keyword">return</span></div><div class="line">it=fib(<span class="number">10</span>)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        print(next(it),end=<span class="string">","</span>)</div><div class="line">    <span class="keyword">except</span> StopIteration:</div><div class="line">        <span class="keyword">break</span></div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>lambda表达式<br>lambda 函数的语法只包含一个语句，如下：<br>lambda [arg1 [,arg2,…..argn]]:expression</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">f=<span class="keyword">lambda</span> x:x+<span class="number">1</span><span class="comment">#lambda就是没有名字的单行函数</span></div><div class="line">print(f(<span class="number">1</span>))</div></pre></td></tr></table></figure>
+</li>
+<li><p>enumerate<br>可以同时得到索引和元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">list=[<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>]</div><div class="line"><span class="keyword">for</span> key,value <span class="keyword">in</span> enumerate(list):</div><div class="line">    print(key,value)</div></pre></td></tr></table></figure></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Python/">Python</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/12/11/Python快速入门/" data-title="Python快速入门 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/11/19/母函数法/"  title="母函数法">
+ <strong>下一篇：</strong><br/> 
+ <span>母函数法
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/图论-欧拉路/" title="图论 欧拉路">图论 欧拉路<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二叉搜索树/" title="二叉搜索树">二叉搜索树<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
