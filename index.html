@@ -100,14 +100,14 @@
 <p>机器处于环境E中，状态空间为X,其中每个状态x是机器感知到的环境的描述，如种瓜任务上就是当前瓜苗长势的描述；机器能采取的动作构成动作空间A；机器采取的动作作用的当前状态上，会使当前环境按状态转移函数P转移到另一状态，转移过程中环境会根据潜在的奖赏函数R反馈给机器一个奖赏。综合起来,强化学习任务对应了一个四元组E=<x,a,p,r>.机器要做的是通过在环境中不断尝试而学得一个策略(policy)phi,根据这个策略，在状态x下就能得知要执行的动作a=phi(x)。</x,a,p,r></p>
 </blockquote>
 <p><img src="http://oc9b84kcd.bkt.clouddn.com/MDP.png" alt=""></p>
-<h3 id="策略和价值"><a href="#策略和价值" class="headerlink" title="策略和价值"></a>策略和价值</h3><p><strong>策略</strong>：状态s下执行动作a的概率<br><span>$\pi(a|s) = P[A_t=a|S_t=s]$</span><!-- Has MathJax --><br><strong>奖励</strong>：当前状态下执行动作a获得的奖励的期望<br><span>$R_s^a = E[R_{t+1}|S_t=s, A_t=a]$</span><!-- Has MathJax --><br><strong>回报</strong>：回报是从t+1时刻开始的累积折扣奖励<br><span>$G_t = R_{t+1}+\gamma R_{t+2}+&hellip;=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}$</span><!-- Has MathJax --><br><strong>策略</strong>：是agent的行为函数，只跟状态有关<br><span>$\pi(a|s) = \mathbb P[A_t = a | S_t = s]$</span><!-- Has MathJax --><br><strong>状态值函数</strong>:状态值函数vπ(s)是从状态s出发，按照策略π采取行为得到的期望回报<br><span>$$v_\pi(s) = \mathbb E_\pi[G_t | S_t = s]$$</span><!-- Has MathJax --><br><strong>行为值函数</strong>:行为值函数qπ(s,a)是从状态s出发，采取行为a后，然后按照策略π采取行为得到的期望回报<br><span>$q_\pi(s, a) = \mathbb E_\pi[G_t | S_t = s, A_t = a]$</span><!-- Has MathJax --></p>
-<h3 id="Bellman期望方程"><a href="#Bellman期望方程" class="headerlink" title="Bellman期望方程"></a>Bellman期望方程</h3><p>Bellman期望方程其实就是vπ(s)和qπ(s,a)自身以及相互之间的递推关系。<br>按照状态值函数和行为值函数定义可以得到如下递推式：<br><span>$$v_\pi(s)= \mathbb E_\pi[R_{t+1}+\gamma G_{t+1} |S_t = s]  
+<h3 id="策略和价值"><a href="#策略和价值" class="headerlink" title="策略和价值"></a>策略和价值</h3><p><strong>策略</strong>：状态s下执行动作a的概率<br><span>$\pi(a|s) = P[A_t=a|S_t=s]$</span><!-- Has MathJax --><br><strong>奖励</strong>：当前状态下执行动作a获得的奖励的期望<br><span>$R_s^a = E[R_{t+1}|S_t=s, A_t=a]$</span><!-- Has MathJax --><br><strong>回报</strong>：回报是从t+1时刻开始的累积折扣奖励<br><span>$G_t = R_{t+1}+\gamma R_{t+2}+&hellip;=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}$</span><!-- Has MathJax --><br><strong>策略</strong>：是agent的行为函数，只跟状态有关<br><span>$\pi(a|s) = \mathbb P[A_t = a | S_t = s]$</span><!-- Has MathJax --><br><strong>状态值函数</strong>:状态值函数vπ(s)是从状态s出发，按照策略π采取行为得到的期望回报<br><span>$v_\pi(s) = \mathbb E_\pi[G_t | S_t = s]$</span><!-- Has MathJax --><br><strong>行为值函数</strong>:行为值函数qπ(s,a)是从状态s出发，采取行为a后，然后按照策略π采取行为得到的期望回报<br><span>$q_\pi(s, a) = \mathbb E_\pi[G_t | S_t = s, A_t = a]$</span><!-- Has MathJax --></p>
+<h3 id="Bellman期望方程"><a href="#Bellman期望方程" class="headerlink" title="Bellman期望方程"></a>Bellman期望方程</h3><p>Bellman期望方程其实就是vπ(s)和qπ(s,a)自身以及相互之间的递推关系。<br>按照状态值函数和行为值函数定义可以得到如下递推式：<br><span>$$v_\pi(s)= \mathbb E_\pi[R_{t+1}+\gamma G_{t+1} |S_t = s] \\
 
-= \mathbb E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1}) | S_t = s]
+= \mathbb E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1}) | S_t = s] \\
 
-q_\pi(s, a)= \mathbb E_\pi[G_t | S_t = s, A_t = a] 
+q_\pi(s, a)= \mathbb E_\pi[G_t | S_t = s, A_t = a] \\
 
-= \mathbb E_\pi[R_{t+1} +\gamma q_\pi(S_{t+1}, A_{t+1}) | S_t = s, A_t = a]$$</span><!-- Has MathJax --><br>vπ(s)与qπ(s,a)之间的关系:<br><span>$$v_\pi(s) = \sum_{a\in {A}} \pi(a|s)q_{\pi}(s, a)
+= \mathbb E_\pi[R_{t+1} +\gamma q_\pi(S_{t+1}, A_{t+1}) | S_t = s, A_t = a] \\$$</span><!-- Has MathJax --><br>vπ(s)与qπ(s,a)之间的关系:<br><span>$$v_\pi(s) = \sum_{a\in {A}} \pi(a|s)q_{\pi}(s, a)
 
 q_\pi(s,a) = {R}_s^a + \gamma \sum_{s&apos; \in {S}} {P}_{ss&apos;}^a v_\pi(s&apos;)$$</span><!-- Has MathJax --><br>递推方程：<br><span>$$v_\pi(s) = \sum_{a} \pi(a|s) \left[ {R}_s^a + \gamma \sum_{s&apos;} { P}_{ss&apos;}^a v_\pi(s&apos;) \right]
 
@@ -791,27 +791,15 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
 			
 		
 			
@@ -823,11 +811,11 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
 			
 		
 			
@@ -847,15 +835,27 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
 			
 		
 		</ul>
