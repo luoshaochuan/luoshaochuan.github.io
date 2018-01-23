@@ -1,0 +1,582 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>TensorFlow快速入门 | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="基础
+Tensor张量：类似于Numpy中的ndarrayrank:维度数量shape:每个维度的大小
+1234567891011121314151617181920212223242526import tensorflow as tf&amp;gt;&amp;gt;&amp;gt; a=tf.constant(5)&amp;gt;&amp;gt;&amp;gt; b=tf.constant(3)&amp;gt;&amp;gt;&amp;gt; c=tf.multip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow快速入门">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/12/05/TensorFlow快速入门/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="基础
+Tensor张量：类似于Numpy中的ndarrayrank:维度数量shape:每个维度的大小
+1234567891011121314151617181920212223242526import tensorflow as tf&amp;gt;&amp;gt;&amp;gt; a=tf.constant(5)&amp;gt;&amp;gt;&amp;gt; b=tf.constant(3)&amp;gt;&amp;gt;&amp;gt; c=tf.multip">
+<meta property="og:updated_time" content="2018-01-21T09:13:54.410Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow快速入门">
+<meta name="twitter:description" content="基础
+Tensor张量：类似于Numpy中的ndarrayrank:维度数量shape:每个维度的大小
+1234567891011121314151617181920212223242526import tensorflow as tf&amp;gt;&amp;gt;&amp;gt; a=tf.constant(5)&amp;gt;&amp;gt;&amp;gt; b=tf.constant(3)&amp;gt;&amp;gt;&amp;gt; c=tf.multip">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/05/TensorFlow快速入门/" title="TensorFlow快速入门" itemprop="url">TensorFlow快速入门</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-05T12:17:03.000Z" itemprop="datePublished"> 发表于 2017-12-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例"><span class="toc-number">2.</span> <span class="toc-text">示例</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ol>
+<li><p>Tensor张量：类似于Numpy中的ndarray<br>rank:维度数量<br>shape:每个维度的大小</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">import tensorflow <span class="keyword">as</span> <span class="keyword">tf</span></div><div class="line">&gt;&gt;&gt; <span class="keyword">a</span>=<span class="keyword">tf</span>.constant(<span class="number">5</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">b</span>=<span class="keyword">tf</span>.constant(<span class="number">3</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">c</span>=<span class="keyword">tf</span>.multiply(<span class="keyword">a</span>,<span class="keyword">b</span>)</div><div class="line">&gt;&gt;&gt; d=<span class="keyword">tf</span>.<span class="built_in">add</span>(<span class="keyword">a</span>,<span class="keyword">b</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">e</span>=<span class="keyword">tf</span>.<span class="built_in">add</span>(<span class="keyword">c</span>,d)</div><div class="line">&gt;&gt;&gt; sess=<span class="keyword">tf</span>.Session()</div><div class="line">&gt;&gt;&gt; <span class="keyword">print</span>(sess.run(<span class="keyword">e</span>))</div><div class="line"><span class="number">23</span></div><div class="line">&gt;&gt;&gt; sess.<span class="keyword">close</span>()</div><div class="line"></div><div class="line">#常用张量</div><div class="line"><span class="keyword">a</span>=<span class="keyword">tf</span>.zeros([<span class="number">2</span>,<span class="number">3</span>],<span class="keyword">tf</span>.int32)</div><div class="line"><span class="keyword">b</span>=<span class="keyword">tf</span>.ones([<span class="number">2</span>,<span class="number">3</span>],<span class="keyword">tf</span>.int32)</div><div class="line"></div><div class="line">#随机张量</div><div class="line">&gt;&gt;&gt; <span class="keyword">a</span>=<span class="keyword">tf</span>.random_normal([<span class="number">2</span>,<span class="number">2</span>],mean=<span class="number">0.0</span>,stddev=<span class="number">1.0</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">b</span>=<span class="keyword">tf</span>.random_uniform([<span class="number">2</span>,<span class="number">2</span>],minval=<span class="number">0.0</span>,maxval=<span class="number">1.0</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">c</span>=<span class="keyword">a</span>+<span class="keyword">b</span></div><div class="line">&gt;&gt;&gt; with <span class="keyword">tf</span>.Session() <span class="keyword">as</span> ses<span class="variable">s:</span></div><div class="line">...     <span class="keyword">print</span>(sess.run(<span class="keyword">c</span>))</div><div class="line"></div><div class="line">#占位符：具体计算时再传入数据</div><div class="line"><span class="keyword">a</span>=<span class="keyword">tf</span>.placeholder(<span class="keyword">tf</span>.int32,[<span class="number">3</span>,])#定义一个向量占位符</div><div class="line">with <span class="keyword">tf</span>.Session() <span class="keyword">as</span> ses<span class="variable">s:</span></div><div class="line"><span class="keyword">print</span>(sess.run(<span class="keyword">a</span>,feed_dict=&#123;<span class="variable">a:</span>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]&#125;))</div></pre></td></tr></table></figure>
+</li>
+<li><p>变量tf.Variable()</p>
+</li>
+</ol>
+<ul>
+<li><p>创建：用一个张量作为初始值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a=tf.Variable([[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">12</span>]])<span class="comment">#初始值为[[2,3],[1,2]]</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">init=tf.global_variables_initializer()<span class="comment">#初始化算子</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">sess.run(init)<span class="comment">#run的参数是一个算子</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>赋值算子 assign()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a=tf.Variable([<span class="number">1</span>,<span class="number">1</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b=tf.Variable([<span class="number">2</span>,<span class="number">2</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>assign_op=a.assign(b)<span class="comment">#赋值算子</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>init=tf.global_variables_initializer()<span class="comment">#初始化算子</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line"><span class="meta">... </span>    sess.run(init)</div><div class="line"><span class="meta">... </span>    print(sess.run(a))</div><div class="line"><span class="meta">... </span>    sess.run(assign_op)</div><div class="line"><span class="meta">... </span>    print(sess.run(a))</div><div class="line"><span class="meta">... </span></div><div class="line">[<span class="number">1</span> <span class="number">1</span>]</div><div class="line">array([<span class="number">2</span>, <span class="number">2</span>])</div><div class="line">[<span class="number">2</span> <span class="number">2</span>]</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>自动梯度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x=tf.constant([<span class="number">2.0</span>,<span class="number">1.0</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y=tf.constant([<span class="number">1.0</span>,<span class="number">2.0</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>z=x*y+x*x</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dx,dy=tf.gradients(z,[x,y])<span class="comment">#求Z关于x,y的偏导数</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line"><span class="meta">... </span>    dx_v,dy_v=sess.run([dx,dy])</div><div class="line"><span class="meta">... </span>    print(dx_v)</div><div class="line"><span class="meta">... </span>    print(dy_v)</div></pre></td></tr></table></figure>
+</li>
+<li><p>优化器<br>大多数机器学习的任务就是<strong>最小化损失</strong>，在损失定义的情况下，后面的工作就交给优化器了。因为深度学习常见的是基于梯度的优化，也就是说，优化器最后其实是各种对于梯度下降算法的优化。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">class tf.train.GradientDescentOptimizer</div><div class="line">这个类是实现梯度下降算法的优化器，构造函数主要设置一下学习率。</div><div class="line">__init__(learning_rate, use_locking=False,name=’GradientDescent’)</div><div class="line"></div><div class="line">作用：创建一个梯度下降优化器对象 </div><div class="line">参数： </div><div class="line">learning_rate: A Tensor or a floating point value. 要使用的学习率 </div><div class="line">use_locking: 要是True的话，就对于更新操作（<span class="keyword">update</span> operations.）使用锁 </div><div class="line"><span class="keyword">name</span>: 名字，可选，默认是”GradientDescent”.</div><div class="line">compute_gradients(loss,var_list=<span class="keyword">None</span>,gate_gradients=GATE_OP,aggregation_method=<span class="keyword">None</span>,colocate_gradients_with_ops=<span class="literal">False</span>,grad_loss=<span class="keyword">None</span>)</div><div class="line"></div><div class="line">作用：对于在变量列表（var_list）中的变量计算对于损失函数的梯度,这个函数返回一个（梯度，变量）对的列表，其中梯度就是相对应变量的梯度了。这是minimize()函数的第一个部分， </div><div class="line">参数： </div><div class="line">loss: 待减小的值 </div><div class="line">var_list: 默认是在GraphKey.TRAINABLE_VARIABLES. </div><div class="line">gate_gradients: How <span class="keyword">to</span> gate the computation <span class="keyword">of</span> gradients. Can be GATE_NONE, GATE_OP, <span class="keyword">or</span> GATE_GRAPH. </div><div class="line">aggregation_method: Specifies the method used <span class="keyword">to</span> combine gradient terms. Valid <span class="keyword">values</span> <span class="keyword">are</span> defined <span class="keyword">in</span> the <span class="keyword">class</span> AggregationMethod. </div><div class="line">colocate_gradients_with_ops: <span class="keyword">If</span> <span class="literal">True</span>, try colocating gradients <span class="keyword">with</span> the <span class="keyword">corresponding</span> op. </div><div class="line">grad_loss: Optional. A Tensor holding the gradient computed <span class="keyword">for</span> loss.</div><div class="line">apply_gradients(grads_and_vars,global_step=<span class="keyword">None</span>,<span class="keyword">name</span>=<span class="keyword">None</span>)</div><div class="line"></div><div class="line">作用：把梯度“应用”（<span class="keyword">Apply</span>）到变量上面去。其实就是按照梯度下降的方式加到上面去。这是minimize（）函数的第二个步骤。 返回一个应用的操作。 </div><div class="line">参数: </div><div class="line">grads_and_vars: compute_gradients()函数返回的(gradient, <span class="keyword">variable</span>)对的列表 </div><div class="line">global_step: Optional <span class="keyword">Variable</span> <span class="keyword">to</span> <span class="keyword">increment</span> <span class="keyword">by</span> one <span class="keyword">after</span> the <span class="keyword">variables</span> have been updated. </div><div class="line"><span class="keyword">name</span>: 可选，名字</div><div class="line">get_name()</div><div class="line"></div><div class="line">minimize(loss,global_step=<span class="keyword">None</span>,var_list=<span class="keyword">None</span>,gate_gradients=GATE_OP,aggregation_method=<span class="keyword">None</span>,colocate_gradients_with_ops=<span class="literal">False</span>,<span class="keyword">name</span>=<span class="keyword">None</span>,grad_loss=<span class="keyword">None</span>)</div><div class="line"></div><div class="line">作用：非常常用的一个函数 </div><div class="line">通过更新var_list来减小loss，这个函数就是前面compute_gradients() 和apply_gradients().的结合</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>TensorFlow训练线性回归模型。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"><span class="meta">#创建100个数据x,y,y=x*0.1+0.3</span></div><div class="line">x_data=np.<span class="built_in">random</span>.rand(<span class="number">100</span>).astype(np.float32)</div><div class="line">y_data=x_data*<span class="number">0.1</span>+<span class="number">0.3</span></div><div class="line"></div><div class="line"><span class="meta">#尝试估计W和b使它们满足y_data=W*x_data+b</span></div><div class="line">W=tf.Variable(tf.random_uniform([<span class="number">1</span>],<span class="number">-1.0</span>,<span class="number">1.0</span>))</div><div class="line">b=tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">y=W*x_data+b</div><div class="line"></div><div class="line"><span class="meta">#采用最小均方误差估计</span></div><div class="line">loss=tf.reduce_mean(tf.square(y-y_data))<span class="meta">#loss为优化目标函数，有点像lingo里的</span></div><div class="line">optimizer=tf.train.GradientDescentOptimizer(<span class="number">0.5</span>)<span class="meta">#创建一个梯度下降优化器，学习率设置为0.5</span></div><div class="line">train=optimizer.minimize(loss)<span class="meta">#最小化均方误差</span></div><div class="line"></div><div class="line"><span class="meta">#打开会话，初始化变量</span></div><div class="line">init=tf.global_variables_initializer()</div><div class="line">sess=tf.Session()</div><div class="line">sess.<span class="built_in">run</span>(init)</div><div class="line"></div><div class="line"><span class="meta">#开始训练</span></div><div class="line"><span class="keyword">for</span> <span class="keyword">step</span> <span class="keyword">in</span> range(<span class="number">201</span>):</div><div class="line">    sess.<span class="built_in">run</span>(train)</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">step</span>%<span class="number">20</span>==<span class="number">0</span>):</div><div class="line">        print(<span class="keyword">step</span>,sess.<span class="built_in">run</span>(W),sess.<span class="built_in">run</span>(b))</div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深度学习-TensorFlow/">深度学习 TensorFlow</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/12/05/TensorFlow快速入门/" data-title="TensorFlow快速入门 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/12/10/利用TensorFlow搭建神经网络/" title="利用TensorFlow搭建神经网络">
+  <strong>上一篇：</strong><br/>
+  <span>
+  利用TensorFlow搭建神经网络</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/11/19/母函数法/"  title="母函数法">
+ <strong>下一篇：</strong><br/> 
+ <span>母函数法
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例"><span class="toc-number">2.</span> <span class="toc-text">示例</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

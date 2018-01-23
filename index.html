@@ -2,7 +2,7 @@
  <!DOCTYPE HTML>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
     <title>我是小韩同学</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -24,11 +24,11 @@
     
     
     
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
   <body>
-    <header>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
       
 <div>
 		
@@ -67,6 +67,356 @@
     </header>
     <div id="container">
       <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/20/强化学习入门(一)/" title="强化学习入门(一)" itemprop="url">强化学习入门(一)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-20T14:32:03.000Z" itemprop="datePublished"> 发表于 2017-12-20</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>书籍：机器学习 周志华<br>视频：<a href="https://www.youtube.com/watch?v=sGuiWX07sKw" target="_blank" rel="external">RL Course by David Silver</a><br>博客：<a href="http://www.algorithmdog.com/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B" target="_blank" rel="external">AlgorithmDog</a></p>
+<h3 id="Agent-amp-Enviroment"><a href="#Agent-amp-Enviroment" class="headerlink" title="Agent &amp; Enviroment"></a>Agent &amp; Enviroment</h3><p><img src="http://oc9b84kcd.bkt.clouddn.com/Agent%20and%20Env.png" alt=""><br><strong>Agent</strong>  </p>
+<ul>
+<li><p>Policy（策略）：它根据当前看到的observation来决定action，是从state到action的映射。有两种表达形式，一种是Deterministic policy（确定策略）即a=π(s)a=π(s)，在某种状态s下，一定会执行某个动作a。一种是Stochastic policy（随机策略）即π(a|s)=p[At=a|St=s]π(a|s)=p[At=a|St=s]，它是在某种状态下执行某个动作的概率。   </p>
+</li>
+<li><p>Value function（价值函数）：它预测了当前状态下未来可能获得的reward的期望。Vπ(s)=Eπ[Rt+1+rRt+2+…|St=s]Vπ(s)=Eπ[Rt+1+rRt+2+…|St=s]。用于衡量当前状态的好坏。</p>
+</li>
+<li>Model（模型）：预测environment下一步会做出什么样的改变，从而预测agent接收到的状态或者reward是什么。因而有两种类型的model，一种是预测下一个state的transition  model即Pass′=p[St+1=s′|St=s,At=a]Pss′a=p[St+1=s′|St=s,At=a]，一种是预测下一次reward的reward model即Ras=E[Rt+1|St=s,At=a]Rsa=E[Rt+1|St=s,At=a]</li>
+</ul>
+<h3 id="马尔可夫决策-MDP"><a href="#马尔可夫决策-MDP" class="headerlink" title="马尔可夫决策 MDP"></a>马尔可夫决策 MDP</h3><blockquote>
+<p>机器处于环境E中，状态空间为X,其中每个状态x是机器感知到的环境的描述，如种瓜任务上就是当前瓜苗长势的描述；机器能采取的动作构成动作空间A；机器采取的动作作用的当前状态上，会使当前环境按状态转移函数P转移到另一状态，转移过程中环境会根据潜在的奖赏函数R反馈给机器一个奖赏。综合起来,强化学习任务对应了一个四元组E=<x,a,p,r>.机器要做的是通过在环境中不断尝试而学得一个策略(policy)phi,根据这个策略，在状态x下就能得知要执行的动作a=phi(x)。</x,a,p,r></p>
+</blockquote>
+<p><img src="http://oc9b84kcd.bkt.clouddn.com/MDP.png" alt=""></p>
+<h3 id="策略和价值"><a href="#策略和价值" class="headerlink" title="策略和价值"></a>策略和价值</h3><p><strong>策略</strong>：状态s下执行动作a的概率<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\pi(a|s) = P[A_t=a|S_t=s]</div></pre></td></tr></table></figure></p>
+<p><strong>奖励</strong>：当前状态下执行动作a获得的奖励的期望<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">R_s^a= E[R_&#123;t+1&#125; | S_t = s, A_t = a]</div></pre></td></tr></table></figure></p>
+<p><strong>回报</strong>：回报是从t+1时刻开始的累积折扣奖励<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">G_t = R_&#123;t+1&#125;+\gamma R_&#123;t+2&#125;+…=\sum_&#123;k=0&#125;^&#123;\infty&#125;\gamma^kR_&#123;t+k+1&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>策略</strong>：是agent的行为函数，只跟状态有关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\pi(a|s) = \mathbb P[A_t = a | S_t = s]</div></pre></td></tr></table></figure></p>
+<p><strong>状态值函数</strong>:状态值函数vπ(s)是从状态s出发，按照策略π采取行为得到的期望回报<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">v_\pi(s) = \mathbb E_\pi[G_t | S_t = s]</div></pre></td></tr></table></figure></p>
+<p><strong>行为值函数</strong>:行为值函数qπ(s,a)是从状态s出发，采取行为a后，然后按照策略π采取行为得到的期望回报<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">q_\pi(s, a) = \mathbb E_\pi[G_t | S_t = s, A_t = a]</div></pre></td></tr></table></figure></p>
+<h3 id="Bellman期望方程"><a href="#Bellman期望方程" class="headerlink" title="Bellman期望方程"></a>Bellman期望方程</h3><p>Bellman期望方程其实就是vπ(s)和qπ(s,a)自身以及相互之间的递推关系。<br>按照状态值函数和行为值函数定义可以得到如下递推式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">v_\pi(s)= \mathbb E_\pi[R_&#123;t+1&#125;+\gamma G_&#123;t+1&#125; |S_t = s]  </div><div class="line"></div><div class="line">= \mathbb E_\pi[R_&#123;t+1&#125;+\gamma v_\pi(S_&#123;t+1&#125;) | S_t = s]</div><div class="line"></div><div class="line">q_\pi(s, a)= \mathbb E_\pi[G_t | S_t = s, A_t = a] </div><div class="line"></div><div class="line">= \mathbb E_\pi[R_&#123;t+1&#125; +\gamma q_\pi(S_&#123;t+1&#125;, A_&#123;t+1&#125;) | S_t = s, A_t = a]</div></pre></td></tr></table></figure></p>
+<p>vπ(s)与qπ(s,a)之间的关系:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">v_\pi(s) = \sum_&#123;a\in &#123;A&#125;&#125; \pi(a|s)q_&#123;\pi&#125;(s, a)</div><div class="line"></div><div class="line">q_\pi(s,a) = &#123;R&#125;_s^a + \gamma \sum_&#123;s&apos; \in &#123;S&#125;&#125; &#123;P&#125;_&#123;ss&apos;&#125;^a v_\pi(s&apos;)</div></pre></td></tr></table></figure></p>
+<p>递推方程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">v_\pi(s) = \sum_&#123;a&#125; \pi(a|s) \left[ &#123;R&#125;_s^a + \gamma \sum_&#123;s&apos;&#125; &#123; P&#125;_&#123;ss&apos;&#125;^a v_\pi(s&apos;) \right]</div><div class="line"></div><div class="line">q_\pi(s, a) = &#123;R&#125;_s^a + \gamma \sum_&#123;s&apos;&#125;&#123;P&#125;_&#123;ss&apos;&#125;^a \sum_&#123;a&apos;&#125;\pi(a&apos;|s&apos;)q_\pi(s&apos;, a&apos;)</div></pre></td></tr></table></figure></p>
+<p>这两个方程的物理意义是：  </p>
+<ul>
+<li>当前状态下能获得的回报的期望等于当前状态下采取动作a的概率乘上采取动作a所获得的的奖励与采取状态a引起的状态转移获得的累积折扣期望回报之和。</li>
+<li>当前状态下采取动作a获得的回报的期望等于采取动作a所获得的奖励与采取动作a引起的状态转移所获得的累积折扣期望回报之和。<h3 id="探索与利用-Exploration-amp-Exploitation"><a href="#探索与利用-Exploration-amp-Exploitation" class="headerlink" title="探索与利用 Exploration &amp; Exploitation"></a>探索与利用 Exploration &amp; Exploitation</h3>探索：放弃一些已知的reward信息，尝试去做一些新的选择。<br>利用： 从已知reward信息中，选择一个reward最大的。<br><strong>强化学习是在探索与利用之间达到折中。</strong>  <h4 id="ε-贪心"><a href="#ε-贪心" class="headerlink" title="ε-贪心"></a>ε-贪心</h4>ε-贪心是基于一个概率来对探索和利用进行折中：每次尝试时，以ε概率进行探索，以1-ε概率进行利用。<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4>以一定概率进行选取，若某些动作回报高于其他，则被选取的概率也会更大。</li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/强化学习/">强化学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/18/利用TensorFlow搭建CNN/" title="利用TensorFlow搭建CNN" itemprop="url">利用TensorFlow搭建CNN</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-18T13:45:03.000Z" itemprop="datePublished"> 发表于 2017-12-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p><a href="http://wiki.jikexueyuan.com/project/tensorflow-zh/tutorials/mnist_beginners.html" target="_blank" rel="external">官方教程中文</a></p>
+<h3 id="重要函数"><a href="#重要函数" class="headerlink" title="重要函数"></a>重要函数</h3><ol>
+<li>tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None)<br>返回一个Tensor，这个输出，就是我们常说的feature map。</li>
+</ol>
+<ul>
+<li><strong>input</strong><br>需要做卷积的输入图像，Tensor类型，具有[batch,in_height,in_width,in_channels]这样的shape，具体含义是[训练时一个batch的数量，图片的高度，图片的宽度，图像的通道数]，注意这是一个4维的Tensor，要求类型为float32和float64之一。</li>
+<li><strong>filter</strong><br>相当于CNN中的卷积核，它要求是一个Tensor，具有[filter_height,filter_width,in_channels,out_channels]这样的shape,具体含义是[卷积核的高度，卷积核的宽度，图像通道数，卷积核个数]，要求类型与input相同，其中input_channels与input相同。</li>
+<li><p><strong>strides</strong><br>卷积时图像在每一维的步长，长度是4，对于图像来说，一般为[1,stride,stride,1]</p>
+</li>
+<li><p><strong>padding</strong><br>代表填充方式，参数只有两种，SAME和VALID，SAME比VALID的填充方式多了一列，比如一个3<em>3图像用2</em>2的滤波器进行卷积，当步长设为2的时候，会缺少一列，则进行第二次卷积的时候，VALID发现余下的窗口不足2*2会直接把第三列去掉，SAME则会填充一列，填充值为0。</p>
+</li>
+<li><strong>use_cudnn_on_gpu</strong><br>是否开启cudnn加速，默认为True</li>
+</ul>
+<ol>
+<li>tf.nn.max_pool(value, ksize, strides, padding, name=None)<br>返回一个池化后的map,最大池化就是取池化窗口的最大值。</li>
+</ol>
+<ul>
+<li>value: 池化的输入，一般池化层接在卷积层后面，所以输入通常为feature map。</li>
+<li>ksize:池化窗口的大小，参数为四维向量，通常取[1,height,width,1]。</li>
+<li><p><strong>strides</strong><br>卷积时图像在每一维的步长，长度是4，对于图像来说，一般为[1,stride,stride,1]</p>
+</li>
+<li><p><strong>padding</strong><br>代表填充方式，参数只有两种，SAME和VALID，SAME比VALID的填充方式多了一列，比如一个3<em>3图像用2</em>2的滤波器进行卷积，当步长设为2的时候，会缺少一列，则进行第二次卷积的时候，VALID发现余下的窗口不足2*2会直接把第三列去掉，SAME则会填充一列，填充值为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</div><div class="line"><span class="comment">#获取数据集</span></div><div class="line">mnist=input_data.read_data_sets(<span class="string">'MNIST_data'</span>,one_hot=<span class="keyword">True</span>)<span class="comment">#采用独热码</span></div><div class="line">x=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">784</span>])</div><div class="line">y_=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">10</span>]);</div><div class="line"><span class="comment">#定义Weight变量，输入shape,返回变量的参数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">weight_variable</span><span class="params">(shape)</span>:</span></div><div class="line">    initial=tf.truncated_normal(shape,stddev=<span class="number">0.1</span>)<span class="comment">#生成的值服从具有指定平均值和标准偏差的正态分布，如果生成的值大于平均值2个标准偏差的值则丢弃重新选择。</span></div><div class="line">    <span class="keyword">return</span> tf.Variable(initial)</div><div class="line"><span class="comment">#定义bias变量，输入shape，返回变量的一些参数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">bias_variable</span><span class="params">(shape)</span>:</span></div><div class="line">    initial=tf.constant(<span class="number">0.1</span>,shape=shape)</div><div class="line">    <span class="keyword">return</span> tf.Variable(initial)</div><div class="line"><span class="comment">#定义卷积</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv2d</span><span class="params">(x,W)</span>:</span></div><div class="line">    <span class="keyword">return</span> tf.nn.conv2d(x,W,strides=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>],padding=<span class="string">'SAME'</span>)</div><div class="line"><span class="comment"># 定义池化</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">max_pool</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">return</span> tf.nn.max_pool(x,ksize=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],strides=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],padding=<span class="string">'SAME'</span>)</div><div class="line"></div><div class="line"><span class="comment">#第一卷积层</span></div><div class="line">x_image=tf.reshape(x,[<span class="number">-1</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>])<span class="comment">#把输入变成4维的，其中-1表示该维度数量让python自己算</span></div><div class="line"><span class="comment">#定义卷积核</span></div><div class="line">W_conv1=weight_variable([<span class="number">5</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">32</span>])<span class="comment">##卷积核大小为5*5,输入通道数为1，输出通道数为32</span></div><div class="line">b_conv1=bias_variable([<span class="number">32</span>])</div><div class="line"><span class="comment">#卷积-&gt;线性修正-&gt;池化</span></div><div class="line">h_conv1=tf.nn.relu(conv2d(x_image,W_conv1)+b_conv1)</div><div class="line">h_pool1=max_pool(h_conv1)</div><div class="line"></div><div class="line"><span class="comment">#第二卷积层</span></div><div class="line"><span class="comment">#卷积核</span></div><div class="line">W_conv2=weight_variable([<span class="number">5</span>,<span class="number">5</span>,<span class="number">32</span>,<span class="number">64</span>])<span class="comment">#卷积核大小为5*5，输入通道数为第一层输出通道数32</span></div><div class="line">b_conv2=bias_variable([<span class="number">64</span>])</div><div class="line"><span class="comment">#卷积-&gt;线性修正-&gt;池化</span></div><div class="line">h_conv2=tf.nn.relu(conv2d(h_pool1,W_conv2)+b_conv2)</div><div class="line">h_pool2=max_pool(h_conv2)</div><div class="line"></div><div class="line"><span class="comment">#把特征图展平成向量，在这里是h_pool2,7*7*64，进入全连接层</span></div><div class="line">W_fc1=weight_variable([<span class="number">7</span>*<span class="number">7</span>*<span class="number">64</span>,<span class="number">1024</span>])</div><div class="line">b_fc1=bias_variable([<span class="number">1024</span>])</div><div class="line">h_pool2_flat=tf.reshape(h_pool2,[<span class="number">-1</span>,<span class="number">7</span>*<span class="number">7</span>*<span class="number">64</span>])</div><div class="line">h_fc1=tf.nn.relu(tf.matmul(h_pool2_flat,W_fc1)+b_fc1)</div><div class="line"></div><div class="line"><span class="comment">#dropout:防止过拟合，在输出层前应用随机失活</span></div><div class="line">keep_prob=tf.placeholder(tf.float32)</div><div class="line">h_fc1_drop=tf.nn.dropout(h_fc1,keep_prob)</div><div class="line"></div><div class="line"><span class="comment">#输出层</span></div><div class="line">W_fc2=weight_variable([<span class="number">1024</span>,<span class="number">10</span>])</div><div class="line">b_fc2=bias_variable([<span class="number">10</span>])</div><div class="line">y_conv=tf.matmul(h_fc1_drop,W_fc2)+b_fc2</div><div class="line"></div><div class="line"><span class="comment">#训练和评估</span></div><div class="line">cross_entropy = tf.reduce_mean(</div><div class="line">    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y_conv))</div><div class="line">train_step = tf.train.AdamOptimizer(<span class="number">1e-4</span>).minimize(cross_entropy)</div><div class="line">correct_prediction = tf.equal(tf.argmax(y_conv, <span class="number">1</span>), tf.argmax(y_, <span class="number">1</span>))</div><div class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">  sess.run(tf.global_variables_initializer())</div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20000</span>):</div><div class="line">    batch = mnist.train.next_batch(<span class="number">50</span>)</div><div class="line">    <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:</div><div class="line">      train_accuracy = accuracy.eval(feed_dict=&#123;</div><div class="line">          x: batch[<span class="number">0</span>], y_: batch[<span class="number">1</span>], keep_prob: <span class="number">1.0</span>&#125;)</div><div class="line">      print(<span class="string">'step %d, training accuracy %g'</span> % (i, train_accuracy))</div><div class="line">    train_step.run(feed_dict=&#123;x: batch[<span class="number">0</span>], y_: batch[<span class="number">1</span>], keep_prob: <span class="number">0.5</span>&#125;)</div><div class="line"></div><div class="line">  print(<span class="string">'test accuracy %g'</span> % accuracy.eval(feed_dict=&#123;</div><div class="line">      x: mnist.test.images, y_: mnist.test.labels, keep_prob: <span class="number">1.0</span>&#125;))</div></pre></td></tr></table></figure></li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CNN-TensorFlow/">CNN TensorFlow</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/14/MNIST机器学习入门/" title="MNIST机器学习入门" itemprop="url">MNIST机器学习入门</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-14T15:17:03.000Z" itemprop="datePublished"> 发表于 2017-12-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p><a href="http://wiki.jikexueyuan.com/project/tensorflow-zh/tutorials/mnist_beginners.html" target="_blank" rel="external">官方教程中文</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> tensorflow.examples.tutorials.mnist.input_data <span class="keyword">as</span> input_data</div><div class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data/"</span>, one_hot=<span class="keyword">True</span>)</div><div class="line"><span class="string">'''</span></div><div class="line">输入占位符</div><div class="line">x是一个占位符，我们在TensorFlow运行计算时输入这个值。我们希望能够输入任意数量的MNIST图像，每一张展平成784维向量。我们用2维</div><div class="line">浮点数张量来表示这些图，这个张量的形状是[None,784],None表示此张量的第一个维度可以是任何长度的。</div><div class="line">'''</div><div class="line">x=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">784</span>])</div><div class="line">y_real=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">10</span>])</div><div class="line"><span class="comment">#权重及偏差</span></div><div class="line">W=tf.Variable(tf.zeros([<span class="number">784</span>,<span class="number">10</span>]))</div><div class="line">b=tf.Variable(tf.zeros([<span class="number">10</span>]))</div><div class="line">y=tf.nn.softmax(tf.matmul(x,W)+b)</div><div class="line"></div><div class="line"><span class="comment">#交叉熵</span></div><div class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_real* tf.log(y), reduction_indices=[<span class="number">1</span>]))</div><div class="line"></div><div class="line"><span class="comment">#优化目标</span></div><div class="line">train_step=tf.train.GradientDescentOptimizer(<span class="number">0.5</span>).minimize(cross_entropy)</div><div class="line"></div><div class="line"><span class="comment">#初始化</span></div><div class="line">init=tf.global_variables_initializer()</div><div class="line">sess=tf.Session()</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"><span class="comment">#训练</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</div><div class="line">    batch_xs,batch_ys=mnist.train.next_batch(<span class="number">100</span>)</div><div class="line">    sess.run(train_step,feed_dict=&#123;x:batch_xs,y_real:batch_ys&#125;)</div><div class="line">    <span class="keyword">if</span> i%<span class="number">50</span>==<span class="number">0</span>:</div><div class="line">        correct_prediction = tf.equal(tf.argmax(y,<span class="number">1</span>), tf.argmax(y_real,<span class="number">1</span>))<span class="comment">#tf.argmax(tensor,axis)返回tensor在某个维度上最大值的下标，1表示按行</span></div><div class="line">        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</div><div class="line">        print(sess.run(accuracy, feed_dict=&#123;x: mnist.test.images, y_real: mnist.test.labels&#125;))</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MNIST-TensorFlow/">MNIST TensorFlow</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/10/利用TensorFlow搭建神经网络/" title="利用TensorFlow搭建神经网络" itemprop="url">利用TensorFlow搭建神经网络</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-10T15:17:03.000Z" itemprop="datePublished"> 发表于 2017-12-10</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><p>相关理论可以看周志华的《机器学习》,重点在于BP算法的推导。代码参照<br><a href="https://www.youtube.com/watch?v=RSRkp8VAavQ" target="_blank" rel="external">视频</a>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment">#添加层函数,返回该层输出</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_layer</span><span class="params">(inputs,in_size,out_size,activation_function=None)</span>:</span></div><div class="line">    Weights=tf.Variable(tf.random_normal([in_size,out_size]))<span class="comment">#权重变量</span></div><div class="line">    biases=tf.Variable(tf.zeros([<span class="number">1</span>,out_size]))<span class="comment">#阈值变量</span></div><div class="line">    Wx_plus_b=tf.matmul(inputs,Weights)+biases</div><div class="line">    <span class="keyword">if</span> activation_function <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        outputs=Wx_plus_b</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        outputs=activation_function(Wx_plus_b)</div><div class="line">    <span class="keyword">return</span> outputs</div><div class="line"></div><div class="line"><span class="comment">#创建一些数据</span></div><div class="line">x_data=np.linspace(<span class="number">-1</span>,<span class="number">1</span>,<span class="number">300</span>)[:,np.newaxis]<span class="comment">#x_data是[-1,1]之间的等差数列</span></div><div class="line">noise=np.random.normal(<span class="number">0</span>,<span class="number">0.05</span>,x_data.shape)<span class="comment">#均值为0，标准差为0.05的噪声</span></div><div class="line">y_data=np.square(x_data)<span class="number">-0.5</span>+noise<span class="comment">#y=x^2-0.5+n</span></div><div class="line"></div><div class="line"><span class="comment"># 定义占位符</span></div><div class="line">xs=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">1</span>])</div><div class="line">ys=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">1</span>])</div><div class="line"><span class="comment">#添加隐藏层</span></div><div class="line">ll=add_layer(xs,<span class="number">1</span>,<span class="number">10</span>,activation_function=tf.nn.relu)</div><div class="line"><span class="comment">#添加输出层</span></div><div class="line">prediction=add_layer(ll,<span class="number">10</span>,<span class="number">1</span>,activation_function=<span class="keyword">None</span>)</div><div class="line"></div><div class="line"><span class="comment">#定义优化目标和优化器</span></div><div class="line">loss=tf.reduce_mean(tf.reduce_sum(tf.square(ys-prediction),reduction_indices=[<span class="number">1</span>]))<span class="comment">#降低累积均方误差</span></div><div class="line">train_step=tf.train.GradientDescentOptimizer(<span class="number">0.1</span>).minimize(loss)</div><div class="line"></div><div class="line"><span class="comment">#初始化所有变量</span></div><div class="line">init=tf.initialize_all_variables()</div><div class="line">sess=tf.Session()</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"><span class="comment">#绘制真实曲线</span></div><div class="line">fig=plt.figure()</div><div class="line">ax=fig.add_subplot(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</div><div class="line">ax.scatter(x_data,y_data)</div><div class="line">plt.ion()</div><div class="line">plt.show()</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</div><div class="line">    <span class="comment">#训练</span></div><div class="line">    sess.run(train_step,feed_dict=&#123;xs:x_data,ys:y_data&#125;)</div><div class="line">    <span class="keyword">if</span> i%<span class="number">50</span>==<span class="number">0</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            ax.lines.remove(lines[<span class="number">0</span>])</div><div class="line">        <span class="keyword">except</span> Exception:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        prediction_value = sess.run(prediction, feed_dict=&#123;xs: x_data&#125;)</div><div class="line">        <span class="comment"># plot the prediction</span></div><div class="line">        lines = ax.plot(x_data, prediction_value, <span class="string">'r-'</span>, lw=<span class="number">5</span>)</div><div class="line">        plt.pause(<span class="number">0.1</span>)</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/神经网络-TensorFlow/">神经网络 TensorFlow</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/05/TensorFlow快速入门/" title="TensorFlow快速入门" itemprop="url">TensorFlow快速入门</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-05T12:17:03.000Z" itemprop="datePublished"> 发表于 2017-12-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ol>
+<li><p>Tensor张量：类似于Numpy中的ndarray<br>rank:维度数量<br>shape:每个维度的大小</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">import tensorflow <span class="keyword">as</span> <span class="keyword">tf</span></div><div class="line">&gt;&gt;&gt; <span class="keyword">a</span>=<span class="keyword">tf</span>.constant(<span class="number">5</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">b</span>=<span class="keyword">tf</span>.constant(<span class="number">3</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">c</span>=<span class="keyword">tf</span>.multiply(<span class="keyword">a</span>,<span class="keyword">b</span>)</div><div class="line">&gt;&gt;&gt; d=<span class="keyword">tf</span>.<span class="built_in">add</span>(<span class="keyword">a</span>,<span class="keyword">b</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">e</span>=<span class="keyword">tf</span>.<span class="built_in">add</span>(<span class="keyword">c</span>,d)</div><div class="line">&gt;&gt;&gt; sess=<span class="keyword">tf</span>.Session()</div><div class="line">&gt;&gt;&gt; <span class="keyword">print</span>(sess.run(<span class="keyword">e</span>))</div><div class="line"><span class="number">23</span></div><div class="line">&gt;&gt;&gt; sess.<span class="keyword">close</span>()</div><div class="line"></div><div class="line">#常用张量</div><div class="line"><span class="keyword">a</span>=<span class="keyword">tf</span>.zeros([<span class="number">2</span>,<span class="number">3</span>],<span class="keyword">tf</span>.int32)</div><div class="line"><span class="keyword">b</span>=<span class="keyword">tf</span>.ones([<span class="number">2</span>,<span class="number">3</span>],<span class="keyword">tf</span>.int32)</div><div class="line"></div><div class="line">#随机张量</div><div class="line">&gt;&gt;&gt; <span class="keyword">a</span>=<span class="keyword">tf</span>.random_normal([<span class="number">2</span>,<span class="number">2</span>],mean=<span class="number">0.0</span>,stddev=<span class="number">1.0</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">b</span>=<span class="keyword">tf</span>.random_uniform([<span class="number">2</span>,<span class="number">2</span>],minval=<span class="number">0.0</span>,maxval=<span class="number">1.0</span>)</div><div class="line">&gt;&gt;&gt; <span class="keyword">c</span>=<span class="keyword">a</span>+<span class="keyword">b</span></div><div class="line">&gt;&gt;&gt; with <span class="keyword">tf</span>.Session() <span class="keyword">as</span> ses<span class="variable">s:</span></div><div class="line">...     <span class="keyword">print</span>(sess.run(<span class="keyword">c</span>))</div><div class="line"></div><div class="line">#占位符：具体计算时再传入数据</div><div class="line"><span class="keyword">a</span>=<span class="keyword">tf</span>.placeholder(<span class="keyword">tf</span>.int32,[<span class="number">3</span>,])#定义一个向量占位符</div><div class="line">with <span class="keyword">tf</span>.Session() <span class="keyword">as</span> ses<span class="variable">s:</span></div><div class="line"><span class="keyword">print</span>(sess.run(<span class="keyword">a</span>,feed_dict=&#123;<span class="variable">a:</span>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]&#125;))</div></pre></td></tr></table></figure>
+</li>
+<li><p>变量tf.Variable()</p>
+</li>
+</ol>
+<ul>
+<li><p>创建：用一个张量作为初始值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a=tf.Variable([[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">12</span>]])<span class="comment">#初始值为[[2,3],[1,2]]</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">init=tf.global_variables_initializer()<span class="comment">#初始化算子</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">sess.run(init)<span class="comment">#run的参数是一个算子</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>赋值算子 assign()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a=tf.Variable([<span class="number">1</span>,<span class="number">1</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b=tf.Variable([<span class="number">2</span>,<span class="number">2</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>assign_op=a.assign(b)<span class="comment">#赋值算子</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>init=tf.global_variables_initializer()<span class="comment">#初始化算子</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line"><span class="meta">... </span>    sess.run(init)</div><div class="line"><span class="meta">... </span>    print(sess.run(a))</div><div class="line"><span class="meta">... </span>    sess.run(assign_op)</div><div class="line"><span class="meta">... </span>    print(sess.run(a))</div><div class="line"><span class="meta">... </span></div><div class="line">[<span class="number">1</span> <span class="number">1</span>]</div><div class="line">array([<span class="number">2</span>, <span class="number">2</span>])</div><div class="line">[<span class="number">2</span> <span class="number">2</span>]</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>自动梯度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x=tf.constant([<span class="number">2.0</span>,<span class="number">1.0</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y=tf.constant([<span class="number">1.0</span>,<span class="number">2.0</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>z=x*y+x*x</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dx,dy=tf.gradients(z,[x,y])<span class="comment">#求Z关于x,y的偏导数</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line"><span class="meta">... </span>    dx_v,dy_v=sess.run([dx,dy])</div><div class="line"><span class="meta">... </span>    print(dx_v)</div><div class="line"><span class="meta">... </span>    print(dy_v)</div></pre></td></tr></table></figure>
+</li>
+<li><p>优化器<br>大多数机器学习的任务就是<strong>最小化损失</strong>，在损失定义的情况下，后面的工作就交给优化器了。因为深度学习常见的是基于梯度的优化，也就是说，优化器最后其实是各种对于梯度下降算法的优化。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">class tf.train.GradientDescentOptimizer</div><div class="line">这个类是实现梯度下降算法的优化器，构造函数主要设置一下学习率。</div><div class="line">__init__(learning_rate, use_locking=False,name=’GradientDescent’)</div><div class="line"></div><div class="line">作用：创建一个梯度下降优化器对象 </div><div class="line">参数： </div><div class="line">learning_rate: A Tensor or a floating point value. 要使用的学习率 </div><div class="line">use_locking: 要是True的话，就对于更新操作（<span class="keyword">update</span> operations.）使用锁 </div><div class="line"><span class="keyword">name</span>: 名字，可选，默认是”GradientDescent”.</div><div class="line">compute_gradients(loss,var_list=<span class="keyword">None</span>,gate_gradients=GATE_OP,aggregation_method=<span class="keyword">None</span>,colocate_gradients_with_ops=<span class="literal">False</span>,grad_loss=<span class="keyword">None</span>)</div><div class="line"></div><div class="line">作用：对于在变量列表（var_list）中的变量计算对于损失函数的梯度,这个函数返回一个（梯度，变量）对的列表，其中梯度就是相对应变量的梯度了。这是minimize()函数的第一个部分， </div><div class="line">参数： </div><div class="line">loss: 待减小的值 </div><div class="line">var_list: 默认是在GraphKey.TRAINABLE_VARIABLES. </div><div class="line">gate_gradients: How <span class="keyword">to</span> gate the computation <span class="keyword">of</span> gradients. Can be GATE_NONE, GATE_OP, <span class="keyword">or</span> GATE_GRAPH. </div><div class="line">aggregation_method: Specifies the method used <span class="keyword">to</span> combine gradient terms. Valid <span class="keyword">values</span> <span class="keyword">are</span> defined <span class="keyword">in</span> the <span class="keyword">class</span> AggregationMethod. </div><div class="line">colocate_gradients_with_ops: <span class="keyword">If</span> <span class="literal">True</span>, try colocating gradients <span class="keyword">with</span> the <span class="keyword">corresponding</span> op. </div><div class="line">grad_loss: Optional. A Tensor holding the gradient computed <span class="keyword">for</span> loss.</div><div class="line">apply_gradients(grads_and_vars,global_step=<span class="keyword">None</span>,<span class="keyword">name</span>=<span class="keyword">None</span>)</div><div class="line"></div><div class="line">作用：把梯度“应用”（<span class="keyword">Apply</span>）到变量上面去。其实就是按照梯度下降的方式加到上面去。这是minimize（）函数的第二个步骤。 返回一个应用的操作。 </div><div class="line">参数: </div><div class="line">grads_and_vars: compute_gradients()函数返回的(gradient, <span class="keyword">variable</span>)对的列表 </div><div class="line">global_step: Optional <span class="keyword">Variable</span> <span class="keyword">to</span> <span class="keyword">increment</span> <span class="keyword">by</span> one <span class="keyword">after</span> the <span class="keyword">variables</span> have been updated. </div><div class="line"><span class="keyword">name</span>: 可选，名字</div><div class="line">get_name()</div><div class="line"></div><div class="line">minimize(loss,global_step=<span class="keyword">None</span>,var_list=<span class="keyword">None</span>,gate_gradients=GATE_OP,aggregation_method=<span class="keyword">None</span>,colocate_gradients_with_ops=<span class="literal">False</span>,<span class="keyword">name</span>=<span class="keyword">None</span>,grad_loss=<span class="keyword">None</span>)</div><div class="line"></div><div class="line">作用：非常常用的一个函数 </div><div class="line">通过更新var_list来减小loss，这个函数就是前面compute_gradients() 和apply_gradients().的结合</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>TensorFlow训练线性回归模型。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"><span class="meta">#创建100个数据x,y,y=x*0.1+0.3</span></div><div class="line">x_data=np.<span class="built_in">random</span>.rand(<span class="number">100</span>).astype(np.float32)</div><div class="line">y_data=x_data*<span class="number">0.1</span>+<span class="number">0.3</span></div><div class="line"></div><div class="line"><span class="meta">#尝试估计W和b使它们满足y_data=W*x_data+b</span></div><div class="line">W=tf.Variable(tf.random_uniform([<span class="number">1</span>],<span class="number">-1.0</span>,<span class="number">1.0</span>))</div><div class="line">b=tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">y=W*x_data+b</div><div class="line"></div><div class="line"><span class="meta">#采用最小均方误差估计</span></div><div class="line">loss=tf.reduce_mean(tf.square(y-y_data))<span class="meta">#loss为优化目标函数，有点像lingo里的</span></div><div class="line">optimizer=tf.train.GradientDescentOptimizer(<span class="number">0.5</span>)<span class="meta">#创建一个梯度下降优化器，学习率设置为0.5</span></div><div class="line">train=optimizer.minimize(loss)<span class="meta">#最小化均方误差</span></div><div class="line"></div><div class="line"><span class="meta">#打开会话，初始化变量</span></div><div class="line">init=tf.global_variables_initializer()</div><div class="line">sess=tf.Session()</div><div class="line">sess.<span class="built_in">run</span>(init)</div><div class="line"></div><div class="line"><span class="meta">#开始训练</span></div><div class="line"><span class="keyword">for</span> <span class="keyword">step</span> <span class="keyword">in</span> range(<span class="number">201</span>):</div><div class="line">    sess.<span class="built_in">run</span>(train)</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">step</span>%<span class="number">20</span>==<span class="number">0</span>):</div><div class="line">        print(<span class="keyword">step</span>,sess.<span class="built_in">run</span>(W),sess.<span class="built_in">run</span>(b))</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深度学习-TensorFlow/">深度学习 TensorFlow</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
 
    
     
@@ -373,291 +723,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/09/29/Manacher算法/" title="Manacher算法" itemprop="url">Manacher算法</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-09-29T12:23:00.000Z" itemprop="datePublished"> 发表于 2017-09-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>构造新字符串，构造方法为在原字符串前面加$,然后每个字符串之间加一个‘#’，例如：s=”abc”变为s_new=”$#a#b#c#”,这样不改变原字符串回文性质，还把字符串长度都变为奇数。令r[id]表示以id为中心的最长回文子串的半径，mx表示以id为中心的最长回文右边界，即mx=id+r[id].<br>核心代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(i&lt;mx)</div><div class="line">    r[i]=min(r[<span class="number">2</span>*id-i],mx-i);</div><div class="line"><span class="keyword">else</span></div><div class="line">    r[i]=<span class="number">1</span>;</div></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e6</span>+<span class="number">5</span>;</div><div class="line"><span class="keyword">char</span> str[maxn*<span class="number">2</span>];</div><div class="line"><span class="keyword">int</span> rad[maxn*<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">manacher</span><span class="params">(<span class="keyword">char</span> *s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> n=<span class="number">0</span>,res=<span class="number">0</span>,ma=<span class="number">0</span>,re=<span class="number">0</span>;</div><div class="line">    str[n++]=<span class="string">'$'</span>;</div><div class="line">    str[n++]=<span class="string">'#'</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;s[i];++i)</div><div class="line">    &#123;</div><div class="line">        str[n++]=s[i];</div><div class="line">        str[n++]=<span class="string">'#'</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(i&lt;ma)rad[i]=min(ma-i,rad[<span class="number">2</span>*re-i]);</div><div class="line">        <span class="keyword">else</span> rad[i]=<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(str[i-rad[i]]==str[i+rad[i]])++rad[i];</div><div class="line">        <span class="keyword">if</span>(ma&lt;rad[i]+i)</div><div class="line">        &#123;</div><div class="line">            ma=rad[i]+i;</div><div class="line">            re=i;</div><div class="line">        &#125;</div><div class="line">        res=max(res,rad[i]<span class="number">-1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Manacher算法/">Manacher算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/09/28/KMP算法/" title="KMP算法" itemprop="url">KMP算法</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-09-28T11:24:59.000Z" itemprop="datePublished"> 发表于 2017-09-28</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://blog.csdn.net/s150503/article/details/58196256" target="_blank" rel="external">http://blog.csdn.net/s150503/article/details/58196256</a><br><a href="http://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/7041827</a></p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>目标串用i索引，模式串用j索引，如果模式串P[j]和目标串S[i]不匹配，则j=next[j]继续匹配。next[j]表示P[0…j-1]这段子串的前缀集合和后缀集合最长公共串的长度。next[0]=-1。已知next[j]求next[j+1]的递推公式为：令k=next[j],如果P[k]==P[j],则next[j+1]=k+1,否则k=next[k]继续。在进行匹配时，如果S[i]==P[j]则++i,++j,否则j=next[j];<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e4</span>+<span class="number">5</span>;</div><div class="line"><span class="keyword">char</span> s[maxn];</div><div class="line"><span class="keyword">char</span> p[maxn];</div><div class="line"><span class="keyword">int</span> next[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">get_next</span><span class="params">(<span class="keyword">char</span> *p)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m = <span class="built_in">strlen</span>(p),i=<span class="number">0</span>,j=<span class="number">-1</span>;</div><div class="line">    next[<span class="number">0</span>]=<span class="number">-1</span>;</div><div class="line">    <span class="keyword">while</span>(i&lt;m)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(j==<span class="number">-1</span>||p[i]==p[j])next[++i]=++j;</div><div class="line">        <span class="keyword">else</span> j=next[j];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp</span><span class="params">(<span class="keyword">char</span> *s,<span class="keyword">char</span> *p)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> n=<span class="built_in">strlen</span>(s),m=<span class="built_in">strlen</span>(p),i=<span class="number">0</span>,j=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(i&lt;n&amp;&amp;j&lt;m)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(j==<span class="number">-1</span>||s[i]==p[j])</div><div class="line">        &#123;</div><div class="line">            ++i;</div><div class="line">            ++j;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        j=next[j];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(j==m)<span class="keyword">return</span> i-j;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/KMP算法/">KMP算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/09/25/并查集 - 副本/" title="AC自动机" itemprop="url">AC自动机</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-09-25T11:08:56.000Z" itemprop="datePublished"> 发表于 2017-09-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e6</span> + <span class="number">5</span>;</div><div class="line"><span class="keyword">int</span> le = <span class="number">0</span>;</div><div class="line"><span class="keyword">struct</span> node</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> end;</div><div class="line">	<span class="keyword">int</span> next[<span class="number">26</span>];</div><div class="line">	<span class="keyword">int</span> suffix;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		end = <span class="number">0</span>;</div><div class="line">		suffix = <span class="number">0</span>;</div><div class="line">		<span class="built_in">memset</span>(next, <span class="number">0</span>, <span class="keyword">sizeof</span>(next));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;T[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">char</span> *s)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, p = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (s[i])</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> x = s[i] - <span class="string">'a'</span>;</div><div class="line">		<span class="keyword">if</span> (!T[p].next[x])</div><div class="line">		&#123;</div><div class="line">			T[++le].init();</div><div class="line">			T[p].next[x] = le;</div><div class="line">		&#125;</div><div class="line">		p = T[p].next[x];</div><div class="line">		i++;</div><div class="line">	&#125;</div><div class="line">	T[p].end = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	T[<span class="number">0</span>].suffix = <span class="number">0</span>;</div><div class="line">	<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (!T[<span class="number">0</span>].next[i])</div><div class="line">			T[<span class="number">0</span>].next[i] = <span class="number">0</span>;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			T[T[<span class="number">0</span>].next[i]].suffix = <span class="number">0</span>;</div><div class="line">			q.push(T[<span class="number">0</span>].next[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">int</span> cur, suf;</div><div class="line">	<span class="keyword">while</span> (!q.empty())</div><div class="line">	&#123;</div><div class="line">		cur = q.front();</div><div class="line">		suf = T[cur].suffix;</div><div class="line">		q.pop();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;<span class="number">26</span>; ++i)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (!T[cur].next[i])</div><div class="line">			&#123;</div><div class="line">				T[cur].next[i] = T[suf].next[i];</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span></div><div class="line">			&#123;</div><div class="line">				T[T[cur].next[i]].suffix = T[suf].next[i];</div><div class="line">				q.push(T[cur].next[i]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span>  <span class="title">check</span><span class="params">(<span class="keyword">char</span> *essay)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i, p;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>, p = <span class="number">0</span>; essay[i]; ++i)</div><div class="line">	&#123;</div><div class="line">		p = T[p].next[essay[i] - <span class="string">'a'</span>];</div><div class="line">		<span class="keyword">if</span> (T[p].end)</div><div class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/AC自动机/">AC自动机</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/09/24/DFA/" title="DFA" itemprop="url">DFA</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-09-24T05:23:00.000Z" itemprop="datePublished"> 发表于 2017-09-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="DFA"><a href="#DFA" class="headerlink" title="DFA"></a>DFA</h3><p>常用于判断字符串是否合法。<br><a href="http://blog.csdn.net/u012061345/article/details/52092436?locationNum=11" target="_blank" rel="external">DFA</a><br>关键是状态编码和确定状态转移。</p>
-<h3 id="leetcode-65-Valid-Number"><a href="#leetcode-65-Valid-Number" class="headerlink" title="leetcode 65. Valid Number"></a><a href="https://leetcode.com/problems/valid-number/description/" target="_blank" rel="external">leetcode 65. Valid Number</a></h3><p><a href="https://postimg.org/image/723mdhed5/" target="_blank" rel="external">状态转移图</a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</div><div class="line">        <span class="comment">//去掉前后空格</span></div><div class="line">        <span class="keyword">int</span> l=<span class="number">0</span>,r=s.length()<span class="number">-1</span>;</div><div class="line">        <span class="keyword">while</span>(l&lt;=r&amp;&amp;s[l]==<span class="string">' '</span>)++l;</div><div class="line">        <span class="keyword">while</span>(r&gt;=<span class="number">0</span>&amp;&amp;s[r]==<span class="string">' '</span>)--r;</div><div class="line">        <span class="keyword">if</span>(r&lt;l)<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="comment">//s=s.substr(l,r-l+1);</span></div><div class="line">        <span class="keyword">int</span> state=<span class="number">0</span>;</div><div class="line">        <span class="comment">//初始状态S0</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=l;i&lt;=r;++i)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">switch</span>(state)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">2</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(s[i]==<span class="string">'+'</span>||s[i]==<span class="string">'-'</span>)</div><div class="line">                        state=<span class="number">1</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(s[i]==<span class="string">'.'</span>)</div><div class="line">                        state=<span class="number">6</span>;</div><div class="line">                    <span class="keyword">else</span> </div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">2</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(s[i]==<span class="string">'.'</span>)</div><div class="line">                        state=<span class="number">6</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">2</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(s[i]==<span class="string">'.'</span>)</div><div class="line">                        state=<span class="number">7</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(s[i]==<span class="string">'e'</span>)</div><div class="line">                        state=<span class="number">3</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="number">3</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">5</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(s[i]==<span class="string">'+'</span>||s[i]==<span class="string">'-'</span>)</div><div class="line">                        state=<span class="number">4</span>;</div><div class="line">                    <span class="keyword">else</span> </div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="number">4</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">5</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="number">5</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">5</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="number">6</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">7</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> <span class="number">7</span>:</div><div class="line">                    <span class="keyword">if</span>(s[i]==<span class="string">'e'</span>)</div><div class="line">                        state=<span class="number">3</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(s[i]&gt;=<span class="string">'0'</span>&amp;&amp;s[i]&lt;=<span class="string">'9'</span>)</div><div class="line">                        state=<span class="number">7</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(state==<span class="number">7</span>||state==<span class="number">2</span>||state==<span class="number">5</span>)<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/DFA/">DFA</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/09/21/尺取法/" title="滑动窗口" itemprop="url">滑动窗口</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-09-21T12:00:00.000Z" itemprop="datePublished"> 发表于 2017-09-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="滑动窗口””尺取法”"><a href="#滑动窗口””尺取法”" class="headerlink" title="滑动窗口””尺取法”"></a>滑动窗口””尺取法”</h3><p>==这种找某段连续子序列满足要求最长/最短的问题，通常可以使用<strong>尺取法</strong>解决==。对于大部分“子字符串”相关问题，即给出一个字符串要求找到它满足某些条件的子串，我们通常可以使用哈希表和双指针来维护一个滑动窗口解决。模板如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">findSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; hashmap(<span class="number">128</span>,<span class="number">0</span>);<span class="comment">//哈希表</span></div><div class="line">    <span class="keyword">int</span> counter;<span class="comment">//检查子串是否有效</span></div><div class="line">    <span class="keyword">int</span> begin=<span class="number">0</span>,end=<span class="number">0</span>;<span class="comment">//双指针，分别指向滑动窗口的两端</span></div><div class="line">    <span class="keyword">int</span> d;<span class="comment">//字符子串长度</span></div><div class="line">    <span class="keyword">for</span>()&#123;<span class="comment">/*初始化哈希表*/</span>&#125;</div><div class="line">    <span class="keyword">while</span>(end&lt;s.length())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(hashmap[s[end++]]--?)&#123;<span class="comment">/*在这里修改计数器*/</span>&#125;</div><div class="line">        <span class="keyword">while</span>(<span class="comment">/*计数器条件*/</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">/*如果发现最小值，在这里更新d*/</span></div><div class="line">            <span class="comment">//增加begin使其再次有效/失效</span></div><div class="line">            <span class="keyword">if</span>(<span class="built_in">map</span>[s[begin++]]++ ?)&#123; <span class="comment">/*modify counter here*/</span> &#125;</div><div class="line">        &#125;</div><div class="line">         <span class="comment">/* update d here if finding maximum*/</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> d;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="例1-Longest-Substring-Without-Repeating-Characters"><a href="#例1-Longest-Substring-Without-Repeating-Characters" class="headerlink" title="例1.Longest Substring Without Repeating Characters"></a>例1.Longest Substring Without Repeating Characters</h3><p><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/description/" target="_blank" rel="external">LeetCode 3</a></p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>可以维护一个滑动窗口，窗口内没有重复字符时，右端移动，窗口内出现重复字符时，将窗口左端移至左边重复字符的下一个位置，为了判重，通常需要一个哈希表。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; table(<span class="number">256</span>,<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> res=<span class="number">0</span>,i=<span class="number">0</span>,j=<span class="number">0</span>,n=s.length();</div><div class="line">        <span class="keyword">while</span>(i&lt;n)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">while</span>(i&lt;n&amp;&amp;!table[s[i]])&#123;table[s[i]]=<span class="number">1</span>;++i;&#125;</div><div class="line">            res=max(res,i-j);</div><div class="line">            <span class="keyword">while</span>(j&lt;n&amp;&amp;s[j]!=s[i])&#123;table[s[j]]=<span class="number">0</span>;++j;&#125;;</div><div class="line">            table[s[j]]=<span class="number">0</span>;++j;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<h3 id="例2-Minimum-Window-Substring"><a href="#例2-Minimum-Window-Substring" class="headerlink" title="例2.Minimum Window Substring"></a>例2.Minimum Window Substring</h3><p><a href="https://leetcode.com/problems/minimum-window-substring/description/" target="_blank" rel="external">LeetCode 76</a></p>
-<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*尺取法*/</span></div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minWindow</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; hashmap(<span class="number">128</span>,<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> begin=<span class="number">0</span>,end=<span class="number">0</span>,min_len=INT_MAX,counter=t.length(),min_start=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> c:t)hashmap[c]++;<span class="comment">//统计t中各字符出现的次数</span></div><div class="line">        <span class="keyword">while</span>(end&lt;s.length())</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(hashmap[s[end]]&gt;<span class="number">0</span>)--counter;<span class="comment">//如果t中有此字符，将还需要找的字符数减1</span></div><div class="line">            hashmap[s[end]]--;<span class="comment">//将窗口内字符对应的数量减1，注意如果不是t中的字符，数量会变为负数</span></div><div class="line">            end++;<span class="comment">//窗口右移</span></div><div class="line">            <span class="keyword">while</span>(counter==<span class="number">0</span>)<span class="comment">//如果已经找齐所有字符，就开始移动窗口左端</span></div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(end-begin&lt;min_len)</div><div class="line">                &#123;</div><div class="line">                    min_len=end-begin;</div><div class="line">                    min_start=begin;</div><div class="line">                &#125;</div><div class="line">                hashmap[s[begin]]++;<span class="comment">//窗口左端增大，窗口内对应字符数量+1</span></div><div class="line">                <span class="keyword">if</span>(hashmap[s[begin]]&gt;<span class="number">0</span>)++counter;<span class="comment">//如果t中存在此字符，窗口左端移动后还需要再找一个此字符</span></div><div class="line">                begin++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> min_len==INT_MAX?<span class="string">""</span>:s.substr(min_start,min_len);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h3 id="例3：Longest-Substring-with-At-Most-Two-Distinct-Characters"><a href="#例3：Longest-Substring-with-At-Most-Two-Distinct-Characters" class="headerlink" title="例3：Longest Substring with At Most Two Distinct Characters"></a>例3：Longest Substring with At Most Two Distinct Characters</h3><p><strong>题意</strong><br>给定一个字符串，找到其最多包含两种字符的最长子串T。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstringTwoDistinct</span><span class="params">(<span class="built_in">string</span> s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dict(<span class="number">128</span>,<span class="number">0</span>);</div><div class="line">    <span class="keyword">int</span> start=<span class="number">0</span>,end=<span class="number">0</span>,count=<span class="number">0</span>,max_len=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(end&lt;s.length())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(end&lt;s.length()&amp;&amp;count&lt;=<span class="number">2</span>)<span class="comment">//窗口内字符种数不超过2</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(dict[s[end]]==<span class="number">0</span>)++count;<span class="comment">//窗口内不存在此字符</span></div><div class="line">            dict[s[end]]++;<span class="comment">//字符数加1</span></div><div class="line">            end++;</div><div class="line">        &#125;</div><div class="line">        max_len=max(max_len,end-start);</div><div class="line">        <span class="keyword">while</span>(dict[s[start]])</div><div class="line">        &#123;</div><div class="line">            dict[s[start]]--;</div><div class="line">            start++;</div><div class="line">        &#125;</div><div class="line">        --count;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> max_len;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/滑动窗口/">滑动窗口</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>
@@ -733,11 +801,11 @@
 			
 		
 			
-				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
 			
 		
 			
@@ -765,11 +833,15 @@
 			
 		
 			
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
 			
 		
 			
@@ -777,15 +849,11 @@
 			
 		
 			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/二叉搜索树/" title="二叉搜索树">二叉搜索树<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -924,12 +992,58 @@ $(document).ready(function(){
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 
 <!-- MathJax End -->
 
 <!-- Tiny_search Begin -->
 
-<!-- Tiny_search End -->
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
   </body>
  </html>

@@ -1,0 +1,588 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>利用TensorFlow搭建CNN | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="官方教程中文
+重要函数
+tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None)返回一个Tensor，这个输出，就是我们常说的feature map。
+
+
+input需要做卷积的输入图像，Tensor类型，具有[batch,in_height,in_width,in_channels]这样的sha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用TensorFlow搭建CNN">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/12/18/利用TensorFlow搭建CNN/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="官方教程中文
+重要函数
+tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None)返回一个Tensor，这个输出，就是我们常说的feature map。
+
+
+input需要做卷积的输入图像，Tensor类型，具有[batch,in_height,in_width,in_channels]这样的sha">
+<meta property="og:updated_time" content="2018-01-23T10:37:28.415Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用TensorFlow搭建CNN">
+<meta name="twitter:description" content="官方教程中文
+重要函数
+tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None)返回一个Tensor，这个输出，就是我们常说的feature map。
+
+
+input需要做卷积的输入图像，Tensor类型，具有[batch,in_height,in_width,in_channels]这样的sha">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/18/利用TensorFlow搭建CNN/" title="利用TensorFlow搭建CNN" itemprop="url">利用TensorFlow搭建CNN</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-18T13:45:03.000Z" itemprop="datePublished"> 发表于 2017-12-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#重要函数"><span class="toc-number">1.</span> <span class="toc-text">重要函数</span></a></li></ol>
+		
+		</div>
+		
+		<p><a href="http://wiki.jikexueyuan.com/project/tensorflow-zh/tutorials/mnist_beginners.html" target="_blank" rel="external">官方教程中文</a></p>
+<h3 id="重要函数"><a href="#重要函数" class="headerlink" title="重要函数"></a>重要函数</h3><ol>
+<li>tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None)<br>返回一个Tensor，这个输出，就是我们常说的feature map。</li>
+</ol>
+<ul>
+<li><strong>input</strong><br>需要做卷积的输入图像，Tensor类型，具有[batch,in_height,in_width,in_channels]这样的shape，具体含义是[训练时一个batch的数量，图片的高度，图片的宽度，图像的通道数]，注意这是一个4维的Tensor，要求类型为float32和float64之一。</li>
+<li><strong>filter</strong><br>相当于CNN中的卷积核，它要求是一个Tensor，具有[filter_height,filter_width,in_channels,out_channels]这样的shape,具体含义是[卷积核的高度，卷积核的宽度，图像通道数，卷积核个数]，要求类型与input相同，其中input_channels与input相同。</li>
+<li><p><strong>strides</strong><br>卷积时图像在每一维的步长，长度是4，对于图像来说，一般为[1,stride,stride,1]</p>
+</li>
+<li><p><strong>padding</strong><br>代表填充方式，参数只有两种，SAME和VALID，SAME比VALID的填充方式多了一列，比如一个3<em>3图像用2</em>2的滤波器进行卷积，当步长设为2的时候，会缺少一列，则进行第二次卷积的时候，VALID发现余下的窗口不足2*2会直接把第三列去掉，SAME则会填充一列，填充值为0。</p>
+</li>
+<li><strong>use_cudnn_on_gpu</strong><br>是否开启cudnn加速，默认为True</li>
+</ul>
+<ol>
+<li>tf.nn.max_pool(value, ksize, strides, padding, name=None)<br>返回一个池化后的map,最大池化就是取池化窗口的最大值。</li>
+</ol>
+<ul>
+<li>value: 池化的输入，一般池化层接在卷积层后面，所以输入通常为feature map。</li>
+<li>ksize:池化窗口的大小，参数为四维向量，通常取[1,height,width,1]。</li>
+<li><p><strong>strides</strong><br>卷积时图像在每一维的步长，长度是4，对于图像来说，一般为[1,stride,stride,1]</p>
+</li>
+<li><p><strong>padding</strong><br>代表填充方式，参数只有两种，SAME和VALID，SAME比VALID的填充方式多了一列，比如一个3<em>3图像用2</em>2的滤波器进行卷积，当步长设为2的时候，会缺少一列，则进行第二次卷积的时候，VALID发现余下的窗口不足2*2会直接把第三列去掉，SAME则会填充一列，填充值为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</div><div class="line"><span class="comment">#获取数据集</span></div><div class="line">mnist=input_data.read_data_sets(<span class="string">'MNIST_data'</span>,one_hot=<span class="keyword">True</span>)<span class="comment">#采用独热码</span></div><div class="line">x=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">784</span>])</div><div class="line">y_=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">10</span>]);</div><div class="line"><span class="comment">#定义Weight变量，输入shape,返回变量的参数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">weight_variable</span><span class="params">(shape)</span>:</span></div><div class="line">    initial=tf.truncated_normal(shape,stddev=<span class="number">0.1</span>)<span class="comment">#生成的值服从具有指定平均值和标准偏差的正态分布，如果生成的值大于平均值2个标准偏差的值则丢弃重新选择。</span></div><div class="line">    <span class="keyword">return</span> tf.Variable(initial)</div><div class="line"><span class="comment">#定义bias变量，输入shape，返回变量的一些参数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">bias_variable</span><span class="params">(shape)</span>:</span></div><div class="line">    initial=tf.constant(<span class="number">0.1</span>,shape=shape)</div><div class="line">    <span class="keyword">return</span> tf.Variable(initial)</div><div class="line"><span class="comment">#定义卷积</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv2d</span><span class="params">(x,W)</span>:</span></div><div class="line">    <span class="keyword">return</span> tf.nn.conv2d(x,W,strides=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>],padding=<span class="string">'SAME'</span>)</div><div class="line"><span class="comment"># 定义池化</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">max_pool</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">return</span> tf.nn.max_pool(x,ksize=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],strides=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],padding=<span class="string">'SAME'</span>)</div><div class="line"></div><div class="line"><span class="comment">#第一卷积层</span></div><div class="line">x_image=tf.reshape(x,[<span class="number">-1</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>])<span class="comment">#把输入变成4维的，其中-1表示该维度数量让python自己算</span></div><div class="line"><span class="comment">#定义卷积核</span></div><div class="line">W_conv1=weight_variable([<span class="number">5</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">32</span>])<span class="comment">##卷积核大小为5*5,输入通道数为1，输出通道数为32</span></div><div class="line">b_conv1=bias_variable([<span class="number">32</span>])</div><div class="line"><span class="comment">#卷积-&gt;线性修正-&gt;池化</span></div><div class="line">h_conv1=tf.nn.relu(conv2d(x_image,W_conv1)+b_conv1)</div><div class="line">h_pool1=max_pool(h_conv1)</div><div class="line"></div><div class="line"><span class="comment">#第二卷积层</span></div><div class="line"><span class="comment">#卷积核</span></div><div class="line">W_conv2=weight_variable([<span class="number">5</span>,<span class="number">5</span>,<span class="number">32</span>,<span class="number">64</span>])<span class="comment">#卷积核大小为5*5，输入通道数为第一层输出通道数32</span></div><div class="line">b_conv2=bias_variable([<span class="number">64</span>])</div><div class="line"><span class="comment">#卷积-&gt;线性修正-&gt;池化</span></div><div class="line">h_conv2=tf.nn.relu(conv2d(h_pool1,W_conv2)+b_conv2)</div><div class="line">h_pool2=max_pool(h_conv2)</div><div class="line"></div><div class="line"><span class="comment">#把特征图展平成向量，在这里是h_pool2,7*7*64，进入全连接层</span></div><div class="line">W_fc1=weight_variable([<span class="number">7</span>*<span class="number">7</span>*<span class="number">64</span>,<span class="number">1024</span>])</div><div class="line">b_fc1=bias_variable([<span class="number">1024</span>])</div><div class="line">h_pool2_flat=tf.reshape(h_pool2,[<span class="number">-1</span>,<span class="number">7</span>*<span class="number">7</span>*<span class="number">64</span>])</div><div class="line">h_fc1=tf.nn.relu(tf.matmul(h_pool2_flat,W_fc1)+b_fc1)</div><div class="line"></div><div class="line"><span class="comment">#dropout:防止过拟合，在输出层前应用随机失活</span></div><div class="line">keep_prob=tf.placeholder(tf.float32)</div><div class="line">h_fc1_drop=tf.nn.dropout(h_fc1,keep_prob)</div><div class="line"></div><div class="line"><span class="comment">#输出层</span></div><div class="line">W_fc2=weight_variable([<span class="number">1024</span>,<span class="number">10</span>])</div><div class="line">b_fc2=bias_variable([<span class="number">10</span>])</div><div class="line">y_conv=tf.matmul(h_fc1_drop,W_fc2)+b_fc2</div><div class="line"></div><div class="line"><span class="comment">#训练和评估</span></div><div class="line">cross_entropy = tf.reduce_mean(</div><div class="line">    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y_conv))</div><div class="line">train_step = tf.train.AdamOptimizer(<span class="number">1e-4</span>).minimize(cross_entropy)</div><div class="line">correct_prediction = tf.equal(tf.argmax(y_conv, <span class="number">1</span>), tf.argmax(y_, <span class="number">1</span>))</div><div class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">  sess.run(tf.global_variables_initializer())</div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20000</span>):</div><div class="line">    batch = mnist.train.next_batch(<span class="number">50</span>)</div><div class="line">    <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:</div><div class="line">      train_accuracy = accuracy.eval(feed_dict=&#123;</div><div class="line">          x: batch[<span class="number">0</span>], y_: batch[<span class="number">1</span>], keep_prob: <span class="number">1.0</span>&#125;)</div><div class="line">      print(<span class="string">'step %d, training accuracy %g'</span> % (i, train_accuracy))</div><div class="line">    train_step.run(feed_dict=&#123;x: batch[<span class="number">0</span>], y_: batch[<span class="number">1</span>], keep_prob: <span class="number">0.5</span>&#125;)</div><div class="line"></div><div class="line">  print(<span class="string">'test accuracy %g'</span> % accuracy.eval(feed_dict=&#123;</div><div class="line">      x: mnist.test.images, y_: mnist.test.labels, keep_prob: <span class="number">1.0</span>&#125;))</div></pre></td></tr></table></figure></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CNN-TensorFlow/">CNN TensorFlow</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/12/18/利用TensorFlow搭建CNN/" data-title="利用TensorFlow搭建CNN | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/12/20/强化学习入门(一)/" title="强化学习入门(一)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  强化学习入门(一)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/12/14/MNIST机器学习入门/"  title="MNIST机器学习入门">
+ <strong>下一篇：</strong><br/> 
+ <span>MNIST机器学习入门
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#重要函数"><span class="toc-number">1.</span> <span class="toc-text">重要函数</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

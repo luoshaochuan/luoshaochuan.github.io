@@ -1,0 +1,580 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>强化学习入门(一) | 我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDog
+Agent &amp;amp; EnviromentAgent  
+
+Policy（策略）：它根据当前看到的observation来决定action，是从state到action的映射。有两种表达形式，一种是Deterministic policy（确定策略）即a=π(s)a=π(s)，在某种状态">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习入门(一)">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/12/20/强化学习入门(一)/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDog
+Agent &amp;amp; EnviromentAgent  
+
+Policy（策略）：它根据当前看到的observation来决定action，是从state到action的映射。有两种表达形式，一种是Deterministic policy（确定策略）即a=π(s)a=π(s)，在某种状态">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/Agent%20and%20Env.png">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/MDP.png">
+<meta property="og:updated_time" content="2018-01-23T10:56:05.888Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="强化学习入门(一)">
+<meta name="twitter:description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDog
+Agent &amp;amp; EnviromentAgent  
+
+Policy（策略）：它根据当前看到的observation来决定action，是从state到action的映射。有两种表达形式，一种是Deterministic policy（确定策略）即a=π(s)a=π(s)，在某种状态">
+<meta name="twitter:image" content="http://oc9b84kcd.bkt.clouddn.com/Agent%20and%20Env.png">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/20/强化学习入门(一)/" title="强化学习入门(一)" itemprop="url">强化学习入门(一)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-20T14:32:03.000Z" itemprop="datePublished"> 发表于 2017-12-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-amp-Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Agent & Enviroment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔可夫决策-MDP"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫决策 MDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略和价值"><span class="toc-number">3.</span> <span class="toc-text">策略和价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman期望方程"><span class="toc-number">4.</span> <span class="toc-text">Bellman期望方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索与利用-Exploration-amp-Exploitation"><span class="toc-number">5.</span> <span class="toc-text">探索与利用 Exploration & Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ε-贪心"><span class="toc-number">5.1.</span> <span class="toc-text">ε-贪心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Softmax"><span class="toc-number">5.2.</span> <span class="toc-text">Softmax</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>书籍：机器学习 周志华<br>视频：<a href="https://www.youtube.com/watch?v=sGuiWX07sKw" target="_blank" rel="external">RL Course by David Silver</a><br>博客：<a href="http://www.algorithmdog.com/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B" target="_blank" rel="external">AlgorithmDog</a></p>
+<h3 id="Agent-amp-Enviroment"><a href="#Agent-amp-Enviroment" class="headerlink" title="Agent &amp; Enviroment"></a>Agent &amp; Enviroment</h3><p><img src="http://oc9b84kcd.bkt.clouddn.com/Agent%20and%20Env.png" alt=""><br><strong>Agent</strong>  </p>
+<ul>
+<li><p>Policy（策略）：它根据当前看到的observation来决定action，是从state到action的映射。有两种表达形式，一种是Deterministic policy（确定策略）即a=π(s)a=π(s)，在某种状态s下，一定会执行某个动作a。一种是Stochastic policy（随机策略）即π(a|s)=p[At=a|St=s]π(a|s)=p[At=a|St=s]，它是在某种状态下执行某个动作的概率。   </p>
+</li>
+<li><p>Value function（价值函数）：它预测了当前状态下未来可能获得的reward的期望。Vπ(s)=Eπ[Rt+1+rRt+2+…|St=s]Vπ(s)=Eπ[Rt+1+rRt+2+…|St=s]。用于衡量当前状态的好坏。</p>
+</li>
+<li>Model（模型）：预测environment下一步会做出什么样的改变，从而预测agent接收到的状态或者reward是什么。因而有两种类型的model，一种是预测下一个state的transition  model即Pass′=p[St+1=s′|St=s,At=a]Pss′a=p[St+1=s′|St=s,At=a]，一种是预测下一次reward的reward model即Ras=E[Rt+1|St=s,At=a]Rsa=E[Rt+1|St=s,At=a]</li>
+</ul>
+<h3 id="马尔可夫决策-MDP"><a href="#马尔可夫决策-MDP" class="headerlink" title="马尔可夫决策 MDP"></a>马尔可夫决策 MDP</h3><blockquote>
+<p>机器处于环境E中，状态空间为X,其中每个状态x是机器感知到的环境的描述，如种瓜任务上就是当前瓜苗长势的描述；机器能采取的动作构成动作空间A；机器采取的动作作用的当前状态上，会使当前环境按状态转移函数P转移到另一状态，转移过程中环境会根据潜在的奖赏函数R反馈给机器一个奖赏。综合起来,强化学习任务对应了一个四元组E=<x,a,p,r>.机器要做的是通过在环境中不断尝试而学得一个策略(policy)phi,根据这个策略，在状态x下就能得知要执行的动作a=phi(x)。</x,a,p,r></p>
+</blockquote>
+<p><img src="http://oc9b84kcd.bkt.clouddn.com/MDP.png" alt=""></p>
+<h3 id="策略和价值"><a href="#策略和价值" class="headerlink" title="策略和价值"></a>策略和价值</h3><p><strong>策略</strong>：状态s下执行动作a的概率<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\pi(a|s) = P[A_t=a|S_t=s]</div></pre></td></tr></table></figure></p>
+<p><strong>奖励</strong>：当前状态下执行动作a获得的奖励的期望<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">R_s^a= E[R_&#123;t+1&#125; | S_t = s, A_t = a]</div></pre></td></tr></table></figure></p>
+<p><strong>回报</strong>：回报是从t+1时刻开始的累积折扣奖励<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">G_t = R_&#123;t+1&#125;+\gamma R_&#123;t+2&#125;+…=\sum_&#123;k=0&#125;^&#123;\infty&#125;\gamma^kR_&#123;t+k+1&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>策略</strong>：是agent的行为函数，只跟状态有关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\pi(a|s) = \mathbb P[A_t = a | S_t = s]</div></pre></td></tr></table></figure></p>
+<p><strong>状态值函数</strong>:状态值函数vπ(s)是从状态s出发，按照策略π采取行为得到的期望回报<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">v_\pi(s) = \mathbb E_\pi[G_t | S_t = s]</div></pre></td></tr></table></figure></p>
+<p><strong>行为值函数</strong>:行为值函数qπ(s,a)是从状态s出发，采取行为a后，然后按照策略π采取行为得到的期望回报<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">q_\pi(s, a) = \mathbb E_\pi[G_t | S_t = s, A_t = a]</div></pre></td></tr></table></figure></p>
+<h3 id="Bellman期望方程"><a href="#Bellman期望方程" class="headerlink" title="Bellman期望方程"></a>Bellman期望方程</h3><p>Bellman期望方程其实就是vπ(s)和qπ(s,a)自身以及相互之间的递推关系。<br>按照状态值函数和行为值函数定义可以得到如下递推式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">v_\pi(s)= \mathbb E_\pi[R_&#123;t+1&#125;+\gamma G_&#123;t+1&#125; |S_t = s]  </div><div class="line"></div><div class="line">= \mathbb E_\pi[R_&#123;t+1&#125;+\gamma v_\pi(S_&#123;t+1&#125;) | S_t = s]</div><div class="line"></div><div class="line">q_\pi(s, a)= \mathbb E_\pi[G_t | S_t = s, A_t = a] </div><div class="line"></div><div class="line">= \mathbb E_\pi[R_&#123;t+1&#125; +\gamma q_\pi(S_&#123;t+1&#125;, A_&#123;t+1&#125;) | S_t = s, A_t = a]</div></pre></td></tr></table></figure></p>
+<p>vπ(s)与qπ(s,a)之间的关系:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">v_\pi(s) = \sum_&#123;a\in &#123;A&#125;&#125; \pi(a|s)q_&#123;\pi&#125;(s, a)</div><div class="line"></div><div class="line">q_\pi(s,a) = &#123;R&#125;_s^a + \gamma \sum_&#123;s&apos; \in &#123;S&#125;&#125; &#123;P&#125;_&#123;ss&apos;&#125;^a v_\pi(s&apos;)</div></pre></td></tr></table></figure></p>
+<p>递推方程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">v_\pi(s) = \sum_&#123;a&#125; \pi(a|s) \left[ &#123;R&#125;_s^a + \gamma \sum_&#123;s&apos;&#125; &#123; P&#125;_&#123;ss&apos;&#125;^a v_\pi(s&apos;) \right]</div><div class="line"></div><div class="line">q_\pi(s, a) = &#123;R&#125;_s^a + \gamma \sum_&#123;s&apos;&#125;&#123;P&#125;_&#123;ss&apos;&#125;^a \sum_&#123;a&apos;&#125;\pi(a&apos;|s&apos;)q_\pi(s&apos;, a&apos;)</div></pre></td></tr></table></figure></p>
+<p>这两个方程的物理意义是：  </p>
+<ul>
+<li>当前状态下能获得的回报的期望等于当前状态下采取动作a的概率乘上采取动作a所获得的的奖励与采取状态a引起的状态转移获得的累积折扣期望回报之和。</li>
+<li>当前状态下采取动作a获得的回报的期望等于采取动作a所获得的奖励与采取动作a引起的状态转移所获得的累积折扣期望回报之和。<h3 id="探索与利用-Exploration-amp-Exploitation"><a href="#探索与利用-Exploration-amp-Exploitation" class="headerlink" title="探索与利用 Exploration &amp; Exploitation"></a>探索与利用 Exploration &amp; Exploitation</h3>探索：放弃一些已知的reward信息，尝试去做一些新的选择。<br>利用： 从已知reward信息中，选择一个reward最大的。<br><strong>强化学习是在探索与利用之间达到折中。</strong>  <h4 id="ε-贪心"><a href="#ε-贪心" class="headerlink" title="ε-贪心"></a>ε-贪心</h4>ε-贪心是基于一个概率来对探索和利用进行折中：每次尝试时，以ε概率进行探索，以1-ε概率进行利用。<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4>以一定概率进行选取，若某些动作回报高于其他，则被选取的概率也会更大。</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/强化学习/">强化学习</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.luoshaochuan.com/2017/12/20/强化学习入门(一)/" data-title="强化学习入门(一) | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/12/18/利用TensorFlow搭建CNN/"  title="利用TensorFlow搭建CNN">
+ <strong>下一篇：</strong><br/> 
+ <span>利用TensorFlow搭建CNN
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-amp-Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Agent & Enviroment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔可夫决策-MDP"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫决策 MDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略和价值"><span class="toc-number">3.</span> <span class="toc-text">策略和价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman期望方程"><span class="toc-number">4.</span> <span class="toc-text">Bellman期望方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索与利用-Exploration-amp-Exploitation"><span class="toc-number">5.</span> <span class="toc-text">探索与利用 Exploration & Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ε-贪心"><span class="toc-number">5.1.</span> <span class="toc-text">ε-贪心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Softmax"><span class="toc-number">5.2.</span> <span class="toc-text">Softmax</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

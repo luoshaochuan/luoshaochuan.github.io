@@ -2,7 +2,7 @@
  <!DOCTYPE HTML>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
     <title>我是小韩同学</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -24,11 +24,11 @@
     
     
     
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
   <body>
-    <header>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
       
 <div>
 		
@@ -67,6 +67,309 @@
     </header>
     <div id="container">
       <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/11/动态规划总结(二）/" title="动态规划总结（二）：前缀动态规划" itemprop="url">动态规划总结（二）：前缀动态规划</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-11T11:31:20.000Z" itemprop="datePublished"> 发表于 2017-07-11</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="前缀动态规划"><a href="#前缀动态规划" class="headerlink" title="前缀动态规划"></a>前缀动态规划</h2><p>这类动态规划的特点是：f(i)可以由f(i-1)得到，或者f(i,j)可以由f(i-1,j-1),f(i-1,j),f(i,j-1)得到。</p>
+<h2 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h2><blockquote>
+<p>LCS:最长公共子序列<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">给定两个字符串A,B,求这两个字符串的最长公共子序列。</div><div class="line">考虑最长公共子序列问题如何分解成子问题，设A=“a0，a1，…，am-1”，B=“b0，b1，…，bm-1”，并Z=“z0，z1，…，zk-1”为它们的最长公共子序列。不难证明有以下性质：</div><div class="line"></div><div class="line">（1） 如果am-1=bn-1，则zk-1=am-1=bn-1，且“z0，z1，…，zk-2”是“a0，a1，…，am-2”和“b0，b1，…，bn-2”的一个最长公共子序列；</div><div class="line"></div><div class="line">（2） 如果am-1!=bn-1，则若zk-1!=am-1，蕴涵“z0，z1，…，zk-1”是“a0，a1，…，am-2”和“b0，b1，…，bn-1”的一个最长公共子序列；</div><div class="line"></div><div class="line">（3） 如果am-1!=bn-1，则若zk-1!=bn-1，蕴涵“z0，z1，…，zk-1”是“a0，a1，…，am-1”和“b0，b1，…，bn-2”的一个最长公共子序列。</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">设f(i,j)是字符串A的第i前缀和字符串B的第j前缀的最长公共子序列的长度,该子序列记为z1,z2,...zk,则：</div><div class="line">f(i,j)=f(i-1,j-1)+1 if a[i]=b[j]</div><div class="line">f(i,j)=max&#123;f(i-1,j),f(i,j-1)&#125; if a[i]!=b[j]</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">print_lcs</span><span class="params">(<span class="built_in">string</span> A, <span class="keyword">int</span>** c, <span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span> (m == <span class="number">0</span> || n == <span class="number">0</span>)</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	<span class="keyword">if</span> (c[n][m] == c[n - <span class="number">1</span>][m - <span class="number">1</span>] + <span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">		print_lcs(A, c, n - <span class="number">1</span>, m - <span class="number">1</span>);</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; A[n - <span class="number">1</span>];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (c[n][m] == c[n - <span class="number">1</span>][m])</div><div class="line">		print_lcs(A, c, n - <span class="number">1</span>, m);</div><div class="line">	<span class="keyword">else</span></div><div class="line">		print_lcs(A, c, n,m - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">lcs</span><span class="params">(<span class="built_in">string</span> A, <span class="built_in">string</span> B)</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">	<span class="keyword">int</span> n = A.length();</div><div class="line">	<span class="keyword">int</span> m = B.length();</div><div class="line">	<span class="keyword">int</span>** c = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((n+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n + <span class="number">1</span>; ++i)</div><div class="line">		c[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((m+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n+<span class="number">1</span>; ++i)</div><div class="line">		c[i][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m + <span class="number">1</span>; ++j)</div><div class="line">		c[<span class="number">0</span>][j] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (A[i] == B[j])</div><div class="line">				c[i + <span class="number">1</span>][j + <span class="number">1</span>] = c[i][j]+<span class="number">1</span>;</div><div class="line">			<span class="keyword">else</span></div><div class="line">			&#123;</div><div class="line">				c[i + <span class="number">1</span>][j + <span class="number">1</span>] = max(c[i][j+<span class="number">1</span>],c[i+<span class="number">1</span>][j]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	print_lcs(A, c, n, m);</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">int</span> l = c[n][m];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n + <span class="number">1</span>; ++i)</div><div class="line">		<span class="built_in">free</span>(c[i]);</div><div class="line">	<span class="built_in">free</span>(c);</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"LCS.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"LCS.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line"></div><div class="line">	<span class="built_in">string</span> A, B;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; A &gt;&gt; B;</div><div class="line"></div><div class="line">	<span class="built_in">cout</span> &lt;&lt; lcs(A, B) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-动态规划/">算法 动态规划</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/10/动态规划总结(一)/" title="动态规划总结（一）：编号动态规划" itemprop="url">动态规划总结（一）：编号动态规划</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-10T12:00:00.000Z" itemprop="datePublished"> 发表于 2017-07-10</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="编号动态规划"><a href="#编号动态规划" class="headerlink" title="编号动态规划"></a>编号动态规划</h2><p>本类动态规划是基础，大部分动态规划都要用到他成为一个维，一般来说有两种编号的状态：</p>
+<blockquote>
+<ol>
+<li>状态i表示前i个元素决策组成的一个状态。</li>
+<li>状态i表示用到了第i个状态，和某些在1到i-1之间的元素，决策组成了一个状态。</li>
+</ol>
+</blockquote>
+<p>例如：<br>F[i]：表示前i个元素XXXX<br>F[i]:以第i个元素结尾的XXXX<br>F[i][j]:前i个元素中恰好有j个XXXX  </p>
+<h2 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h2><blockquote>
+<p>1.LIS:最长递增子序列<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">给定一个长度为N的数组，输出其最长单调递增的子序列的长度。</div><div class="line">*/</div><div class="line"><span class="comment">/*</span></div><div class="line">分析：属于编号动态规划的第二种类型，第i项和前面1到i-1的部分项决策组成一个状态。</div><div class="line">f(i)：以第i项结尾的最长公共子序列的长度。</div><div class="line">*/</div><div class="line"><span class="comment">/*</span></div><div class="line">例如：输入[5,6,7,1,2,8]</div><div class="line">f(0)=0</div><div class="line">f(1)=1 (5)</div><div class="line">f(2) = 2 = f(1)+1 (5,6)</div><div class="line">f(3) = 3 = f(2)+1 (5,6,7)</div><div class="line">f(4) = 1 (1)</div><div class="line">...</div><div class="line">f(i) = max&#123;f(j)|j&lt;i and a[j]&lt;a[i]&#125;+1</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span>* a, <span class="keyword">int</span> len)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> *f = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(len*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">	f[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; ++i)</div><div class="line">	&#123;</div><div class="line">		f[i] = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (f[j]&gt;f[i] &amp;&amp; a[i] &gt; a[j])</div><div class="line">			&#123;</div><div class="line">				f[i] = f[j];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		f[i] += <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> lis = f[len - <span class="number">1</span>];</div><div class="line">	<span class="built_in">free</span>(f);</div><div class="line">	<span class="keyword">return</span> lis;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">牛逼闪闪的二分搜索</div><div class="line">LIS本质上是一个将a[i]不断找合适的子序列插入的过程，显然同样长度的序列，末尾元素越小的越容易插入，我们不妨定义</div><div class="line">末尾元素最小的最长子序列为最优最长子序列。</div><div class="line">定义一个数组B,保存各个长度的最优最长子序列的末尾元素。</div><div class="line">例如：A: 1 5 2 6 3 7</div><div class="line">则：</div><div class="line">B[1] = 1;//长度为1的最优最长子序列末尾元素为1</div><div class="line">B[2] = 2;//1 2</div><div class="line">B[3] = 3;//1 2 3</div><div class="line">B[4] = 4;//1 2 3 4</div><div class="line">...</div><div class="line">可以发现B一定是个单调递增序列，且长度为i-1的子序列一定是长度为i的子序列的子序列。</div><div class="line">既然如此，我们每次拿到一个a[i],就可以用二分搜索查找它可以放在哪个末尾，放入后是</div><div class="line">否构成一个新的最优最长子序列。</div><div class="line"></div><div class="line">这种想法来源于对题目性质的观察和二分搜索性质的理解。二分法是计算机领域常用地方法，要仔细体会。</div><div class="line"></div><div class="line">a)最长不下降子序列以一元组(i)作为状态，表示第i个作为序列的最后一个点的时候的最长序列。于是很容易想到O(n^2)</div><div class="line">得算法。但本题可合理组织状态，引入一个单调的辅助数组，利用单调性二分查找，优化到O(nlogn)。关于优化详见优化</div><div class="line">章。一些问题可将数据有序化，转化成本题。</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">lis</span><span class="params">(<span class="keyword">int</span>* a, <span class="keyword">int</span> len)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> l = <span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> *b = <span class="keyword">new</span> <span class="keyword">int</span>[len];</div><div class="line">	b[<span class="number">0</span>] = a[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> left = <span class="number">0</span>, right = l - <span class="number">1</span>;<span class="comment">//二分法常用套路</span></div><div class="line">		<span class="keyword">while</span> (left &lt; right)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> mid = (left + right)/<span class="number">2</span>;</div><div class="line">			<span class="keyword">if</span> (a[i] &gt; b[mid])</div><div class="line">				left = mid+<span class="number">1</span>;</div><div class="line">			<span class="keyword">else</span></div><div class="line">				right = mid<span class="number">-1</span>;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (a[i] &gt; b[left])</div><div class="line">		&#123;</div><div class="line">			b[left+<span class="number">1</span>] = a[i];</div><div class="line">			<span class="keyword">if</span> (left + <span class="number">2</span> &gt; l)</div><div class="line">				l = left + <span class="number">2</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(a[i]&lt; b[left])</div><div class="line">		&#123;</div><div class="line">		    b[left]=a[i];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">delete</span>[] b;</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"LIS.in"</span>, <span class="string">"r"</span>, <span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"LIS.out"</span>, <span class="string">"w"</span>, <span class="built_in">stdout</span>);</div><div class="line">	<span class="keyword">int</span> len;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; len;</div><div class="line">	<span class="keyword">int</span> *a = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(len*<span class="keyword">sizeof</span>(len));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> n;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; n;</div><div class="line">		a[i] = n;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; lis(a, len) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">free</span>(a);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-动态规划/">算法 动态规划</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/06/leetcode546/" title="leetcode 546" itemprop="url">leetcode 546</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-06T02:21:00.000Z" itemprop="datePublished"> 发表于 2017-07-06</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给定一排带颜色的盒子，用数字表示颜色，每次你能移走连续的几个相同颜色的k个盒子，并获得K^2点分数，求能获得的最大的分数。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>我们每次可以移走右边相同的k个盒子，也可以找到左边和右边相同颜色的盒子，移走它们中间的盒子，再一起移走这些相同颜色的盒子。<br>令dp[i][j][k]表示i~j的一排盒子，并且右边有k个和j相同颜色的盒子,能获得的最大分数。则：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dp[<span class="string">i</span>][<span class="symbol">j</span>][<span class="string">k</span>]=dp[<span class="string">i</span>][<span class="symbol">j-1</span>][<span class="string">k+1</span>] if color[j]=color[j-1]</div><div class="line">dp[<span class="string">i</span>][<span class="symbol">j</span>][<span class="string">k</span>]=dp[<span class="string">i</span>][<span class="symbol">j-k</span>][<span class="string">0</span>]+k^2</div><div class="line">dp[<span class="string">i</span>][<span class="symbol">j</span>][<span class="string">k</span>]=max(dp[<span class="string">i</span>][<span class="symbol">j</span>][<span class="string">k</span>],dp[<span class="string">i</span>][<span class="symbol">l</span>][<span class="string">k+1</span>]+dp[<span class="string">l+1</span>][<span class="symbol">j-1</span>][<span class="string">0</span>]); if color[l]==color[j]</div></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeBoxes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; boxes)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> dp[<span class="number">100</span>][<span class="number">100</span>][<span class="number">100</span>]=&#123;<span class="number">0</span>&#125;;<span class="comment">//原来可以这样初始化</span></div><div class="line">        <span class="keyword">return</span> dfs(boxes,dp,<span class="number">0</span>,boxes.size()<span class="number">-1</span>,<span class="number">0</span>);<span class="comment">//记忆化搜索DP</span></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; boxes,<span class="keyword">int</span> dp[<span class="number">100</span>][<span class="number">100</span>][<span class="number">100</span>],<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(l&gt;r)<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(dp[l][r][k])<span class="keyword">return</span> dp[l][r][k];</div><div class="line">        <span class="keyword">while</span>(boxes[r]==boxes[r<span class="number">-1</span>])&#123;</div><div class="line">            --r;</div><div class="line">            ++k;</div><div class="line">        &#125;</div><div class="line">        dp[l][r][k]=dfs(boxes,dp,l,r<span class="number">-1</span>,<span class="number">0</span>)+(k+<span class="number">1</span>)*(k+<span class="number">1</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=l;i&lt;r;++i)&#123;</div><div class="line">            <span class="keyword">if</span>(boxes[i]==boxes[r])&#123;</div><div class="line">                dp[l][r][k]=max(dp[l][r][k],dfs(boxes,dp,i+<span class="number">1</span>,r<span class="number">-1</span>,<span class="number">0</span>)+dfs(boxes,dp,l,i,k+<span class="number">1</span>));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dp[l][r][k];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-leetcode/">算法 leetcode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/05/leetcode34/" title="leetcode 34" itemprop="url">leetcode 34</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-05T05:30:59.000Z" itemprop="datePublished"> 发表于 2017-07-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给定一个上升数组和一个target数，求数组中值为该数的左右边界，不存在该数则为[-1,-1].</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>看到在有序数组中查找的，首先就想到二分法。另外该题可以直接使用STL自带的lower_bound和upper_bound解决。lower_bound返回的是第一个元素值&gt;=查找值的位置，upper_bound返回的是第一个元素值&gt;查找值的位置。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; searchRange(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</div><div class="line">        <span class="keyword">int</span> sz = nums.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res(<span class="number">2</span>,<span class="number">-1</span>);</div><div class="line">        <span class="keyword">int</span> l=lower_bound(nums.begin(),nums.end(),target)-nums.begin();</div><div class="line">        <span class="keyword">if</span>(l==sz || nums[l]!=target) <span class="keyword">return</span> res;</div><div class="line">        res[<span class="number">0</span>]=l;</div><div class="line">        <span class="keyword">int</span> r=upper_bound(nums.begin(),nums.end(),target)-nums.begin();</div><div class="line">        res[<span class="number">1</span>]=r<span class="number">-1</span>;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; searchRange(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</div><div class="line">        <span class="keyword">int</span> sz = nums.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res(<span class="number">2</span>,<span class="number">-1</span>);</div><div class="line">        <span class="keyword">int</span> l=<span class="number">0</span>,r=sz<span class="number">-1</span>;</div><div class="line">        <span class="keyword">while</span>(l&lt;r)&#123;</div><div class="line">            <span class="keyword">int</span> mid = (l+r)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</div><div class="line">                l=mid+<span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                r=mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(l&lt;sz &amp;&amp; nums[l]==target)res[<span class="number">0</span>]=l;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> res;</div><div class="line">        l=<span class="number">0</span>;r=sz<span class="number">-1</span>;</div><div class="line">         <span class="keyword">while</span>(l&lt;r)&#123;</div><div class="line">            <span class="keyword">int</span> mid = (l+r+<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</div><div class="line">                r=mid<span class="number">-1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                l=mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        res[<span class="number">1</span>]=r;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-leetcode/">算法 leetcode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/01/单调栈和单调队列/" title="单调栈和单调队列" itemprop="url">单调栈和单调队列</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-01T01:01:59.000Z" itemprop="datePublished"> 发表于 2017-07-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h2><p>单调栈具有如下性质：  </p>
+<ul>
+<li>若是单调递增栈，则从栈顶到栈底的元素是严格递增的；若是单调递减栈，则从栈顶到栈底的元素是严格递减的。  </li>
+<li>对于单调递增栈，若当前进栈元素比栈顶元素大(或相等)，则应将栈顶元素出栈，直至进栈元素比栈顶元素小；单调递减栈同理。  </li>
+<li>单调递增栈栈顶元素左边保存的是数组左边第一个比栈顶元素大的元素。</li>
+</ul>
+<h3 id="1-右侧第1个比自己大的数"><a href="#1-右侧第1个比自己大的数" class="headerlink" title="1.右侧第1个比自己大的数"></a>1.右侧第1个比自己大的数</h3><blockquote>
+<p>给一个数组，返回一个大小相同的数组。返回的数组的第i个位置的值应当是，对于原数组中的第i个元素，至少往右走多少步，才能遇到一个比自己大的元素（如果之后没有比自己大的元素，或者已经是最后一个元素，则在返回数组的对应位置放上-1）。<br>示例：<br>input:[5 3 1 2 4]<br>output:[-1 3 1 1 -1]</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>维护一个单调递增栈，栈内保存数组元素下标，对于一个进栈元素，若比当前栈顶下标对应的元素大，说明该元素是比栈顶下标对应元素大的第一个数，则对应位置结果为二者下标差，将栈顶元素出栈，继续比较进栈元素和进栈元素大小，直至栈顶元素比进栈元素大，说明栈顶元素之前的元素都比进栈元素大。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nextExceed(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;input)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res(input.size(),<span class="number">-1</span>);</div><div class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; monoStack;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;input.size();++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(!monoStack.empty() &amp;&amp; input[monoStack.top()]&lt;input[i])</div><div class="line">        &#123;</div><div class="line">            res[monoStack.top()]=i-monoStack.top();</div><div class="line">            monoStack.pop();</div><div class="line">        &#125;</div><div class="line">        monoStack.push(i);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="2-Largest-Rectangle-in-Histogram"><a href="#2-Largest-Rectangle-in-Histogram" class="headerlink" title="2.Largest Rectangle in Histogram"></a>2.<a href="https://leetcode.com/problems/largest-rectangle-in-histogram/description/" target="_blank" rel="external">Largest Rectangle in Histogram</a></h3><h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>和上题差不多，对于每个bar，找到右边第一个比它矮的bar,则它能围成的矩面积形为它的高乘以第一个比它矮的bar的下标和左边第一个比它矮的下标差。如果右边没有比它矮的bar,则能围成的面积为它的高乘以数组大小减去左边第一个比它矮的下标，如果左边没有比它矮的，下标即为-1,。也可以在数组末尾添加1个0，使得右边一定有个比任何bar都矮的。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; heights)</span> </span>&#123;</div><div class="line">    heights.push_back(<span class="number">0</span>);</div><div class="line">    <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; monoStack;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;heights.size();++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(!monoStack.empty() &amp;&amp; heights[i]&lt;heights[monoStack.top()])</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> h=heights[monoStack.top()];</div><div class="line">            monoStack.pop();</div><div class="line">            <span class="keyword">int</span> sidx = monoStack.empty()?<span class="number">-1</span>:monoStack.top();</div><div class="line">            res=max(res,h*(i-sidx<span class="number">-1</span>));</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        monoStack.push(i);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="3-Maximal-Rectangle"><a href="#3-Maximal-Rectangle" class="headerlink" title="3.Maximal Rectangle"></a>3.<a href="https://leetcode.com/problems/maximal-rectangle/description/" target="_blank" rel="external">Maximal Rectangle</a></h3><h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>这道题可以转化为上一道题，把每一列看做一个bar,对于每行元素，如果某元素为1，则其高度为上一行对应列元素高度加1，否则该元素高度为0。这样每一行我们都可以构造一个bar的高度数组heights,把heights传入上一题函数中，可得本行最大矩形面积；遍历每一行，即可得到答案。<br>对于示例：<br>第一行，对应的高度为 1 0 1 0 0<br>第二行，对应的高度为 2 0 2 1 1<br>第三行，对应的高度为 3 1 3 2 2<br>第四行，对应的高度为 4 0 0 3 0<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">maximalRectangle</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; matrix)</span> </span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(matrix.size()==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; heights(matrix[<span class="number">0</span>].size(),<span class="number">0</span>);</div><div class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;matrix.size();++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;matrix[i].size();++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(matrix[i][j]==<span class="string">'0'</span>)heights[j]=<span class="number">0</span>;</div><div class="line">            <span class="keyword">else</span> ++heights[j];</div><div class="line">        &#125;</div><div class="line">        res = max(res,largestRectangleArea(heights));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h2><p>单调队列是一个双端的队列，也就是通常说的Deque，它既可以从队列的头取走元素，也可以从队列的尾取走元素。一般用于动态规划中或者用于动态维护子数组的最值（最小值或者最大值）。</p>
+<h3 id="1-Sliding-Window-Maximum"><a href="#1-Sliding-Window-Maximum" class="headerlink" title="1.Sliding Window Maximum"></a>1.<a href="https://leetcode.com/problems/sliding-window-maximum/description/" target="_blank" rel="external">Sliding Window Maximum</a></h3><h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>我们用一个单调队列维护窗口内的最大值的下标，对于每个进队元素，如果当前元素比队尾元素大，队尾元素不可能是窗口内最大值，则将队尾元素出队，直至找到一个不小于当前元素的队尾元素，或者队列为空；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; maxSlidingWindow(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k) &#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt;monoQueue;</div><div class="line">    <span class="keyword">if</span>(nums.size()==<span class="number">0</span>)<span class="keyword">return</span> res;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k;++i)&#123;</div><div class="line">        <span class="keyword">while</span>(!monoQueue.empty() &amp;&amp; nums[i]&gt;nums[monoQueue.back()])monoQueue.pop_back();</div><div class="line">        monoQueue.push_back(i);</div><div class="line">    &#125;</div><div class="line">    res.push_back(nums[monoQueue.front()]);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=k;i&lt;nums.size();++i)&#123;</div><div class="line">        <span class="keyword">while</span>(!monoQueue.empty() &amp;&amp; i-monoQueue.front()&gt;=k)monoQueue.pop_front();</div><div class="line">        <span class="keyword">while</span>(!monoQueue.empty() &amp;&amp; nums[i]&gt;nums[monoQueue.back()])monoQueue.pop_back();</div><div class="line">        monoQueue.push_back(i);</div><div class="line">        res.push_back(nums[monoQueue.front()]);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-leetcode/">算法 leetcode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
 
    
     
@@ -658,224 +961,9 @@
 
 
 
-   
-    
-    <article class="post-expand intel" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/04/Studio开发环境搭建说明/" title="Intel Parallel Studio开发环境搭建说明" itemprop="url">Intel Parallel Studio开发环境搭建说明</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-04T10:04:23.000Z" itemprop="datePublished"> 发表于 2016-09-04</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="Intel-Parallel-Studio开发环境搭建说明"><a href="#Intel-Parallel-Studio开发环境搭建说明" class="headerlink" title="Intel Parallel Studio开发环境搭建说明"></a>Intel Parallel Studio开发环境搭建说明</h3><h4 id="安装Intel-Parallel-Studio"><a href="#安装Intel-Parallel-Studio" class="headerlink" title="安装Intel Parallel Studio"></a>安装Intel Parallel Studio</h4><ol>
-<li><p>安装visual studio 2013</p>
-</li>
-<li><p>去英特尔官网使用学校邮箱注册账号(<a href="https://software.intel.com/registration/?lang=en-us" target="_blank" rel="external">https://software.intel.com/registration/?lang=en-us</a>)</p>
-</li>
-<li><p>使用学校邮箱申请免费使用Parallel Studio(<a href="https://registrationcenter.intel.com/en/forms/?licensetype=2&amp;productid=2489" target="_blank" rel="external">https://registrationcenter.intel.com/en/forms/?licensetype=2&amp;productid=2489</a>)<br>选中所有复选框点Accept<br>填写邮箱和地区点Submit<br>获得序列号</p>
-</li>
-<li><p>下好安装文件后按照提示安装即可</p>
-</li>
-</ol>
-<h4 id="如何使用ICC和MKL"><a href="#如何使用ICC和MKL" class="headerlink" title="如何使用ICC和MKL"></a>如何使用ICC和MKL</h4><ol>
-<li><p>打开Visual Studio新建项目</p>
-</li>
-<li><p>点击上方菜单栏 项目-Intel Compiler-Use Visual C++即可切换至ICC编译器</p>
-</li>
-<li><p>使用MKL：点击菜单栏 项目-属性-配置属性，如图启用MKL库即可</p>
-</li>
-<li><p>在文件中添加<code>#include&lt;mkl.h&gt;</code>即可</p>
-</li>
-</ol>
-<h4 id="至此完成开发环境搭建，调用MKL完成后续模块即可"><a href="#至此完成开发环境搭建，调用MKL完成后续模块即可" class="headerlink" title="至此完成开发环境搭建，调用MKL完成后续模块即可"></a>至此完成开发环境搭建，调用MKL完成后续模块即可</h4>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Parallel-Studio/">Parallel Studio</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Parallel-Studio/">Parallel Studio</a><a href="/tags/ICC/">ICC</a><a href="/tags/MKL/">MKL</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/08/29/PAT-1061/" title="PAT 1061" itemprop="url">PAT 1061</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-29T14:49:40.000Z" itemprop="datePublished"> 发表于 2016-08-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>(<a href="https://www.patest.cn/contests/pat-a-practise/1061" target="_blank" rel="external">https://www.patest.cn/contests/pat-a-practise/1061</a>)</p>
-<p>Sherlock Holmes received a note with some strange strings: “Let’s date! 3485djDkxh4hhGE 2984akDfkkkkggEdsb s&amp;hgsfdk d&amp;Hyscvnm”. It took him only a minute to figure out that those strange strings are actually referring to the coded time “Thursday 14:04” – since the first common capital English letter (case sensitive) shared by the first two strings is the 4th capital letter ‘D’, representing the 4th day in a week; the second common character is the 5th capital letter ‘E’, representing the 14th hour (hence the hours from 0 to 23 in a day are represented by the numbers from 0 to 9 and the capital letters from A to N, respectively); and the English letter shared by the last two strings is ‘s’ at the 4th position, representing the 4th minute. Now given two pairs of strings, you are supposed to help Sherlock decode the dating time.</p>
-<p>Input Specification:</p>
-<p>Each input file contains one test case. Each case gives 4 non-empty strings of no more than 60 characters without white space in 4 lines.</p>
-<p>Output Specification:</p>
-<p>For each test case, print the decoded time in one line, in the format “DAY HH:MM”, where “DAY” is a 3-character abbreviation for the days in a week – that is, “MON” for Monday, “TUE” for Tuesday, “WED” for Wednesday, “THU” for Thursday, “FRI” for Friday, “SAT” for Saturday, and “SUN” for Sunday. It is guaranteed that the result is unique for each case.</p>
-<p>Sample Input:<br>3485djDkxh4hhGE<br>2984akDfkkkkggEdsb<br>s&amp;hgsfdk<br>d&amp;Hyscvnm  </p>
-<p>Sample Output:<br>THU 14:04</p>
-<h2 id="Python版"><a href="#Python版" class="headerlink" title="Python版"></a>Python版</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">dict = [<span class="string">"MON"</span>,<span class="string">"TUE"</span>,<span class="string">"WED"</span>,<span class="string">"THU"</span>,<span class="string">"FRI"</span>,<span class="string">"SAT"</span>,<span class="string">"SUN"</span>]</div><div class="line">params = []</div><div class="line">result = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">4</span>):</div><div class="line">    params.append(input())</div><div class="line"></div><div class="line">n = min(len(params[<span class="number">0</span>]),len(params[<span class="number">1</span>]))</div><div class="line">k = <span class="number">-1</span></div><div class="line">day =<span class="number">-1</span></div><div class="line">hour = <span class="number">-1</span></div><div class="line">minute = <span class="number">-1</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isupper() <span class="keyword">and</span> ord(params[<span class="number">0</span>][i])&lt;ord(<span class="string">'H'</span>)):</div><div class="line">        day = ord(params[<span class="number">0</span>][i])-ord(<span class="string">'A'</span>)</div><div class="line">        k=i</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k+<span class="number">1</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isdigit()):</div><div class="line">        hour = int(params[<span class="number">0</span>][i])</div><div class="line">        <span class="keyword">break</span></div><div class="line">    <span class="keyword">elif</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isupper() <span class="keyword">and</span> ord(params[<span class="number">0</span>][i])&lt;ord(<span class="string">'O'</span>)):</div><div class="line">        hour = ord(params[<span class="number">0</span>][i])-ord(<span class="string">'A'</span>)+<span class="number">10</span></div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">n = min(len(params[<span class="number">2</span>]),len(params[<span class="number">3</span>]))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">2</span>][i] == params[<span class="number">3</span>][i] <span class="keyword">and</span> (params[<span class="number">2</span>][i].isupper() <span class="keyword">or</span> params[<span class="number">2</span>][i].islower())):</div><div class="line">        minute = i</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">print(<span class="string">'%s %d%d:%d%d'</span>%(dict[day],hour/<span class="number">10</span>,hour%<span class="number">10</span>,minute/<span class="number">10</span>,minute%<span class="number">10</span>))</div></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/PAT/">PAT</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/PAT/">PAT</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/08/21/写在最前面的话/" title="随便聊聊" itemprop="url">随便聊聊</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-21T12:41:04.000Z" itemprop="datePublished"> 发表于 2016-08-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>欲将心事付瑶琴，知音少，弦断有谁听。</p>
-</blockquote>
-<p><img src="http://oc9b84kcd.bkt.clouddn.com/image/jpeg/1.jpeg1.jpeg" alt="孤独"></p>
-<p>花了半天把个人博客搭好了，原来在CSDN上的博客(<a href="http://blog.csdn.net/luoshaochuan1993" target="_blank" rel="external">http://blog.csdn.net/luoshaochuan1993</a>) 就不写了,看了下也没啥好迁移的，干脆从头开始吧，加油！</p>
-<blockquote>
-<p>他年我若为青帝，报与桃花一处开。</p>
-</blockquote>
-<p><img src="http://oc9b84kcd.bkt.clouddn.com/55adef26d0dd7.jpg" alt="桃花"></p>
-<p>这几天总是静不下心来。看到实验室师兄为了找工作到处跑，不免对自己的未来有些担忧。所谓人无远虑，必有近忧，趁现在刚入学，还是给自己定些小目标吧。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/生活随笔/">生活随笔</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/生活随笔/">生活随笔</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/4/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next<span></span></a>
   </nav>
 
 </div>
@@ -951,11 +1039,11 @@
 			
 		
 			
-				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
 			
 		
 			
@@ -983,11 +1071,15 @@
 			
 		
 			
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
 			
 		
 			
@@ -995,15 +1087,11 @@
 			
 		
 			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/二叉搜索树/" title="二叉搜索树">二叉搜索树<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -1142,12 +1230,58 @@ $(document).ready(function(){
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 
 <!-- MathJax End -->
 
 <!-- Tiny_search Begin -->
 
-<!-- Tiny_search End -->
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
   </body>
  </html>
