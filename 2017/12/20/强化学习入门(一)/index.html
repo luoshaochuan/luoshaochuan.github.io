@@ -25,7 +25,7 @@ Agent &amp;amp; EnviromentAgent
 Policy（策略）：它根据当前看到的observation来决定action，是从state到action的映射。有两种表达形式，一种是Deterministic policy（确定策略）即a=π(s)a=π(s)，在某种状态">
 <meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/Agent%20and%20Env.png">
 <meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/MDP.png">
-<meta property="og:updated_time" content="2018-01-23T12:51:02.981Z">
+<meta property="og:updated_time" content="2018-01-23T13:12:42.142Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强化学习入门(一)">
 <meta name="twitter:description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDog
@@ -118,15 +118,18 @@ Policy（策略）：它根据当前看到的observation来决定action，是从
 <p>机器处于环境E中，状态空间为X,其中每个状态x是机器感知到的环境的描述，如种瓜任务上就是当前瓜苗长势的描述；机器能采取的动作构成动作空间A；机器采取的动作作用的当前状态上，会使当前环境按状态转移函数P转移到另一状态，转移过程中环境会根据潜在的奖赏函数R反馈给机器一个奖赏。综合起来,强化学习任务对应了一个四元组E=<x,a,p,r>.机器要做的是通过在环境中不断尝试而学得一个策略(policy)phi,根据这个策略，在状态x下就能得知要执行的动作a=phi(x)。</x,a,p,r></p>
 </blockquote>
 <p><img src="http://oc9b84kcd.bkt.clouddn.com/MDP.png" alt=""></p>
-<h3 id="策略和价值"><a href="#策略和价值" class="headerlink" title="策略和价值"></a>策略和价值</h3><p><strong>策略</strong>：状态s下执行动作a的概率<br>$$<br>\pi(a|s) = P[A_t=a|S_t=s]<br>$$<br><strong>奖励</strong>：当前状态下执行动作a获得的奖励的期望<br>$$<br>R<em>s^a= E[R</em>{t+1} | S_t = s, A_t = a]<br>$$<br><strong>回报</strong>：回报是从t+1时刻开始的累积折扣奖励<br>$$<br>G<em>t = R</em>{t+1}+\gamma R<em>{t+2}+…=\sum</em>{k=0}^{\infty}\gamma^kR_{t+k+1}<br>$$<br><strong>策略</strong>：是agent的行为函数，只跟状态有关<br>$$<br>\pi(a|s) = \mathbb P[A_t = a | S<em>t = s]<br>$$<br><strong>状态值函数</strong>:状态值函数vπ(s)是从状态s出发，按照策略π采取行为得到的期望回报<br>$$<br>v</em>\pi(s) = \mathbb E_\pi[G_t | S_t = s]</p>
-<p>$$<br><strong>行为值函数</strong>:行为值函数qπ(s,a)是从状态s出发，采取行为a后，然后按照策略π采取行为得到的期望回报<br>$$<br>q<em>\pi(s, a) = \mathbb E</em>\pi[G_t | S_t = s, A_t = a]<br>$$</p>
-<h3 id="Bellman期望方程"><a href="#Bellman期望方程" class="headerlink" title="Bellman期望方程"></a>Bellman期望方程</h3><p>Bellman期望方程其实就是vπ(s)和qπ(s,a)自身以及相互之间的递推关系。<br>按照状态值函数和行为值函数定义可以得到如下递推式：<br>$$<br>v<em>\pi(s)= \mathbb E</em>\pi[R<em>{t+1}+\gamma G</em>{t+1} |S_t = s]  </p>
-<p>= \mathbb E<em>\pi[R</em>{t+1}+\gamma v<em>\pi(S</em>{t+1}) | S_t = s]</p>
-<p>q<em>\pi(s, a)= \mathbb E</em>\pi[G_t | S_t = s, A_t = a] </p>
-<p>= \mathbb E<em>\pi[R</em>{t+1} +\gamma q<em>\pi(S</em>{t+1}, A_{t+1}) | S_t = s, A_t = a]</p>
-<p>$$<br>vπ(s)与qπ(s,a)之间的关系:<br>$$<br>v<em>\pi(s) = \sum</em>{a\in {A}} \pi(a|s)q_{\pi}(s, a)</p>
-<p>q_\pi(s,a) = {R}<em>s^a + \gamma \sum</em>{s’ \in {S}} {P}<em>{ss’}^a v</em>\pi(s’)<br>$$<br>递推方程：<br>$$<br>v<em>\pi(s) = \sum</em>{a} \pi(a|s) \left[ {R}<em>s^a + \gamma \sum</em>{s’} { P}<em>{ss’}^a v</em>\pi(s’) \right]</p>
-<p>q_\pi(s, a) = {R}<em>s^a + \gamma \sum</em>{s’}{P}<em>{ss’}^a \sum</em>{a’}\pi(a’|s’)q_\pi(s’, a’)<br>$$<br>这两个方程的物理意义是：  </p>
+<h3 id="策略和价值"><a href="#策略和价值" class="headerlink" title="策略和价值"></a>策略和价值</h3><p><strong>策略</strong>：状态s下执行动作a的概率<br><span>$\pi(a|s) = P[A_t=a|S_t=s]$</span><!-- Has MathJax --><br><strong>奖励</strong>：当前状态下执行动作a获得的奖励的期望<br><span>$R_s^a = E[R_{t+1}|S_t=s, A_t=a]$</span><!-- Has MathJax --><br><strong>回报</strong>：回报是从t+1时刻开始的累积折扣奖励<br><span>$G_t = R_{t+1}+\gamma R_{t+2}+&hellip;=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}$</span><!-- Has MathJax --><br><strong>策略</strong>：是agent的行为函数，只跟状态有关<br><span>$\pi(a|s) = \mathbb P[A_t = a | S_t = s]$</span><!-- Has MathJax --><br><strong>状态值函数</strong>:状态值函数vπ(s)是从状态s出发，按照策略π采取行为得到的期望回报<br><span>$$v_\pi(s) = \mathbb E_\pi[G_t | S_t = s]$$</span><!-- Has MathJax --><br><strong>行为值函数</strong>:行为值函数qπ(s,a)是从状态s出发，采取行为a后，然后按照策略π采取行为得到的期望回报<br><span>$q_\pi(s, a) = \mathbb E_\pi[G_t | S_t = s, A_t = a]$</span><!-- Has MathJax --></p>
+<h3 id="Bellman期望方程"><a href="#Bellman期望方程" class="headerlink" title="Bellman期望方程"></a>Bellman期望方程</h3><p>Bellman期望方程其实就是vπ(s)和qπ(s,a)自身以及相互之间的递推关系。<br>按照状态值函数和行为值函数定义可以得到如下递推式：<br><span>$$v_\pi(s)= \mathbb E_\pi[R_{t+1}+\gamma G_{t+1} |S_t = s]  
+
+= \mathbb E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1}) | S_t = s]
+
+q_\pi(s, a)= \mathbb E_\pi[G_t | S_t = s, A_t = a] 
+
+= \mathbb E_\pi[R_{t+1} +\gamma q_\pi(S_{t+1}, A_{t+1}) | S_t = s, A_t = a]$$</span><!-- Has MathJax --><br>vπ(s)与qπ(s,a)之间的关系:<br><span>$$v_\pi(s) = \sum_{a\in {A}} \pi(a|s)q_{\pi}(s, a)
+
+q_\pi(s,a) = {R}_s^a + \gamma \sum_{s&apos; \in {S}} {P}_{ss&apos;}^a v_\pi(s&apos;)$$</span><!-- Has MathJax --><br>递推方程：<br><span>$$v_\pi(s) = \sum_{a} \pi(a|s) \left[ {R}_s^a + \gamma \sum_{s&apos;} { P}_{ss&apos;}^a v_\pi(s&apos;) \right]
+
+q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(a&apos;|s&apos;)q_\pi(s&apos;, a&apos;)$$</span><!-- Has MathJax --><br>这两个方程的物理意义是：  </p>
 <ul>
 <li>当前状态下能获得的回报的期望等于当前状态下采取动作a的概率乘上采取动作a所获得的的奖励与采取状态a引起的状态转移获得的累积折扣期望回报之和。</li>
 <li>当前状态下采取动作a获得的回报的期望等于采取动作a所获得的奖励与采取动作a引起的状态转移所获得的累积折扣期望回报之和。<h3 id="探索与利用-Exploration-amp-Exploitation"><a href="#探索与利用-Exploration-amp-Exploitation" class="headerlink" title="探索与利用 Exploration &amp; Exploitation"></a>探索与利用 Exploration &amp; Exploitation</h3>探索：放弃一些已知的reward信息，尝试去做一些新的选择。<br>利用： 从已知reward信息中，选择一个reward最大的。<br><strong>强化学习是在探索与利用之间达到折中。</strong>  <h4 id="ε-贪心"><a href="#ε-贪心" class="headerlink" title="ε-贪心"></a>ε-贪心</h4>ε-贪心是基于一个概率来对探索和利用进行折中：每次尝试时，以ε概率进行探索，以1-ε概率进行利用。<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4>以一定概率进行选取，若某些动作回报高于其他，则被选取的概率也会更大。</li>
@@ -254,6 +257,14 @@ Policy（策略）：它根据当前看到的observation来决定action，是从
 			
 		
 			
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
 			
 		
@@ -262,15 +273,15 @@ Policy（策略）：它根据当前看到的observation来决定action，是从
 			
 		
 			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
 			
@@ -294,15 +305,7 @@ Policy（策略）：它根据当前看到的observation来决定action，是从
 			
 		
 			
-				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/二叉树/" title="二叉树">二叉树<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
 			
 		
 			
