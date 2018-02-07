@@ -74,6 +74,116 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/10/13/双向BFS/" title="双向BFS" itemprop="url">双向BFS</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-10-13T14:05:00.000Z" itemprop="datePublished"> 发表于 2017-10-13</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="双向BFS"><a href="#双向BFS" class="headerlink" title="双向BFS"></a>双向BFS</h3><p>如果我们已经知道搜索的起点和终点，可以采用双向BFS进行搜索。双向BFS基于两个队列begin和end,每次搜索从较小的那个队列进行搜索，如果两个队列里有公共元素，则搜索终止。</p>
+<h3 id="例1-127-Word-Ladder"><a href="#例1-127-Word-Ladder" class="headerlink" title="例1.127. Word Ladder"></a>例1.<a href="https://leetcode.com/problems/word-ladder/description/" target="_blank" rel="external">127. Word Ladder</a></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList)</span> </span>&#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>,<span class="keyword">bool</span>&gt; M;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> str:wordList)M[str]=<span class="literal">false</span>;</div><div class="line">        <span class="keyword">if</span>(!M.count(endWord))<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; beginQ,endQ,swapQ;</div><div class="line">        beginQ.insert(beginWord);endQ.insert(endWord);</div><div class="line">        M[beginWord]=<span class="literal">true</span>;M[endWord]=<span class="literal">true</span>;</div><div class="line">        <span class="keyword">int</span> steps=<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(!beginQ.empty()&amp;&amp;!endQ.empty())</div><div class="line">        &#123;</div><div class="line">            ++steps;</div><div class="line">            <span class="keyword">if</span>(beginQ.size()&gt;endQ.size())swap(beginQ,endQ);</div><div class="line">            swapQ.clear();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> word:beginQ)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;word.size();++i)</div><div class="line">                &#123;</div><div class="line">                    <span class="built_in">string</span> s=word;</div><div class="line">                    <span class="keyword">for</span>(<span class="keyword">int</span> c=<span class="string">'a'</span>;c&lt;=<span class="string">'z'</span>;++c)</div><div class="line">                    &#123;</div><div class="line">                        s[i]=c;</div><div class="line">                        <span class="keyword">if</span>(endQ.count(s))<span class="keyword">return</span> steps+<span class="number">1</span>;</div><div class="line">                        <span class="keyword">if</span>(M.count(s)&amp;&amp;!M[s])</div><div class="line">                        &#123;</div><div class="line">                            M[s]=<span class="literal">true</span>;</div><div class="line">                            swapQ.insert(s);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            swap(beginQ,swapQ);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/BFS/">BFS</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/10/02/Trie树/" title="Trie树" itemprop="url">Trie树</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-10-02T12:23:00.000Z" itemprop="datePublished"> 发表于 2017-10-02</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h3><p>字典树是储存着不同字符串的数据结构，是一个n叉树(n为字符串集的大小)，对于一棵储存26个字母的字典树来说，它的每一个节点储存着26个指针可以分别代表这个节点后面加上‘a’~’z’后可以指向那个节点。<br>插入的时候从根节点开始，沿着对应的边走（如果某个指针后面指向的节点为空，可以新建一个节点）走到字符串结束的时候在当前停留的节点标记一下(是否出现过，出现了几次等)。<br>查询的时候也是一样从根节点走，如果走到某个节点无路可走了，说明查不到，当一路走到字符串结束时，检查当前停留的节点是否被标记过。<br>==别忘了初始化根节点！==<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e6</span>+<span class="number">5</span>;</div><div class="line"><span class="keyword">struct</span> node</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> next[<span class="number">26</span>];<span class="comment">//下一个节点编号</span></div><div class="line">    <span class="keyword">int</span> cnt;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        cnt=<span class="number">0</span>;</div><div class="line">        <span class="built_in">memset</span>(next,<span class="number">-1</span>,<span class="keyword">sizeof</span>(next));</div><div class="line">    &#125;</div><div class="line">&#125;T[maxn];</div><div class="line"><span class="keyword">int</span> le=<span class="number">1</span>;<span class="comment">//当前节点数量</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">char</span> *s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>,p=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(s[i])</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> x=s[i]-<span class="string">'a'</span>;</div><div class="line">        <span class="keyword">if</span>(T[p].next[x]==<span class="number">-1</span>)<span class="comment">//创建节点</span></div><div class="line">        &#123;</div><div class="line">            T[le].init();</div><div class="line">            T[p].next[x]=le++;</div><div class="line">        &#125;</div><div class="line">        p=T[p].next[x];</div><div class="line">        T[p].cnt++;</div><div class="line">        i++</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">query</span><span class="params">(<span class="keyword">char</span> *s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>,p=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(s[i])</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> x=s[i]-<span class="string">'a'</span>;</div><div class="line">        <span class="keyword">if</span>(T[p].next[x]==<span class="number">-1</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"0\n"</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        p=T[p].next[x];</div><div class="line">        ++i;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,T[p].cnt);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Trie树/">Trie树</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/09/29/Manacher算法/" title="Manacher算法" itemprop="url">Manacher算法</a>
   </h1>
   <p class="article-author">By
@@ -578,122 +688,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/31/hihocoder1141/" title="区间逆序对" itemprop="url">区间逆序对</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-31T14:49:40.000Z" itemprop="datePublished"> 发表于 2017-08-31</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="二分·归并排序之逆序对"><a href="#二分·归并排序之逆序对" class="headerlink" title=" 二分·归并排序之逆序对"></a><a href="http://hihocoder.com/problemset/problem/1141" target="_blank" rel="external"> 二分·归并排序之逆序对</a></h3><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>元素值较小时可以采用树状数组，否则采用归并排序。<br>假设有个数组{4,3,2,1}那么我们二分数组得到{4,3},{2,1}两个子数组。对{4,3}继续二分得到两个子数组a{4},b{3}现在我们将两个进行归并为c。b的第一个元素3小于4，先把3放进c,再把a中的4放进c。可以看出每次把a中元素放入c时,c中属于b的元素都和此元素构成逆序对，所以我们只需要统计c中属于b的元素个数cnt，每次向c中放a元素时，结果加上cnt即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e5</span>+<span class="number">5</span>;</div><div class="line"></div><div class="line"><span class="keyword">long</span> <span class="keyword">long</span> res=<span class="number">0</span>,cnt=<span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> a[maxn],b[maxn];</div><div class="line"><span class="keyword">int</span> n;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> m,<span class="keyword">int</span> r)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i,j,k;</div><div class="line">    <span class="keyword">for</span>(i=l;i&lt;=r;++i)b[i]=a[i];</div><div class="line">    cnt=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(i=l,j=m+<span class="number">1</span>,k=l;i&lt;=m&amp;&amp;j&lt;=r;)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(b[i]&lt;=b[j])</div><div class="line">        &#123;</div><div class="line">            a[k++]=b[i++];</div><div class="line">            res+=cnt;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            a[k++]=b[j++];</div><div class="line">            cnt++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(i&lt;=m)</div><div class="line">    &#123;</div><div class="line">        a[k++]=b[i++];</div><div class="line">        res+=cnt;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(j&lt;=r)</div><div class="line">        a[k++]=b[j++];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(l&lt;r)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</div><div class="line">        merge_sort(l,m);</div><div class="line">        merge_sort(m+<span class="number">1</span>,r);</div><div class="line">        merge(l,m,r);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</div><div class="line">    merge_sort(<span class="number">0</span>,n<span class="number">-1</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%lld"</span>,res);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/hihocoder/">hihocoder</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/hihocoder-分治/">hihocoder 分治</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/31/leetcode33/" title="leetcode 33.Search in Rotated Sorted Array" itemprop="url">leetcode 33.Search in Rotated Sorted Array</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-31T02:21:00.000Z" itemprop="datePublished"> 发表于 2017-08-31</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/description/" target="_blank" rel="external">https://leetcode.com/problems/search-in-rotated-sorted-array/description/</a></p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>一个旋转过的数组，加上旋转位置是pivot,则在[0,pivot],[pivot+1,n-1]之间两段数组都是有序的，如果target&gt;=nums[0],说明target位于[0,pivot]之间，否则说明target位于[pivot+1,n-1]之间。在进行二分搜索时，我们可以根据nums[mid]和nums[0]的关系以及target和nums[0]的关系来调整左右端点。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先找到旋转的位置k,在[0,k-1],[k,n-1]之间分别进行二分搜索，找到则返回下标，都找不到则返回-1</span></div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> l = <span class="number">0</span>,r=nums.size()<span class="number">-1</span>;</div><div class="line">        <span class="keyword">while</span>(l&lt;=r)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> m = (l+r)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(target&gt;=nums[<span class="number">0</span>])<span class="comment">//target位于左边数组</span></div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(nums[m]&gt;=nums[<span class="number">0</span>])</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span>(nums[m]&lt;target)</div><div class="line">                        l=m+<span class="number">1</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(nums[m]&gt;target)</div><div class="line">                        r=m<span class="number">-1</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> m;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    r=m<span class="number">-1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span><span class="comment">//target位于右边数组</span></div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(nums[m]&lt;nums[<span class="number">0</span>])</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span>(nums[m]&lt;target)</div><div class="line">                        l=m+<span class="number">1</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(nums[m]&gt;target)</div><div class="line">                        r=m<span class="number">-1</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> m;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    l=m+<span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法-leetcode/">算法 leetcode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -760,11 +754,11 @@
 			
 		
 			
-				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
 			
 		
 			
@@ -772,7 +766,15 @@
 			
 		
 			
-				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+				<li><a href="/tags/强化学习/" title="强化学习">强化学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
 			
 		
 			
@@ -780,7 +782,7 @@
 			
 		
 			
-				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
 			
 		
 			
@@ -800,10 +802,6 @@
 			
 		
 			
-				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
@@ -812,19 +810,15 @@
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
 			
 		
 		</ul>

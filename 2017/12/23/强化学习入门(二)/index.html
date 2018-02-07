@@ -4,32 +4,33 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>动态规划总结（八）：DAG上的动态规划 | 我是小韩同学</title>
+    <title>强化学习入门(二) | 我是小韩同学</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="洛绍川">
     
 
     
-    <meta name="description" content="图上的动态规划1.矩形嵌套
-有n个矩形，每个矩形可以用两个整数a,b描述，表示他的长和宽。矩形X(a,b)可以嵌套在矩形Y(c,d)中，当且仅当a&amp;lt;c,b&amp;lt;d或者b&amp;lt;c,a&amp;lt;d。你的任务是选出尽可能多的矩形排成一行，使得除最后一个外，前一个都能嵌套在下一个矩形内。
-
-分析这题有点类似最长公共子序列问题，可以用类似的动态规划方法解决。不过，矩形的“可嵌套”是一个典型的二元关系">
+    <meta name="description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDogDavid Silver强化学习公开课之四
+model-free learning 免模型学习免模型学习：状态转移、奖励函数未知策略评估：蒙特卡罗、时间差分策略学习：Q-Learning、Sarsa强化学习的方法就是先对当前策略进行策略评估，也就是说计算出当前策略所对应的值函数；然后，利用值">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动态规划总结（八）：DAG上的动态规划">
-<meta property="og:url" content="http://www.luoshaochuan.com/2017/07/17/动态规划总结(八）/index.html">
+<meta property="og:title" content="强化学习入门(二)">
+<meta property="og:url" content="http://www.luoshaochuan.com/2017/12/23/强化学习入门(二)/index.html">
 <meta property="og:site_name" content="我是小韩同学">
-<meta property="og:description" content="图上的动态规划1.矩形嵌套
-有n个矩形，每个矩形可以用两个整数a,b描述，表示他的长和宽。矩形X(a,b)可以嵌套在矩形Y(c,d)中，当且仅当a&amp;lt;c,b&amp;lt;d或者b&amp;lt;c,a&amp;lt;d。你的任务是选出尽可能多的矩形排成一行，使得除最后一个外，前一个都能嵌套在下一个矩形内。
-
-分析这题有点类似最长公共子序列问题，可以用类似的动态规划方法解决。不过，矩形的“可嵌套”是一个典型的二元关系">
-<meta property="og:updated_time" content="2017-10-25T12:32:22.857Z">
+<meta property="og:description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDogDavid Silver强化学习公开课之四
+model-free learning 免模型学习免模型学习：状态转移、奖励函数未知策略评估：蒙特卡罗、时间差分策略学习：Q-Learning、Sarsa强化学习的方法就是先对当前策略进行策略评估，也就是说计算出当前策略所对应的值函数；然后，利用值">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/%E8%B4%AA%E5%BF%83.png">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/OnPolicy.png">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/OffPolicy.png">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/Sarsa.png">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/QLearning.png">
+<meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/MC&TD.png">
+<meta property="og:updated_time" content="2018-02-06T09:27:30.960Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动态规划总结（八）：DAG上的动态规划">
-<meta name="twitter:description" content="图上的动态规划1.矩形嵌套
-有n个矩形，每个矩形可以用两个整数a,b描述，表示他的长和宽。矩形X(a,b)可以嵌套在矩形Y(c,d)中，当且仅当a&amp;lt;c,b&amp;lt;d或者b&amp;lt;c,a&amp;lt;d。你的任务是选出尽可能多的矩形排成一行，使得除最后一个外，前一个都能嵌套在下一个矩形内。
-
-分析这题有点类似最长公共子序列问题，可以用类似的动态规划方法解决。不过，矩形的“可嵌套”是一个典型的二元关系">
+<meta name="twitter:title" content="强化学习入门(二)">
+<meta name="twitter:description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDogDavid Silver强化学习公开课之四
+model-free learning 免模型学习免模型学习：状态转移、奖励函数未知策略评估：蒙特卡罗、时间差分策略学习：Q-Learning、Sarsa强化学习的方法就是先对当前策略进行策略评估，也就是说计算出当前策略所对应的值函数；然后，利用值">
+<meta name="twitter:image" content="http://oc9b84kcd.bkt.clouddn.com/%E8%B4%AA%E5%BF%83.png">
 
     
     
@@ -82,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/17/动态规划总结(八）/" title="动态规划总结（八）：DAG上的动态规划" itemprop="url">动态规划总结（八）：DAG上的动态规划</a>
+      <a href="/2017/12/23/强化学习入门(二)/" title="强化学习入门(二)" itemprop="url">强化学习入门(二)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-17T13:18:30.000Z" itemprop="datePublished"> 发表于 2017-07-17</time>
+    <time datetime="2017-12-23T13:48:13.000Z" itemprop="datePublished"> 发表于 2017-12-23</time>
     
   </p>
 </header>
@@ -98,27 +99,23 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#图上的动态规划"><span class="toc-number">1.</span> <span class="toc-text">图上的动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-矩形嵌套"><span class="toc-number">1.1.</span> <span class="toc-text">1.矩形嵌套</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分析"><span class="toc-number">1.1.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化"><span class="toc-number">1.1.2.</span> <span class="toc-text">初始化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Card-Game"><span class="toc-number">1.2.</span> <span class="toc-text">2.Card Game</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意"><span class="toc-number">1.2.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分析-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图论建模"><span class="toc-number">1.2.3.</span> <span class="toc-text">图论建模</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#model-free-learning-免模型学习"><span class="toc-number">1.</span> <span class="toc-text">model-free learning 免模型学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#蒙特卡罗学习"><span class="toc-number">1.1.</span> <span class="toc-text">蒙特卡罗学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#时间差分学习"><span class="toc-number">1.2.</span> <span class="toc-text">时间差分学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#蒙特卡罗-vs-时间差分"><span class="toc-number">1.3.</span> <span class="toc-text">蒙特卡罗 vs 时间差分</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h2 id="图上的动态规划"><a href="#图上的动态规划" class="headerlink" title="图上的动态规划"></a>图上的动态规划</h2><h3 id="1-矩形嵌套"><a href="#1-矩形嵌套" class="headerlink" title="1.矩形嵌套"></a>1.矩形嵌套</h3><blockquote>
-<p>有n个矩形，每个矩形可以用两个整数a,b描述，表示他的长和宽。矩形X(a,b)可以嵌套在矩形Y(c,d)中，当且仅当a&lt;c,b&lt;d或者b&lt;c,a&lt;d。你的任务是选出尽可能多的矩形排成一行，使得除最后一个外，前一个都能嵌套在下一个矩形内。</p>
-</blockquote>
-<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>这题有点类似最长公共子序列问题，可以用类似的动态规划方法解决。不过，矩形的“可嵌套”是一个典型的二元关系，<a href="http://blog.csdn.net/songzitea/article/details/45980289" target="_blank" rel="external">二元关系的图表示</a>。二元关系可以用图建模。将可嵌套的矩形用一条边连起来，问题等价于在图上寻找最长路径。<br>首先我们利用邻接矩阵G(i,j)来建图,如果矩形i可以嵌套在矩形j中，则G(i,j)=1。令d[i]表示从i开始的最长路径，则<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">d[i]=max\left \&#123; d[j]+1|if(G(i,j)==1) \right \&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>d[1…N]=0</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> i)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> &amp;ans = d[i];</div><div class="line">    <span class="keyword">if</span>(ans&gt;<span class="number">0</span>)<span class="keyword">return</span> ans;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;++j)</div><div class="line">    <span class="keyword">if</span>(G[i][j])ans=max(ans,dp(j)+<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-Card-Game"><a href="#2-Card-Game" class="headerlink" title="2.Card Game"></a>2.Card Game</h3><p><a href="https://codejam.withgoogle.com/codejam/contest/4214486/dashboard#s=p2" target="_blank" rel="external">题目</a></p>
-<h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p>给定一串数字A1…An,给你一个数字K,如果相邻的三个数A[k],A[k+1],A[k+2]之间的差为K,则这三个数字可以删去。重复以上操作，求能剩下的最少的数字的个数。</p>
-<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>如果用动态规划来做，则令dp[i][j]表示i到j至今能剩下的最少的数量。显然少于三张牌没办法删除，所以dp[i][j]=j-i+1 if j-i&lt;2。如果多余三张牌，则分下面两种情况讨论：</p>
-<ul>
-<li><p><strong>A[i]最后没被删去</strong><br>dp[i][j]=dp[i+1][j]+1</p>
-</li>
-<li><p><strong>A[i]最后被删去</strong><br>A[i]到A[j]之间必然存在A[p]=A[i]+K,A[q]=A[i]+2K,i&lt;p&lt;q&lt;=j且best[i+1][p-1]=0,<br>best[p+1][q-1]=0,所以dp[i][j]=dp[q+1][j]</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span> (j - i &lt; <span class="number">2</span>)</div><div class="line">		<span class="keyword">return</span> j - i + <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span> (dp[i][j]&gt;=<span class="number">0</span>)</div><div class="line">		<span class="keyword">return</span> dp[i][j];</div><div class="line">	dp[i][j] = solve(i + <span class="number">1</span>, j)+<span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> p = i + <span class="number">1</span>; p &lt; j; ++p)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> q = p + <span class="number">1</span>; q &lt;= j; ++q)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (A[p] == A[i] + K &amp;&amp; A[q] == A[i] + <span class="number">2</span> * K)</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">if</span> (solve(i + <span class="number">1</span>, p - <span class="number">1</span>) == <span class="number">0</span> &amp;&amp; solve(p + <span class="number">1</span>, q - <span class="number">1</span>) == <span class="number">0</span>)</div><div class="line">				&#123;</div><div class="line">					dp[i][j] = min(dp[i][j],solve(q+<span class="number">1</span>,j));</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[i][j];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="图论建模"><a href="#图论建模" class="headerlink" title="图论建模"></a>图论建模</h4><p>初始是一条链，如果相邻三个节点满足差为K的话，它们前面和后面的节点便可以连起来。不断减图，直至没有节点可以相连。原问题等价于在图中寻找最短路径。</p>
+		<p>书籍：机器学习 周志华<br>视频：<a href="https://www.youtube.com/watch?v=sGuiWX07sKw" target="_blank" rel="external">RL Course by David Silver</a><br>博客：<a href="http://www.algorithmdog.com/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B" target="_blank" rel="external">AlgorithmDog</a><br><a href="http://chenrudan.github.io/blog/2016/07/11/reinforcementlearninglesssion4.html" target="_blank" rel="external">David Silver强化学习公开课之四</a></p>
+<h3 id="model-free-learning-免模型学习"><a href="#model-free-learning-免模型学习" class="headerlink" title="model-free learning 免模型学习"></a>model-free learning 免模型学习</h3><p>免模型学习：状态转移、奖励函数未知<br>策略评估：蒙特卡罗、时间差分<br>策略学习：Q-Learning、Sarsa<br>强化学习的方法就是<strong>先对当前策略进行策略评估，也就是说计算出当前策略所对应的值函数；然后，利用值函数改进当前策略。</strong><br>==<strong>强化学习的关键在于计算出值函数，而值函数的关键在于计算当前状态下获得回报的期望。</strong>==  </p>
+<p>在有模型的强化学习中，我们知道马尔科夫决策过程的状态转移和奖励函数，因此值函数可以用动态规划求得。<br><span>$$v_\pi(s) = \mathbb E_\pi[G_t | S_t = s]
+
+= \sum_{a} \pi(a|s) \left[ {R}_s^a + \gamma \sum_{s&apos;} { P}_{ss&apos;}^a v_\pi(s&apos;) \right]$$</span><!-- Has MathJax --><br><span>$$q_\pi(s, a) = \mathbb E_\pi[G_t | S_t = s, A_t = a]
+
+= {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(a&apos;|s&apos;)q_\pi(s&apos;, a&apos;)$$</span><!-- Has MathJax --><br><strong>所以无模型学习的关键是估计状态值函数和行为值函数中的期望。</strong></p>
+<h4 id="蒙特卡罗学习"><a href="#蒙特卡罗学习" class="headerlink" title="蒙特卡罗学习"></a>蒙特卡罗学习</h4><p><strong>蒙特卡罗方法是利用经验平均代替随机变量的期望,即假设每个状态的值函数取值等于多次试验返回的回报的平均值。</strong><br>评估当前策略时，我们可以利用策略产生很多次试验，每次试验都是从任意的初始状态开始直到终止状态，比如一次试验(an<br>episode)为：<br><span>$S_1,A_1,R_2,&hellip;,S_k$</span><!-- Has MathJax --><br>计算一次试验中状态s处的折扣回报返回值为：<br><span>$G_t = R_{t+1}+\gamma R_{t+2}+&hellip;+\gamma^{k-1}R_{t+k}$</span><!-- Has MathJax --><br>我们只需要计算试验的次数和每次试验返回的回报求平均即可。令N(St)表示St访问的次数，Gt表示这次实验获得的回报,则值函数的更新如下：<br><span>$N(S_t)=N(S_t)+1$</span><!-- Has MathJax --><br><span>$V(S_t) = V(S_t)+\frac{1}{N(S_t)}(G_t-V(S_t))$</span><!-- Has MathJax --><br>在一些问题中，经常用一个平均访问次数alpha来代替N(St),即<br><span>$V(S_t) = V(S_t)+\alpha(G_t-V(S_t))$</span><!-- Has MathJax --></p>
+<p><strong>探索</strong>：<br>为了获得较好的指函数的估计，需要充分探索每一个每一个动作可能到达的状态，也就是说在任意状态下，采用动作集中每个动作的概率都大于零。可以采用ε-soft选取动作：<br><img src="http://oc9b84kcd.bkt.clouddn.com/%E8%B4%AA%E5%BF%83.png" alt=""></p>
+<p><strong>On-Policy &amp; Off-Policy</strong>:<br>同策略：用于采样和改进的策略是同一个策略π。<br>异策略：用于采样的是策略μ，来改进的是策略π。<br><strong>同策略蒙特卡罗</strong><br><img src="http://oc9b84kcd.bkt.clouddn.com/OnPolicy.png" alt="image"></p>
+<p><strong>异策略蒙特卡罗</strong><br><img src="http://oc9b84kcd.bkt.clouddn.com/OffPolicy.png" alt="image"></p>
+<h4 id="时间差分学习"><a href="#时间差分学习" class="headerlink" title="时间差分学习"></a>时间差分学习</h4><p>蒙特卡罗需要完成一个完整的采样轨迹后再更新策略的值估计，这样没有没有充分利用强化学习任务的MDP结构。时序差分学习则结合了动态规划与蒙特卡罗方法的思想，能做到更高效的无模型学习。MC算法总是从当前状态出发，一直走到终止状态再更新当前状态的值函数，而TD算法可以从当前状态出发走n步再更新当前状态的值函数，特别的，走一步就更新的即TD(0)。TD(0)的值函数更新公式如下：<br><span>$V(S_t) = V(S_t)+\alpha(R_{t+1}+\gamma V(S_{t+1})-V(S_t))$</span><!-- Has MathJax --><br><span>$Q(S_t, A_t) = Q(S_t, A_t) + \alpha(R_{t+1} + \gamma Q(S_{t+1}, A&apos;) - Q(S_t, A_t)$</span><!-- Has MathJax --><br>TD(0)是指在某个状态s下执行某个动作后转移到下一个状态s′s′时，估计s′的return再更新s，假如s之后执行两次动作转移到s′′时再反回来更新s的值函数，那么就是另一种形式，从而根据step的长度n可以扩展TD到不同的形式，当step长度到达当前episode终点时就变成了MC。从而得到统一公式如下:<br><span>$G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + &hellip; + \gamma ^{n-1}R_{t+n}+\gamma ^nV(S_{t+n})$</span><!-- Has MathJax --><br><span>$V(S_t) = V(S_t) + \alpha(G_t^{(n)} - V(S_t))$</span><!-- Has MathJax --><br><strong>On-Policy Sarsa算法</strong>：<br>执行策略和改进的策略都是ε-贪婪策略。<br><img src="http://oc9b84kcd.bkt.clouddn.com/Sarsa.png" alt=""><br><strong>Off-Policy Q-Learning算法</strong>：<br>执行策略为ε-贪婪策略，改进策略为贪婪策略。<br><img src="http://oc9b84kcd.bkt.clouddn.com/QLearning.png" alt=""></p>
+<h4 id="蒙特卡罗-vs-时间差分"><a href="#蒙特卡罗-vs-时间差分" class="headerlink" title="蒙特卡罗 vs 时间差分"></a>蒙特卡罗 vs 时间差分</h4><p><img src="http://oc9b84kcd.bkt.clouddn.com/MC&amp;TD.png" alt=""></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -127,7 +124,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/算法-动态规划/">算法 动态规划</a>
+  <span></span> <a href="/tags/强化学习/">强化学习</a>
   </div>
 
 </div>
@@ -136,7 +133,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.luoshaochuan.com/2017/07/17/动态规划总结(八）/" data-title="动态规划总结（八）：DAG上的动态规划 | 我是小韩同学" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://www.luoshaochuan.com/2017/12/23/强化学习入门(二)/" data-title="强化学习入门(二) | 我是小韩同学" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -150,18 +147,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/07/21/GoSightseeing/" title="GoSightseeing">
+ <a href="/2017/12/27/强化学习入门(三)/" title="强化学习入门(三)">
   <strong>上一篇：</strong><br/>
   <span>
-  GoSightseeing</span>
+  强化学习入门(三)</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2017/07/16/动态规划总结(七）/"  title="动态规划总结（七）：概率型DP">
+<a href="/2017/12/20/强化学习入门(一)/"  title="强化学习入门(一)">
  <strong>下一篇：</strong><br/> 
- <span>动态规划总结（七）：概率型DP
+ <span>强化学习入门(一)
 </span>
 </a>
 </div>
@@ -176,7 +173,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#图上的动态规划"><span class="toc-number">1.</span> <span class="toc-text">图上的动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-矩形嵌套"><span class="toc-number">1.1.</span> <span class="toc-text">1.矩形嵌套</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分析"><span class="toc-number">1.1.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化"><span class="toc-number">1.1.2.</span> <span class="toc-text">初始化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Card-Game"><span class="toc-number">1.2.</span> <span class="toc-text">2.Card Game</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#题意"><span class="toc-number">1.2.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分析-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图论建模"><span class="toc-number">1.2.3.</span> <span class="toc-text">图论建模</span></a></li></ol></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#model-free-learning-免模型学习"><span class="toc-number">1.</span> <span class="toc-text">model-free learning 免模型学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#蒙特卡罗学习"><span class="toc-number">1.1.</span> <span class="toc-text">蒙特卡罗学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#时间差分学习"><span class="toc-number">1.2.</span> <span class="toc-text">时间差分学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#蒙特卡罗-vs-时间差分"><span class="toc-number">1.3.</span> <span class="toc-text">蒙特卡罗 vs 时间差分</span></a></li></ol></li></ol>
  
   </div>
 

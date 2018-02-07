@@ -74,6 +74,122 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/08/31/hihocoder1141/" title="区间逆序对" itemprop="url">区间逆序对</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-31T14:49:40.000Z" itemprop="datePublished"> 发表于 2017-08-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="二分·归并排序之逆序对"><a href="#二分·归并排序之逆序对" class="headerlink" title=" 二分·归并排序之逆序对"></a><a href="http://hihocoder.com/problemset/problem/1141" target="_blank" rel="external"> 二分·归并排序之逆序对</a></h3><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>元素值较小时可以采用树状数组，否则采用归并排序。<br>假设有个数组{4,3,2,1}那么我们二分数组得到{4,3},{2,1}两个子数组。对{4,3}继续二分得到两个子数组a{4},b{3}现在我们将两个进行归并为c。b的第一个元素3小于4，先把3放进c,再把a中的4放进c。可以看出每次把a中元素放入c时,c中属于b的元素都和此元素构成逆序对，所以我们只需要统计c中属于b的元素个数cnt，每次向c中放a元素时，结果加上cnt即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e5</span>+<span class="number">5</span>;</div><div class="line"></div><div class="line"><span class="keyword">long</span> <span class="keyword">long</span> res=<span class="number">0</span>,cnt=<span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> a[maxn],b[maxn];</div><div class="line"><span class="keyword">int</span> n;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> m,<span class="keyword">int</span> r)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i,j,k;</div><div class="line">    <span class="keyword">for</span>(i=l;i&lt;=r;++i)b[i]=a[i];</div><div class="line">    cnt=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(i=l,j=m+<span class="number">1</span>,k=l;i&lt;=m&amp;&amp;j&lt;=r;)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(b[i]&lt;=b[j])</div><div class="line">        &#123;</div><div class="line">            a[k++]=b[i++];</div><div class="line">            res+=cnt;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            a[k++]=b[j++];</div><div class="line">            cnt++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(i&lt;=m)</div><div class="line">    &#123;</div><div class="line">        a[k++]=b[i++];</div><div class="line">        res+=cnt;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(j&lt;=r)</div><div class="line">        a[k++]=b[j++];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(l&lt;r)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> m=(l+r)&gt;&gt;<span class="number">1</span>;</div><div class="line">        merge_sort(l,m);</div><div class="line">        merge_sort(m+<span class="number">1</span>,r);</div><div class="line">        merge(l,m,r);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</div><div class="line">    merge_sort(<span class="number">0</span>,n<span class="number">-1</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%lld"</span>,res);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/hihocoder/">hihocoder</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hihocoder-分治/">hihocoder 分治</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/08/31/leetcode33/" title="leetcode 33.Search in Rotated Sorted Array" itemprop="url">leetcode 33.Search in Rotated Sorted Array</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-31T02:21:00.000Z" itemprop="datePublished"> 发表于 2017-08-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/description/" target="_blank" rel="external">https://leetcode.com/problems/search-in-rotated-sorted-array/description/</a></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>一个旋转过的数组，加上旋转位置是pivot,则在[0,pivot],[pivot+1,n-1]之间两段数组都是有序的，如果target&gt;=nums[0],说明target位于[0,pivot]之间，否则说明target位于[pivot+1,n-1]之间。在进行二分搜索时，我们可以根据nums[mid]和nums[0]的关系以及target和nums[0]的关系来调整左右端点。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先找到旋转的位置k,在[0,k-1],[k,n-1]之间分别进行二分搜索，找到则返回下标，都找不到则返回-1</span></div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> l = <span class="number">0</span>,r=nums.size()<span class="number">-1</span>;</div><div class="line">        <span class="keyword">while</span>(l&lt;=r)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> m = (l+r)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(target&gt;=nums[<span class="number">0</span>])<span class="comment">//target位于左边数组</span></div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(nums[m]&gt;=nums[<span class="number">0</span>])</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span>(nums[m]&lt;target)</div><div class="line">                        l=m+<span class="number">1</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(nums[m]&gt;target)</div><div class="line">                        r=m<span class="number">-1</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> m;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    r=m<span class="number">-1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span><span class="comment">//target位于右边数组</span></div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(nums[m]&lt;nums[<span class="number">0</span>])</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span>(nums[m]&lt;target)</div><div class="line">                        l=m+<span class="number">1</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(nums[m]&gt;target)</div><div class="line">                        r=m<span class="number">-1</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        <span class="keyword">return</span> m;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    l=m+<span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-leetcode/">算法 leetcode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/08/27/leetcode87/" title="leetcode 87" itemprop="url">leetcode 87</a>
   </h1>
   <p class="article-author">By
@@ -600,139 +716,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/05/gBallon/" title="gBallon" itemprop="url">gBallon</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-05T11:08:56.000Z" itemprop="datePublished"> 发表于 2017-08-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="gBallon"><a href="#gBallon" class="headerlink" title="gBallon"></a>gBallon</h3><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p><a href="https://code.google.com/codejam/contest/11214486/dashboard#s=p1" target="_blank" rel="external">https://code.google.com/codejam/contest/11214486/dashboard#s=p1</a><br>大意是把气球各自移动到某个高度，使所有气球到达y轴时间最短。</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>某些求最值的题目，可以变为判断可不可行+二分搜索，这题我们就可以枚举时间t利用二分搜索解决。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1001</span>;</div><div class="line"><span class="keyword">int</span> N, M, Q;</div><div class="line"><span class="keyword">int</span> v[maxn];</div><div class="line"><span class="keyword">struct</span> Ball</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> p, h;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Ball ball[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getT</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> h)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span> (h &gt;= M || h &lt; <span class="number">0</span>)<span class="keyword">return</span> inf;</div><div class="line">	<span class="keyword">if</span> (p == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (p*v[h] &gt;= <span class="number">0</span>)<span class="keyword">return</span> inf;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">abs</span>(p) / <span class="built_in">abs</span>(v[h]) + (<span class="built_in">abs</span>(p) % <span class="built_in">abs</span>(v[h]) ? <span class="number">1</span> : <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">C</span><span class="params">(<span class="keyword">int</span> t)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">bool</span> flag = <span class="literal">false</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= Q; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (getT(ball[i].p, ball[i].h + j) &lt;= t || getT(ball[i].p, ball[i].h - j) &lt;= t)</div><div class="line">			&#123;</div><div class="line">				flag = <span class="literal">true</span>;</div><div class="line">				sum += j;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!flag)<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> sum &lt;= Q;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> c)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> l = <span class="number">0</span>; <span class="keyword">int</span> r = inf;</div><div class="line">	<span class="keyword">while</span> (r &gt; l)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> t = (r + l) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (C(t))</div><div class="line">			r = t;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			l = t + <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (l == inf)</div><div class="line">		prtStr(c);</div><div class="line">	<span class="keyword">else</span></div><div class="line">		prtInt(c, l);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"B-large-practice.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"00.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line">	<span class="keyword">int</span> T;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; T;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; N &gt;&gt; M &gt;&gt; Q;</div><div class="line">		FOR(h, M)<span class="built_in">cin</span> &gt;&gt; v[h];</div><div class="line">		FOR(j, N)</div><div class="line">		&#123;</div><div class="line">			<span class="built_in">cin</span> &gt;&gt; ball[j].p &gt;&gt; ball[j].h;</div><div class="line">		&#125;</div><div class="line">		solve(i+<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="注"><a href="#注" class="headerlink" title="注"></a>注</h3><p>本题还可以用贪心算法解决，每次尝试改进时间最长的气球，将其移到距离最近的能减少当前时间的高度上，如此循环直至无法改进。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1001</span>;</div><div class="line"><span class="keyword">int</span> N, M, Q;</div><div class="line"><span class="keyword">int</span> v[maxn];</div><div class="line"><span class="keyword">struct</span> Ball</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> p, h, t;</div><div class="line">	<span class="keyword">int</span> y;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Ball &amp;b1, Ball &amp;b2)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">return</span> b1.t &gt; b2.t;</div><div class="line">&#125;</div><div class="line">Ball ball[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getT</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> h)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span> (h &gt;= M || h &lt; <span class="number">0</span>)<span class="keyword">return</span> inf;</div><div class="line">	<span class="keyword">if</span> (p == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (p*v[h] &gt;= <span class="number">0</span>)<span class="keyword">return</span> inf;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">abs</span>(p) / <span class="built_in">abs</span>(v[h]) + (<span class="built_in">abs</span>(p) % <span class="built_in">abs</span>(v[h]) ? <span class="number">1</span> : <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> c)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">bool</span> flag = <span class="literal">true</span>;</div><div class="line">	<span class="keyword">while</span> (Q &amp;&amp; flag)</div><div class="line">	&#123;</div><div class="line">		flag = <span class="literal">false</span>;</div><div class="line">		sort(ball, ball + N, cmp);</div><div class="line">			<span class="keyword">if</span> (ball[<span class="number">0</span>].t &lt;= <span class="number">1</span>)</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">int</span> q = <span class="built_in">abs</span>(ball[<span class="number">0</span>].y - ball[<span class="number">0</span>].h);</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j&lt;=Q+q; ++j)</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">int</span> t1 = getT(ball[<span class="number">0</span>].p, ball[<span class="number">0</span>].h + j);</div><div class="line">				<span class="keyword">int</span> t2 = getT(ball[<span class="number">0</span>].p, ball[<span class="number">0</span>].h - j);</div><div class="line">				<span class="keyword">if</span> (t1 &lt; ball[<span class="number">0</span>].t)</div><div class="line">				&#123;</div><div class="line">					ball[<span class="number">0</span>].t = t1;</div><div class="line">					flag = <span class="literal">true</span>;</div><div class="line">					Q = Q + q - j;</div><div class="line">					ball[<span class="number">0</span>].y = ball[<span class="number">0</span>].h + j;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (t2 &lt; ball[<span class="number">0</span>].t)</div><div class="line">				&#123;</div><div class="line">					ball[<span class="number">0</span>].t = t2;		</div><div class="line">					flag = <span class="literal">true</span>;</div><div class="line">					Q = Q + q-j;</div><div class="line">					ball[<span class="number">0</span>].y = ball[<span class="number">0</span>].h - j;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">	&#125;</div><div class="line">	sort(ball, ball + N, cmp);</div><div class="line">	<span class="keyword">if</span> (ball[<span class="number">0</span>].t == inf)</div><div class="line">		prtStr(c);</div><div class="line">	<span class="keyword">else</span></div><div class="line">		prtInt(c, ball[<span class="number">0</span>].t);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"B-large-practice.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"0.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line">	<span class="keyword">int</span> T;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; T;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; N &gt;&gt; M &gt;&gt; Q;</div><div class="line">		FOR(h, M)<span class="built_in">cin</span> &gt;&gt; v[h];</div><div class="line">		FOR(j, N)</div><div class="line">		&#123;</div><div class="line">			<span class="built_in">cin</span> &gt;&gt; ball[j].p &gt;&gt; ball[j].h;</div><div class="line">			ball[j].t = getT(ball[j].p, ball[j].h);</div><div class="line">			ball[j].y = ball[j].h;</div><div class="line">		&#125;</div><div class="line">		solve(i+<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Kickstart-Google/">Kickstart Google</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/01/二分搜索/" title="二分搜索" itemprop="url">二分搜索</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-01T11:24:59.000Z" itemprop="datePublished"> 发表于 2017-08-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h2><p>如果问题具有单调有序的性质，则可以使用二分查找来搜索满足题目条件的某个值。</p>
-<h3 id="1-从有序数组中查找某个值"><a href="#1-从有序数组中查找某个值" class="headerlink" title="1.从有序数组中查找某个值"></a>1.从有序数组中查找某个值</h3><blockquote>
-<p>给定长度为n的单调不降数组a0,a1,…,an-1,求满足ai&gt;=k的最小的i,不存在的时候输出n。</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">lowb</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A, <span class="keyword">int</span> K)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> l = <span class="number">0</span>, r = A.size();</div><div class="line">	<span class="keyword">while</span> (l &lt; r)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (A[mid] &gt;= K)<span class="comment">//满足条件</span></div><div class="line">			r = mid;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			l = mid+<span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>给定长度为n的单调不降数组a0,a1,…,an-1,求满足ai&lt;=k的最大的i加1,不存在的时候输出-1。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">upb</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp;A, <span class="keyword">int</span> K)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> l = <span class="number">0</span>, r = A.size();</div><div class="line">	<span class="keyword">while</span> (l &lt; r)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (A[mid] &lt;= K)</div><div class="line">			l = mid + <span class="number">1</span>;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			r = mid;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> r;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p>==注：STL中的low_bound和up_bound实现了相同的功能！==</p>
-<h3 id="2-判断某个解是否可行"><a href="#2-判断某个解是否可行" class="headerlink" title="2.判断某个解是否可行"></a>2.判断某个解是否可行</h3><blockquote>
-<p>有N根绳子，每根长度为Li,从这N根绳子中切割出K根的话，每根最多能有多长？</p>
-</blockquote>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>先将绳子排序，切出的绳子长度不会超过最长的绳子，依次二分绳子长度，看看是否满足K根即可。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> n, k;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10000</span>;</div><div class="line"><span class="keyword">double</span> L[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">C</span><span class="params">(<span class="keyword">double</span> m)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	rep(i, n)</div><div class="line">	&#123;</div><div class="line">		sum += <span class="keyword">int</span>(L[i] / m);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (sum &gt;= k)</div><div class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	sort(L, L + n);</div><div class="line">	<span class="keyword">double</span> l = <span class="number">0</span>, r = L[n - <span class="number">1</span>];</div><div class="line">	<span class="keyword">while</span> (r - l &gt; eps)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">double</span> mid = (l + r) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (C(mid))</div><div class="line">			l = mid;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			r = mid;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-最大化最小值"><a href="#3-最大化最小值" class="headerlink" title="3.最大化最小值"></a>3.最大化最小值</h3><blockquote>
-<p>农夫 John 建造了一座很长的畜栏，它包括N (2 &lt;= N &lt;= 100,000)个隔间，这些小隔间依次编号为x1,…,xN (0 &lt;= xi &lt;= 1,000,000,000).<br>但是，John的C (2 &lt;= C &lt;= N)头牛们并不喜欢这种布局，而且几头牛放在一个隔间里，他们就要发生争斗。为了不让牛互相伤害。John决定自己给牛分配隔间，使任意两头牛之间的最小距离尽可能的大，那么，这个最大的最小距离是什么呢？</p>
-</blockquote>
-<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>先对舍坐标排序，显然最远距离不会超过第一个和最后一个牛舍的距离，二分距离判断是否可行即可。</p>
-<h3 id="代码略"><a href="#代码略" class="headerlink" title="代码略"></a>代码略</h3><h3 id="最大化平均值"><a href="#最大化平均值" class="headerlink" title="最大化平均值"></a>最大化平均值</h3><blockquote>
-<p>有N个物品重量和价值分别为Wi和Vi,从中选出K个物品使单位重量的价值最大。</p>
-</blockquote>
-<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>起初我觉得将N个物品按单位价值排序取前K个即可，但是这样不对。正确的做法是令C(x)表示表示可以选择使得单位重量的价值不小于x。因此，原问题变成了求满足条件的最大的x。<br>因为v/w&gt;=x,所以v-x*w&gt;=0,所以可以按照v-x*w进行排序，看前k个的和是否大于等于0即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> n, k;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10001</span>;</div><div class="line"><span class="keyword">double</span> w[maxn];</div><div class="line"><span class="keyword">double</span> v[maxn];</div><div class="line"><span class="keyword">double</span> p[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">C</span><span class="params">(<span class="keyword">double</span> x)</span></span></div><div class="line">&#123;</div><div class="line">	rep(i, n)</div><div class="line">		p[i] = v[i] - w[i] * x;</div><div class="line">	sort(p, p + n, greater&lt;<span class="keyword">double</span>&gt;());</div><div class="line">	<span class="keyword">double</span> sum = <span class="number">0</span>;</div><div class="line">	rep(i, k)</div><div class="line">		sum += p[i];</div><div class="line">	<span class="keyword">return</span> sum &gt;= <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">double</span> l = <span class="number">0</span>, r = inf;</div><div class="line">	<span class="keyword">while</span> (r-l&gt;eps)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">double</span> mid = (r + l) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (C(mid))</div><div class="line">			l = mid;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			r = mid;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> l;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法-挑战程序设计竞赛/">算法 挑战程序设计竞赛</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -799,11 +782,11 @@
 			
 		
 			
-				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
 			
 		
 			
@@ -811,7 +794,15 @@
 			
 		
 			
-				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+				<li><a href="/tags/强化学习/" title="强化学习">强化学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
 			
 		
 			
@@ -819,7 +810,7 @@
 			
 		
 			
-				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
 			
 		
 			
@@ -839,10 +830,6 @@
 			
 		
 			
-				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
@@ -851,19 +838,15 @@
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
 			
 		
 		</ul>

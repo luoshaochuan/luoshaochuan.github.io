@@ -25,7 +25,7 @@ Agent &amp;amp; EnviromentAgent
 Policy（策略）：它根据当前看到的observation来决定action，是从state到action的映射。有两种表达形式，一种是Deterministic policy（确定策略）即a=π(s)a=π(s)，在某种状态">
 <meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/Agent%20and%20Env.png">
 <meta property="og:image" content="http://oc9b84kcd.bkt.clouddn.com/MDP.png">
-<meta property="og:updated_time" content="2018-01-23T13:15:49.846Z">
+<meta property="og:updated_time" content="2018-02-06T09:15:57.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强化学习入门(一)">
 <meta name="twitter:description" content="书籍：机器学习 周志华视频：RL Course by David Silver博客：AlgorithmDog
@@ -101,7 +101,7 @@ Policy（策略）：它根据当前看到的observation来决定action，是从
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-amp-Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Agent & Enviroment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔可夫决策-MDP"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫决策 MDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略和价值"><span class="toc-number">3.</span> <span class="toc-text">策略和价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman期望方程"><span class="toc-number">4.</span> <span class="toc-text">Bellman期望方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索与利用-Exploration-amp-Exploitation"><span class="toc-number">5.</span> <span class="toc-text">探索与利用 Exploration & Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ε-贪心"><span class="toc-number">5.1.</span> <span class="toc-text">ε-贪心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Softmax"><span class="toc-number">5.2.</span> <span class="toc-text">Softmax</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-amp-Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Agent & Enviroment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔可夫决策-MDP"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫决策 MDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略和价值"><span class="toc-number">3.</span> <span class="toc-text">策略和价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman期望方程"><span class="toc-number">4.</span> <span class="toc-text">Bellman期望方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索与利用-Exploration-amp-Exploitation"><span class="toc-number">5.</span> <span class="toc-text">探索与利用 Exploration & Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ε-贪心"><span class="toc-number">5.1.</span> <span class="toc-text">ε-贪心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Softmax"><span class="toc-number">5.2.</span> <span class="toc-text">Softmax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#model-based-leanning有模型学习"><span class="toc-number">6.</span> <span class="toc-text">model-based leanning有模型学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#策略迭代"><span class="toc-number">6.1.</span> <span class="toc-text">策略迭代</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#策略评估"><span class="toc-number">6.1.1.</span> <span class="toc-text">策略评估</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#策略改进"><span class="toc-number">6.1.2.</span> <span class="toc-text">策略改进</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#价值迭代"><span class="toc-number">6.2.</span> <span class="toc-text">价值迭代</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -132,8 +132,14 @@ q_\pi(s,a) = {R}_s^a + \gamma \sum_{s&apos; \in {S}} {P}_{ss&apos;}^a v_\pi(s&ap
 q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(a&apos;|s&apos;)q_\pi(s&apos;, a&apos;)$$</span><!-- Has MathJax --><br>这两个方程的物理意义是：  </p>
 <ul>
 <li>当前状态下能获得的回报的期望等于当前状态下采取动作a的概率乘上采取动作a所获得的的奖励与采取状态a引起的状态转移获得的累积折扣期望回报之和。</li>
-<li>当前状态下采取动作a获得的回报的期望等于采取动作a所获得的奖励与采取动作a引起的状态转移所获得的累积折扣期望回报之和。<h3 id="探索与利用-Exploration-amp-Exploitation"><a href="#探索与利用-Exploration-amp-Exploitation" class="headerlink" title="探索与利用 Exploration &amp; Exploitation"></a>探索与利用 Exploration &amp; Exploitation</h3>探索：放弃一些已知的reward信息，尝试去做一些新的选择。<br>利用： 从已知reward信息中，选择一个reward最大的。<br><strong>强化学习是在探索与利用之间达到折中。</strong>  <h4 id="ε-贪心"><a href="#ε-贪心" class="headerlink" title="ε-贪心"></a>ε-贪心</h4>ε-贪心是基于一个概率来对探索和利用进行折中：每次尝试时，以ε概率进行探索，以1-ε概率进行利用。<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4>以一定概率进行选取，若某些动作回报高于其他，则被选取的概率也会更大。</li>
+<li>当前状态下采取动作a获得的回报的期望等于采取动作a所获得的奖励与采取动作a引起的状态转移所获得的累积折扣期望回报之和。<h3 id="探索与利用-Exploration-amp-Exploitation"><a href="#探索与利用-Exploration-amp-Exploitation" class="headerlink" title="探索与利用 Exploration &amp; Exploitation"></a>探索与利用 Exploration &amp; Exploitation</h3>探索：放弃一些已知的reward信息，尝试去做一些新的选择。<br>利用： 从已知reward信息中，选择一个reward最大的。<br><strong>强化学习是在探索与利用之间达到折中。</strong>  <h4 id="ε-贪心"><a href="#ε-贪心" class="headerlink" title="ε-贪心"></a>ε-贪心</h4>ε-贪心是基于一个概率来对探索和利用进行折中：每次尝试时，以ε概率进行探索，以1-ε概率进行利用。<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4>以一定概率进行选取，若某些动作回报高于其他，则被选取的概率也会更大。<h3 id="model-based-leanning有模型学习"><a href="#model-based-leanning有模型学习" class="headerlink" title="model-based leanning有模型学习"></a>model-based leanning有模型学习</h3>已知R~s~^a^和P~ss’~^a^时，马尔科夫决策过程就是已知的，Agent可以对环境进行建模，即有模型学习，有模型学习常用的方法有策略迭代和价值迭代。<h4 id="策略迭代"><a href="#策略迭代" class="headerlink" title="策略迭代"></a>策略迭代</h4>策略迭代主要步骤<strong>策略评估</strong>与<strong>策略改进</strong>，从一个随机策略出发，不断进行策略评估与策略改进，直至策略收敛。<h5 id="策略评估"><a href="#策略评估" class="headerlink" title="策略评估"></a>策略评估</h5>策略评估主要依据状态值函数，指的是用这个策略在当前状态下所能获得的累积奖励的期望评估该策略。<span>$v_\pi(s) = \sum_{a} \pi(a|s) \left[ {R}_s^a + \gamma \sum_{s&apos;} { P}_{ss&apos;}^a v_\pi(s&apos;) \right]$</span><!-- Has MathJax -->
+<h5 id="策略改进"><a href="#策略改进" class="headerlink" title="策略改进"></a>策略改进</h5>将策略选择的动作变为当前最优的动作。<span>$\pi&apos; {\left ( x \right )}=\underset{a\in A}{argmax}\left (q^{\pi }\left ( x,a \right )  \right )$</span><!-- Has MathJax -->
+迭代公式：<span>$$v_*(s) = \underset{a}{max}q_*(s,a) = \underset{a}{max} R_s^{a} + \gamma \sum_{s&apos; \in S}P_{ss&apos;}^av_*(s&apos;)
+
+q^*(s,a) = R_s^{a} + \gamma \sum_{s&apos; \in S}P_{ss&apos;}^av_*(s&apos;) = R_s^a + \gamma \sum_{s&apos;\in S}P_{ss&apos;}^a \underset{a&apos;}    {max}q^*(s&apos;, a&apos;)$$</span><!-- Has MathJax -->
+</li>
 </ul>
+<h4 id="价值迭代"><a href="#价值迭代" class="headerlink" title="价值迭代"></a>价值迭代</h4><p>策略迭代是从初始状态出发，不断评估改进直到找到到达最终状态时的回报最大的策略。价值迭代指的是从最终奖励状态开始迭代，直到找到每个状态的最大回报。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -164,6 +170,14 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/12/23/强化学习入门(二)/" title="强化学习入门(二)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  强化学习入门(二)</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/12/18/利用TensorFlow搭建CNN/"  title="利用TensorFlow搭建CNN">
@@ -183,7 +197,7 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-amp-Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Agent & Enviroment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔可夫决策-MDP"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫决策 MDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略和价值"><span class="toc-number">3.</span> <span class="toc-text">策略和价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman期望方程"><span class="toc-number">4.</span> <span class="toc-text">Bellman期望方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索与利用-Exploration-amp-Exploitation"><span class="toc-number">5.</span> <span class="toc-text">探索与利用 Exploration & Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ε-贪心"><span class="toc-number">5.1.</span> <span class="toc-text">ε-贪心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Softmax"><span class="toc-number">5.2.</span> <span class="toc-text">Softmax</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-amp-Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Agent & Enviroment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔可夫决策-MDP"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫决策 MDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略和价值"><span class="toc-number">3.</span> <span class="toc-text">策略和价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman期望方程"><span class="toc-number">4.</span> <span class="toc-text">Bellman期望方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索与利用-Exploration-amp-Exploitation"><span class="toc-number">5.</span> <span class="toc-text">探索与利用 Exploration & Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ε-贪心"><span class="toc-number">5.1.</span> <span class="toc-text">ε-贪心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Softmax"><span class="toc-number">5.2.</span> <span class="toc-text">Softmax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#model-based-leanning有模型学习"><span class="toc-number">6.</span> <span class="toc-text">model-based leanning有模型学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#策略迭代"><span class="toc-number">6.1.</span> <span class="toc-text">策略迭代</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#策略评估"><span class="toc-number">6.1.1.</span> <span class="toc-text">策略评估</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#策略改进"><span class="toc-number">6.1.2.</span> <span class="toc-text">策略改进</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#价值迭代"><span class="toc-number">6.2.</span> <span class="toc-text">价值迭代</span></a></li></ol></li></ol>
  
   </div>
 
@@ -245,11 +259,11 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
 			
 		
 			
@@ -257,7 +271,15 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+				<li><a href="/tags/强化学习/" title="强化学习">强化学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
 			
 		
 			
@@ -265,7 +287,7 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
 			
 		
 			
@@ -285,10 +307,6 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
@@ -297,19 +315,15 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -559,7 +573,23 @@ $(document).ready(function(){
 
 <!-- Tiny_search Begin -->
 
-<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<!-- Tiny_search End -->
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config("");
 </script>
@@ -577,6 +607,5 @@ $(document).ready(function(){
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-  </body>
+</body>
 </html>

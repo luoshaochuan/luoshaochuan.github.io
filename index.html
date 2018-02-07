@@ -74,6 +74,153 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/12/27/强化学习入门(三)/" title="强化学习入门(三)" itemprop="url">强化学习入门(三)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-27T13:48:13.000Z" itemprop="datePublished"> 发表于 2017-12-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>书籍：机器学习 周志华<br>视频：<a href="https://www.youtube.com/watch?v=sGuiWX07sKw" target="_blank" rel="external">RL Course by David Silver</a><br>博客：<a href="http://www.algorithmdog.com/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B" target="_blank" rel="external">AlgorithmDog</a><br>知乎：<a href="https://zhuanlan.zhihu.com/p/26007538" target="_blank" rel="external">强化学习入门 第五讲 值函数逼近</a></p>
+<h3 id="值函数近似"><a href="#值函数近似" class="headerlink" title="值函数近似"></a>值函数近似</h3><blockquote>
+<p>前面已经讲了强化学习的基本方法：基于动态规划的方法，基于蒙特卡罗的方法和基于时间差分的方法。这些方法有一个基本的前提条件，那就是状态空间和动作空间是离散的，而且状态空间和动作空间不能太大。</p>
+</blockquote>
+<p><strong>强化学习的基本步骤：首先评估值函数，接着利用值函数改进当前策略，值函数的评估是关键。</strong>  </p>
+<p>在表格型强化学习中，值函数对应着一张表。在值函数逼近方法中，值函数对应着一个逼近函数。值函数近似分为参数化近似和非参数化近似。  </p>
+<p><strong>随机梯度近似</strong>：<br><img src="http://oc9b84kcd.bkt.clouddn.com/SGD.png" alt=""></p>
+<h3 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h3><h4 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h4><p>Q-Learning是异策略时间差分方法，伪代码如图所示：<br><img src="http://oc9b84kcd.bkt.clouddn.com/Q.jpg" alt=""> </p>
+<h4 id="Deep-Q-Learning"><a href="#Deep-Q-Learning" class="headerlink" title="Deep Q-Learning"></a>Deep Q-Learning</h4><p><img src="http://oc9b84kcd.bkt.clouddn.com/DQN2.png" alt=""><br>DQN对Q-learning的修改主要体现在以下三个方面：</p>
+<ul>
+<li><p>DQN利用深度卷积神经网络逼近值函数</p>
+</li>
+<li><p>DQN利用了经验回放对强化学习的学习过程进行训练</p>
+</li>
+<li><p>DQN独立设置了目标网络来单独处理时间差分算法中的TD偏差。</p>
+<h5 id="1-DQN利用卷积神经网络逼近行为值函数"><a href="#1-DQN利用卷积神经网络逼近行为值函数" class="headerlink" title="1. DQN利用卷积神经网络逼近行为值函数"></a>1. DQN利用卷积神经网络逼近行为值函数</h5><p><img src="http://oc9b84kcd.bkt.clouddn.com/CNN.png" alt=""><br><strong>step1：首先，我们使用参数化逼近来近似行为值函数</strong>：</p>
+<span>$Q(s,a;w)\approx Q^\prime(s,a)$</span><!-- Has MathJax -->
+<p><strong>step2: 在Q值中使用均方误差来定义目标函数的loss function</strong>:</p>
+<span>$L(w) = E[(\color{red}{\underbrace{r+\gamma\max_{a^\prime}Q(s^\prime,a^\prime,w)}_{Target}}\color{black}-Q(s,a,w))^2]$</span><!-- Has MathJax -->
+<p><strong>step3: 计算参数ω关于loss function梯度</strong>：</p>
+<span>$\frac{\partial  L(w)}{\partial w} =  E[(\color{red}{r+\gamma\max_{a^\prime}Q(s^\prime,a^\prime,w)}\color{black}-Q(s,a,w))\frac{\partial Q(s,a,w)}{\partial w}]$</span><!-- Has MathJax -->
+<p><strong>step4: 使用SGD实现End-to-end的优化目标</strong>：<br>有了上面的梯度，可以从深度神经网络中进行计算，因此，就可以使用SGD 随机梯度下降来更新参数，从而得到最优的Q值。</p>
+</li>
+</ul>
+<h5 id="2-DQN利用Expericence-Replay对强化学习过程进行训练"><a href="#2-DQN利用Expericence-Replay对强化学习过程进行训练" class="headerlink" title="2.DQN利用Expericence Replay对强化学习过程进行训练"></a>2.DQN利用Expericence Replay对强化学习过程进行训练</h5><p><strong>Experience Replay 的动机是: 解决神经网络不收敛</strong><br>1）深度神经网络作为有监督学习模型，要求数据满足独立同分布<br>2）但 Q Learning 算法得到的样本前后是有关系的。为了打破数据之间的关联性，Experience Replay 方法通过存储-采样的方法将这个关联性打破了。</p>
+<h5 id="3-DQN设置了目标网络来单独处理时间差分算法中的TD偏差"><a href="#3-DQN设置了目标网络来单独处理时间差分算法中的TD偏差" class="headerlink" title="3.DQN设置了目标网络来单独处理时间差分算法中的TD偏差"></a>3.DQN设置了目标网络来单独处理时间差分算法中的TD偏差</h5><p><strong>进一步打破相关性</strong><br>以往用梯度下降算法：<br><span>$\omega_{t+1} =  \omega_{t}+\alpha[(\color{red}{r+\gamma\max_{a^\prime}Q(s^\prime,a^\prime,w)}\color{black}-Q(s,a,w))\frac{\partial Q(s,a,w)}{\partial w}$</span><!-- Has MathJax --><br>计算TD目标(红色部分)的动作值函数所用的网络参数ω，与梯度计算中要逼近的值函数所用的网络参数相同，这样就容易使得数据间存在关联性，训练不稳定。<br>为了解决这个问题，DeepMind在TD Target采用和训练目标不一样的参数ω-：<br><span>$\omega_{t+1} =  \omega_{t}+\alpha[(\color{red}{r+\gamma\max_{a^\prime}Q(s^\prime,a^\prime,w^-)}\color{black}-Q(s,a,w))\frac{\partial Q(s,a,w)}{\partial w}$</span><!-- Has MathJax --><br><a href="http://blog.csdn.net/songrotek/article/details/50951537" target="_blank" rel="external"><strong>参考代码</strong>：</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</div><div class="line"></div><div class="line"><span class="comment">#超参数</span></div><div class="line">FRAME_PER_ACTION=<span class="number">1</span>    <span class="comment">#每个动作采几帧</span></div><div class="line">GAMMA=<span class="number">0.99</span>            <span class="comment">#折扣率</span></div><div class="line">OBSERVE=<span class="number">100.</span>          <span class="comment">#训练之前的观察时间</span></div><div class="line">EXPLORE=<span class="number">10000.</span>       <span class="comment">#试验数</span></div><div class="line">FINAL_EPSILON=<span class="number">0.0</span>     <span class="comment">#epsilon贪心最终参数</span></div><div class="line">INITIAL_EPSILON = <span class="number">0.5</span> <span class="comment">#epsilon贪心初始参数</span></div><div class="line">REPLAY_MEMORY=<span class="number">50000</span>   <span class="comment">#回放队列大小</span></div><div class="line">BATCH_SIZE=<span class="number">32</span>         <span class="comment">#minbatch大小</span></div><div class="line">UPDATE_TIME=<span class="number">100</span>       <span class="comment">#更新目标Q网络的时间间隔</span></div><div class="line">LEARNING_RATE=<span class="number">0.001</span>   <span class="comment">#学习率</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BrainDQN</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,actions)</span>:</span></div><div class="line">        <span class="comment">#初始化回放池</span></div><div class="line">        self.replayMemory = deque()</div><div class="line">        <span class="comment">#初始化相关参数</span></div><div class="line">        self.timeStep = <span class="number">0</span></div><div class="line">        self.epsilon=INITIAL_EPSILON</div><div class="line">        self.actions=actions</div><div class="line">        <span class="comment">#初始化Q网络</span></div><div class="line">        self.stateInput,self.QValue,self.W_conv1,self.b_conv1,self.W_conv2,self.b_conv2,self.W_conv3,self.b_conv3,self.W_fc1,self.b_fc1,self.W_fc2,self.b_fc2 = self.createQNetwork()</div><div class="line">        <span class="comment">#初始化目标Q网络并设置目标Q网络和Q网络参数一样，TD Target主要用于缓存Q网络参数值</span></div><div class="line">        self.stateInputT,self.QValueT,self.W_conv1T,self.b_conv1T,self.W_conv2T,self.b_conv2T,self.W_conv3T,self.b_conv3T,self.W_fc1T,self.b_fc1T,self.W_fc2T,self.b_fc2T = self.createQNetwork()</div><div class="line">        self.copyTargetQNetworkOperation = [self.W_conv1T.assign(self.W_conv1),self.b_conv1T.assign(self.b_conv1),self.W_conv2T.assign(self.W_conv2),self.b_conv2T.assign(self.b_conv2),self.W_conv3T.assign(self.W_conv3),self.b_conv3T.assign(self.b_conv3),self.W_fc1T.assign(self.W_fc1),self.b_fc1T.assign(self.b_fc1),self.W_fc2T.assign(self.W_fc2),self.b_fc2T.assign(self.b_fc2)]</div><div class="line">        self.createTrainingMethod()</div><div class="line">        <span class="comment"># saving and loading networks</span></div><div class="line">        self.saver = tf.train.Saver()</div><div class="line">        self.session = tf.InteractiveSession(config=tf.ConfigProto(log_device_placement=<span class="keyword">True</span>))</div><div class="line">        self.session.run(tf.initialize_all_variables())</div><div class="line">        checkpoint = tf.train.get_checkpoint_state(<span class="string">"saved_networks"</span>)</div><div class="line">        <span class="keyword">if</span> checkpoint <span class="keyword">and</span> checkpoint.model_checkpoint_path:</div><div class="line">            self.saver.restore(self.session, checkpoint.model_checkpoint_path)</div><div class="line">            <span class="keyword">print</span> (<span class="string">"Successfully loaded:"</span>, checkpoint.model_checkpoint_path)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">print</span> (<span class="string">"Could not find old network weights"</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">createQNetwork</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment">#三个卷积层</span></div><div class="line">        W_conv1=self.weight_variable([<span class="number">8</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">32</span>])</div><div class="line">        b_conv1=self.bias_variable([<span class="number">32</span>])</div><div class="line"></div><div class="line">        W_conv2=self.weight_variable([<span class="number">4</span>,<span class="number">4</span>,<span class="number">32</span>,<span class="number">64</span>])</div><div class="line">        b_conv2=self.bias_variable([<span class="number">64</span>])</div><div class="line"></div><div class="line">        W_conv3=self.weight_variable([<span class="number">3</span>,<span class="number">3</span>,<span class="number">64</span>,<span class="number">64</span>])</div><div class="line">        b_conv3=self.bias_variable([<span class="number">64</span>])</div><div class="line">        <span class="comment">#两个全连接层</span></div><div class="line">        W_fc1=self.weight_variable([<span class="number">1600</span>,<span class="number">512</span>])</div><div class="line">        b_fc1=self.bias_variable([<span class="number">512</span>])</div><div class="line"></div><div class="line">        W_fc2=self.weight_variable([<span class="number">512</span>,self.actions])</div><div class="line">        b_fc2=self.bias_variable([self.actions])</div><div class="line">        <span class="comment">#输入层</span></div><div class="line">        stateInput=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">80</span>,<span class="number">80</span>,<span class="number">4</span>])<span class="comment">#状态为4张80*80的照片</span></div><div class="line">        <span class="comment">#隐藏层</span></div><div class="line">        h_conv1=tf.nn.relu(self.conv2d(stateInput,W_conv1,<span class="number">4</span>)+b_conv1)</div><div class="line">        h_pool1=self.max_pool_2x2(h_conv1)</div><div class="line">        h_conv2 = tf.nn.relu(self.conv2d(h_pool1,W_conv2,<span class="number">2</span>) + b_conv2)</div><div class="line"></div><div class="line">        h_conv3 = tf.nn.relu(self.conv2d(h_conv2,W_conv3,<span class="number">1</span>) + b_conv3)</div><div class="line"></div><div class="line">        h_conv3_flat = tf.reshape(h_conv3,[<span class="number">-1</span>,<span class="number">1600</span>])</div><div class="line">        h_fc1 = tf.nn.relu(tf.matmul(h_conv3_flat,W_fc1) + b_fc1)</div><div class="line">        <span class="comment"># Q value 层</span></div><div class="line">        QValue = tf.matmul(h_fc1,W_fc2)+b_fc2</div><div class="line"></div><div class="line">        <span class="keyword">return</span> stateInput,QValue,W_conv1,b_conv1,W_conv2,b_conv2,W_conv3,b_conv3,W_fc1,b_fc1,W_fc2,b_fc2</div><div class="line"></div><div class="line">    <span class="comment">#缓存Q网络</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">copyTargetQNetwork</span><span class="params">(self)</span>:</span></div><div class="line">        self.session.run(self.copyTargetQNetworkOperation)</div><div class="line"></div><div class="line">    <span class="comment">#把观察的图片作为状态</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setInitState</span><span class="params">(self,observation)</span>:</span></div><div class="line">        self.currentState = np.stack((observation, observation, observation, observation), axis = <span class="number">2</span>)</div><div class="line">    <span class="comment">#记住输出是Q值，关键要计算出cost，里面关键是计算Q_action的值，即该state和action下的Q值。由于actionInput是</span></div><div class="line">    <span class="comment">#one hot vector的形式，因此tf.mul(self.QValue, self.actionInput)正好就是该action下的Q值。</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">createTrainingMethod</span><span class="params">(self)</span>:</span></div><div class="line">        self.actionInput=tf.placeholder(tf.float32,[<span class="keyword">None</span>,self.actions])</div><div class="line">        self.yInput=tf.placeholder(tf.float32,[<span class="keyword">None</span>])</div><div class="line">        Q_Action=tf.reduce_sum(tf.multiply(self.QValue,self.actionInput),reduction_indices=<span class="number">1</span>)</div><div class="line">        self.cost=tf.reduce_mean(tf.square(self.yInput-Q_Action))</div><div class="line">        self.trainStep=tf.train.AdamOptimizer(LEARNING_RATE).minimize(self.cost)</div><div class="line"></div><div class="line">    <span class="comment">#主要是从回放池里随机挑选一批数据，用TD Q网络求值，然后用于更新Q网络参数</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">trainQNetwork</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment">#step 1:从经验池里获取随机采样</span></div><div class="line">        minibatch=random.sample(self.replayMemory,BATCH_SIZE)</div><div class="line">        state_batch=[data[<span class="number">0</span>] <span class="keyword">for</span> data <span class="keyword">in</span> minibatch]</div><div class="line">        action_batch=[data[<span class="number">1</span>] <span class="keyword">for</span> data <span class="keyword">in</span> minibatch]</div><div class="line">        reward_batch=[data[<span class="number">2</span>] <span class="keyword">for</span> data <span class="keyword">in</span> minibatch]</div><div class="line">        nextState_batch=[data[<span class="number">3</span>]<span class="keyword">for</span> data <span class="keyword">in</span> minibatch]</div><div class="line">        <span class="comment">#step 2:计算y</span></div><div class="line">        y_batch=[]</div><div class="line">        QValue_batch=self.QValueT.eval(feed_dict=&#123;self.stateInputT:nextState_batch&#125;)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,BATCH_SIZE):</div><div class="line">            terminal=minibatch[i][<span class="number">4</span>]</div><div class="line">            <span class="keyword">if</span> terminal:</div><div class="line">                y_batch.append(reward_batch[i])</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                y_batch.append(reward_batch[i]+GAMMA*np.max(QValue_batch[i]))</div><div class="line">        self.trainStep.run(feed_dict=&#123;</div><div class="line">            self.yInput:y_batch,</div><div class="line">            self.actionInput:action_batch,</div><div class="line">            self.stateInput:state_batch</div><div class="line">            &#125;)</div><div class="line">        <span class="comment">#保存网络</span></div><div class="line">        <span class="keyword">if</span>(self.timeStep%<span class="number">10000</span>==<span class="number">0</span>):</div><div class="line">            self.saver.save(self.session,<span class="string">'saved_networks/'</span>+<span class="string">'network'</span>+<span class="string">'-dqn'</span>,global_step=self.timeStep)</div><div class="line">        <span class="comment">#更新TD Q网络</span></div><div class="line">        <span class="keyword">if</span> self.timeStep%UPDATE_TIME==<span class="number">0</span>:</div><div class="line">            self.copyTargetQNetwork()</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setPerception</span><span class="params">(self,nextObservation,action,reward,terminal)</span>:</span></div><div class="line">        newState=np.append(self.currentState[:,:,<span class="number">1</span>:],nextObservation,axis=<span class="number">2</span>)</div><div class="line">        self.replayMemory.append((self.currentState,action,reward,newState,terminal))</div><div class="line">        <span class="keyword">if</span> len(self.replayMemory)&gt;REPLAY_MEMORY:</div><div class="line">            self.replayMemory.popleft()</div><div class="line">        <span class="keyword">if</span> self.timeStep&gt;OBSERVE:</div><div class="line">            self.trainQNetwork()</div><div class="line">        <span class="comment">#打印信息</span></div><div class="line">        state=<span class="string">""</span></div><div class="line">        <span class="keyword">if</span> self.timeStep&lt;=OBSERVE:</div><div class="line">            state=<span class="string">"observe"</span></div><div class="line">        <span class="keyword">elif</span> self.timeStep&gt;OBSERVE <span class="keyword">and</span> self.timeStep&lt;=OBSERVE+EXPLORE:</div><div class="line">            state=<span class="string">"explore"</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            state=<span class="string">"train"</span></div><div class="line">        <span class="keyword">print</span> (<span class="string">"TIMESTEP"</span>, self.timeStep, <span class="string">"/ STATE"</span>, state, \</div><div class="line">            <span class="string">"/ EPSILON"</span>, self.epsilon)</div><div class="line">        self.currentState = newState</div><div class="line">        self.timeStep += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="comment">#采用epsilon贪心获取动作</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getAction</span><span class="params">(self)</span>:</span></div><div class="line">        QValue=self.QValue.eval(feed_dict=&#123;self.stateInput:[self.currentState]&#125;)[<span class="number">0</span>]<span class="comment">#所有动作的动作值函数</span></div><div class="line">        action=np.zeros(self.actions)</div><div class="line">        action_index=<span class="number">0</span></div><div class="line">        <span class="keyword">if</span> self.timeStep%FRAME_PER_ACTION==<span class="number">0</span>:</div><div class="line">            <span class="keyword">if</span>(random.random()&lt;=self.epsilon):</div><div class="line">                action_index=random.randrange(self.actions)</div><div class="line">                action[action_index]=<span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            action[<span class="number">0</span>]=<span class="number">1</span><span class="comment">#do noting</span></div><div class="line">        <span class="comment">#change episilon</span></div><div class="line">        <span class="keyword">if</span> self.epsilon&gt;FINAL_EPSILON <span class="keyword">and</span> self.timeStep&gt;OBSERVE:</div><div class="line">            self.epsilon -= (INITIAL_EPSILON - FINAL_EPSILON)/EXPLORE</div><div class="line">        <span class="keyword">return</span> action</div><div class="line">    <span class="comment">#初始化状态</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setInitState</span><span class="params">(self,observation)</span>:</span></div><div class="line">        self.currentState=np.stack((observation,observation,observation,observation),axis=<span class="number">2</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">weight_variable</span><span class="params">(self,shape)</span>:</span></div><div class="line">        initial = tf.truncated_normal(shape, stddev = <span class="number">0.01</span>)</div><div class="line">        <span class="keyword">return</span> tf.Variable(initial)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bias_variable</span><span class="params">(self,shape)</span>:</span></div><div class="line">        initial = tf.constant(<span class="number">0.01</span>, shape = shape)</div><div class="line">        <span class="keyword">return</span> tf.Variable(initial)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">conv2d</span><span class="params">(self,x, W, stride)</span>:</span></div><div class="line">        <span class="keyword">return</span> tf.nn.conv2d(x, W, strides = [<span class="number">1</span>, stride, stride, <span class="number">1</span>], padding = <span class="string">"SAME"</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">max_pool_2x2</span><span class="params">(self,x)</span>:</span></div><div class="line">        <span class="keyword">return</span> tf.nn.max_pool(x, ksize = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], strides = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], padding = <span class="string">"SAME"</span>)</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/强化学习/">强化学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/23/强化学习入门(二)/" title="强化学习入门(二)" itemprop="url">强化学习入门(二)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-23T13:48:13.000Z" itemprop="datePublished"> 发表于 2017-12-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>书籍：机器学习 周志华<br>视频：<a href="https://www.youtube.com/watch?v=sGuiWX07sKw" target="_blank" rel="external">RL Course by David Silver</a><br>博客：<a href="http://www.algorithmdog.com/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B" target="_blank" rel="external">AlgorithmDog</a><br><a href="http://chenrudan.github.io/blog/2016/07/11/reinforcementlearninglesssion4.html" target="_blank" rel="external">David Silver强化学习公开课之四</a></p>
+<h3 id="model-free-learning-免模型学习"><a href="#model-free-learning-免模型学习" class="headerlink" title="model-free learning 免模型学习"></a>model-free learning 免模型学习</h3><p>免模型学习：状态转移、奖励函数未知<br>策略评估：蒙特卡罗、时间差分<br>策略学习：Q-Learning、Sarsa<br>强化学习的方法就是<strong>先对当前策略进行策略评估，也就是说计算出当前策略所对应的值函数；然后，利用值函数改进当前策略。</strong><br>==<strong>强化学习的关键在于计算出值函数，而值函数的关键在于计算当前状态下获得回报的期望。</strong>==  </p>
+<p>在有模型的强化学习中，我们知道马尔科夫决策过程的状态转移和奖励函数，因此值函数可以用动态规划求得。<br><span>$$v_\pi(s) = \mathbb E_\pi[G_t | S_t = s]
+
+= \sum_{a} \pi(a|s) \left[ {R}_s^a + \gamma \sum_{s&apos;} { P}_{ss&apos;}^a v_\pi(s&apos;) \right]$$</span><!-- Has MathJax --><br><span>$$q_\pi(s, a) = \mathbb E_\pi[G_t | S_t = s, A_t = a]
+
+= {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(a&apos;|s&apos;)q_\pi(s&apos;, a&apos;)$$</span><!-- Has MathJax --><br><strong>所以无模型学习的关键是估计状态值函数和行为值函数中的期望。</strong></p>
+<h4 id="蒙特卡罗学习"><a href="#蒙特卡罗学习" class="headerlink" title="蒙特卡罗学习"></a>蒙特卡罗学习</h4><p><strong>蒙特卡罗方法是利用经验平均代替随机变量的期望,即假设每个状态的值函数取值等于多次试验返回的回报的平均值。</strong><br>评估当前策略时，我们可以利用策略产生很多次试验，每次试验都是从任意的初始状态开始直到终止状态，比如一次试验(an<br>episode)为：<br><span>$S_1,A_1,R_2,&hellip;,S_k$</span><!-- Has MathJax --><br>计算一次试验中状态s处的折扣回报返回值为：<br><span>$G_t = R_{t+1}+\gamma R_{t+2}+&hellip;+\gamma^{k-1}R_{t+k}$</span><!-- Has MathJax --><br>我们只需要计算试验的次数和每次试验返回的回报求平均即可。令N(St)表示St访问的次数，Gt表示这次实验获得的回报,则值函数的更新如下：<br><span>$N(S_t)=N(S_t)+1$</span><!-- Has MathJax --><br><span>$V(S_t) = V(S_t)+\frac{1}{N(S_t)}(G_t-V(S_t))$</span><!-- Has MathJax --><br>在一些问题中，经常用一个平均访问次数alpha来代替N(St),即<br><span>$V(S_t) = V(S_t)+\alpha(G_t-V(S_t))$</span><!-- Has MathJax --></p>
+<p><strong>探索</strong>：<br>为了获得较好的指函数的估计，需要充分探索每一个每一个动作可能到达的状态，也就是说在任意状态下，采用动作集中每个动作的概率都大于零。可以采用ε-soft选取动作：<br><img src="http://oc9b84kcd.bkt.clouddn.com/%E8%B4%AA%E5%BF%83.png" alt=""></p>
+<p><strong>On-Policy &amp; Off-Policy</strong>:<br>同策略：用于采样和改进的策略是同一个策略π。<br>异策略：用于采样的是策略μ，来改进的是策略π。<br><strong>同策略蒙特卡罗</strong><br><img src="http://oc9b84kcd.bkt.clouddn.com/OnPolicy.png" alt="image"></p>
+<p><strong>异策略蒙特卡罗</strong><br><img src="http://oc9b84kcd.bkt.clouddn.com/OffPolicy.png" alt="image"></p>
+<h4 id="时间差分学习"><a href="#时间差分学习" class="headerlink" title="时间差分学习"></a>时间差分学习</h4><p>蒙特卡罗需要完成一个完整的采样轨迹后再更新策略的值估计，这样没有没有充分利用强化学习任务的MDP结构。时序差分学习则结合了动态规划与蒙特卡罗方法的思想，能做到更高效的无模型学习。MC算法总是从当前状态出发，一直走到终止状态再更新当前状态的值函数，而TD算法可以从当前状态出发走n步再更新当前状态的值函数，特别的，走一步就更新的即TD(0)。TD(0)的值函数更新公式如下：<br><span>$V(S_t) = V(S_t)+\alpha(R_{t+1}+\gamma V(S_{t+1})-V(S_t))$</span><!-- Has MathJax --><br><span>$Q(S_t, A_t) = Q(S_t, A_t) + \alpha(R_{t+1} + \gamma Q(S_{t+1}, A&apos;) - Q(S_t, A_t)$</span><!-- Has MathJax --><br>TD(0)是指在某个状态s下执行某个动作后转移到下一个状态s′s′时，估计s′的return再更新s，假如s之后执行两次动作转移到s′′时再反回来更新s的值函数，那么就是另一种形式，从而根据step的长度n可以扩展TD到不同的形式，当step长度到达当前episode终点时就变成了MC。从而得到统一公式如下:<br><span>$G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + &hellip; + \gamma ^{n-1}R_{t+n}+\gamma ^nV(S_{t+n})$</span><!-- Has MathJax --><br><span>$V(S_t) = V(S_t) + \alpha(G_t^{(n)} - V(S_t))$</span><!-- Has MathJax --><br><strong>On-Policy Sarsa算法</strong>：<br>执行策略和改进的策略都是ε-贪婪策略。<br><img src="http://oc9b84kcd.bkt.clouddn.com/Sarsa.png" alt=""><br><strong>Off-Policy Q-Learning算法</strong>：<br>执行策略为ε-贪婪策略，改进策略为贪婪策略。<br><img src="http://oc9b84kcd.bkt.clouddn.com/QLearning.png" alt=""></p>
+<h4 id="蒙特卡罗-vs-时间差分"><a href="#蒙特卡罗-vs-时间差分" class="headerlink" title="蒙特卡罗 vs 时间差分"></a>蒙特卡罗 vs 时间差分</h4><p><img src="http://oc9b84kcd.bkt.clouddn.com/MC&amp;TD.png" alt=""></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/强化学习/">强化学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/12/20/强化学习入门(一)/" title="强化学习入门(一)" itemprop="url">强化学习入门(一)</a>
   </h1>
   <p class="article-author">By
@@ -114,8 +261,14 @@ q_\pi(s,a) = {R}_s^a + \gamma \sum_{s&apos; \in {S}} {P}_{ss&apos;}^a v_\pi(s&ap
 q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(a&apos;|s&apos;)q_\pi(s&apos;, a&apos;)$$</span><!-- Has MathJax --><br>这两个方程的物理意义是：  </p>
 <ul>
 <li>当前状态下能获得的回报的期望等于当前状态下采取动作a的概率乘上采取动作a所获得的的奖励与采取状态a引起的状态转移获得的累积折扣期望回报之和。</li>
-<li>当前状态下采取动作a获得的回报的期望等于采取动作a所获得的奖励与采取动作a引起的状态转移所获得的累积折扣期望回报之和。<h3 id="探索与利用-Exploration-amp-Exploitation"><a href="#探索与利用-Exploration-amp-Exploitation" class="headerlink" title="探索与利用 Exploration &amp; Exploitation"></a>探索与利用 Exploration &amp; Exploitation</h3>探索：放弃一些已知的reward信息，尝试去做一些新的选择。<br>利用： 从已知reward信息中，选择一个reward最大的。<br><strong>强化学习是在探索与利用之间达到折中。</strong>  <h4 id="ε-贪心"><a href="#ε-贪心" class="headerlink" title="ε-贪心"></a>ε-贪心</h4>ε-贪心是基于一个概率来对探索和利用进行折中：每次尝试时，以ε概率进行探索，以1-ε概率进行利用。<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4>以一定概率进行选取，若某些动作回报高于其他，则被选取的概率也会更大。</li>
+<li>当前状态下采取动作a获得的回报的期望等于采取动作a所获得的奖励与采取动作a引起的状态转移所获得的累积折扣期望回报之和。<h3 id="探索与利用-Exploration-amp-Exploitation"><a href="#探索与利用-Exploration-amp-Exploitation" class="headerlink" title="探索与利用 Exploration &amp; Exploitation"></a>探索与利用 Exploration &amp; Exploitation</h3>探索：放弃一些已知的reward信息，尝试去做一些新的选择。<br>利用： 从已知reward信息中，选择一个reward最大的。<br><strong>强化学习是在探索与利用之间达到折中。</strong>  <h4 id="ε-贪心"><a href="#ε-贪心" class="headerlink" title="ε-贪心"></a>ε-贪心</h4>ε-贪心是基于一个概率来对探索和利用进行折中：每次尝试时，以ε概率进行探索，以1-ε概率进行利用。<h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4>以一定概率进行选取，若某些动作回报高于其他，则被选取的概率也会更大。<h3 id="model-based-leanning有模型学习"><a href="#model-based-leanning有模型学习" class="headerlink" title="model-based leanning有模型学习"></a>model-based leanning有模型学习</h3>已知R~s~^a^和P~ss’~^a^时，马尔科夫决策过程就是已知的，Agent可以对环境进行建模，即有模型学习，有模型学习常用的方法有策略迭代和价值迭代。<h4 id="策略迭代"><a href="#策略迭代" class="headerlink" title="策略迭代"></a>策略迭代</h4>策略迭代主要步骤<strong>策略评估</strong>与<strong>策略改进</strong>，从一个随机策略出发，不断进行策略评估与策略改进，直至策略收敛。<h5 id="策略评估"><a href="#策略评估" class="headerlink" title="策略评估"></a>策略评估</h5>策略评估主要依据状态值函数，指的是用这个策略在当前状态下所能获得的累积奖励的期望评估该策略。<span>$v_\pi(s) = \sum_{a} \pi(a|s) \left[ {R}_s^a + \gamma \sum_{s&apos;} { P}_{ss&apos;}^a v_\pi(s&apos;) \right]$</span><!-- Has MathJax -->
+<h5 id="策略改进"><a href="#策略改进" class="headerlink" title="策略改进"></a>策略改进</h5>将策略选择的动作变为当前最优的动作。<span>$\pi&apos; {\left ( x \right )}=\underset{a\in A}{argmax}\left (q^{\pi }\left ( x,a \right )  \right )$</span><!-- Has MathJax -->
+迭代公式：<span>$$v_*(s) = \underset{a}{max}q_*(s,a) = \underset{a}{max} R_s^{a} + \gamma \sum_{s&apos; \in S}P_{ss&apos;}^av_*(s&apos;)
+
+q^*(s,a) = R_s^{a} + \gamma \sum_{s&apos; \in S}P_{ss&apos;}^av_*(s&apos;) = R_s^a + \gamma \sum_{s&apos;\in S}P_{ss&apos;}^a \underset{a&apos;}    {max}q^*(s&apos;, a&apos;)$$</span><!-- Has MathJax -->
+</li>
 </ul>
+<h4 id="价值迭代"><a href="#价值迭代" class="headerlink" title="价值迭代"></a>价值迭代</h4><p>策略迭代是从初始状态出发，不断评估改进直到找到到达最终状态时的回报最大的策略。价值迭代指的是从最终奖励状态开始迭代，直到找到每个状态的最大回报。</p>
 
         
         
@@ -615,116 +768,6 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/10/13/双向BFS/" title="双向BFS" itemprop="url">双向BFS</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-10-13T14:05:00.000Z" itemprop="datePublished"> 发表于 2017-10-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="双向BFS"><a href="#双向BFS" class="headerlink" title="双向BFS"></a>双向BFS</h3><p>如果我们已经知道搜索的起点和终点，可以采用双向BFS进行搜索。双向BFS基于两个队列begin和end,每次搜索从较小的那个队列进行搜索，如果两个队列里有公共元素，则搜索终止。</p>
-<h3 id="例1-127-Word-Ladder"><a href="#例1-127-Word-Ladder" class="headerlink" title="例1.127. Word Ladder"></a>例1.<a href="https://leetcode.com/problems/word-ladder/description/" target="_blank" rel="external">127. Word Ladder</a></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList)</span> </span>&#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>,<span class="keyword">bool</span>&gt; M;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> str:wordList)M[str]=<span class="literal">false</span>;</div><div class="line">        <span class="keyword">if</span>(!M.count(endWord))<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; beginQ,endQ,swapQ;</div><div class="line">        beginQ.insert(beginWord);endQ.insert(endWord);</div><div class="line">        M[beginWord]=<span class="literal">true</span>;M[endWord]=<span class="literal">true</span>;</div><div class="line">        <span class="keyword">int</span> steps=<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(!beginQ.empty()&amp;&amp;!endQ.empty())</div><div class="line">        &#123;</div><div class="line">            ++steps;</div><div class="line">            <span class="keyword">if</span>(beginQ.size()&gt;endQ.size())swap(beginQ,endQ);</div><div class="line">            swapQ.clear();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> word:beginQ)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;word.size();++i)</div><div class="line">                &#123;</div><div class="line">                    <span class="built_in">string</span> s=word;</div><div class="line">                    <span class="keyword">for</span>(<span class="keyword">int</span> c=<span class="string">'a'</span>;c&lt;=<span class="string">'z'</span>;++c)</div><div class="line">                    &#123;</div><div class="line">                        s[i]=c;</div><div class="line">                        <span class="keyword">if</span>(endQ.count(s))<span class="keyword">return</span> steps+<span class="number">1</span>;</div><div class="line">                        <span class="keyword">if</span>(M.count(s)&amp;&amp;!M[s])</div><div class="line">                        &#123;</div><div class="line">                            M[s]=<span class="literal">true</span>;</div><div class="line">                            swapQ.insert(s);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            swap(beginQ,swapQ);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/BFS/">BFS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/10/02/Trie树/" title="Trie树" itemprop="url">Trie树</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2017-10-02T12:23:00.000Z" itemprop="datePublished"> 发表于 2017-10-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h3><p>字典树是储存着不同字符串的数据结构，是一个n叉树(n为字符串集的大小)，对于一棵储存26个字母的字典树来说，它的每一个节点储存着26个指针可以分别代表这个节点后面加上‘a’~’z’后可以指向那个节点。<br>插入的时候从根节点开始，沿着对应的边走（如果某个指针后面指向的节点为空，可以新建一个节点）走到字符串结束的时候在当前停留的节点标记一下(是否出现过，出现了几次等)。<br>查询的时候也是一样从根节点走，如果走到某个节点无路可走了，说明查不到，当一路走到字符串结束时，检查当前停留的节点是否被标记过。<br>==别忘了初始化根节点！==<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e6</span>+<span class="number">5</span>;</div><div class="line"><span class="keyword">struct</span> node</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> next[<span class="number">26</span>];<span class="comment">//下一个节点编号</span></div><div class="line">    <span class="keyword">int</span> cnt;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        cnt=<span class="number">0</span>;</div><div class="line">        <span class="built_in">memset</span>(next,<span class="number">-1</span>,<span class="keyword">sizeof</span>(next));</div><div class="line">    &#125;</div><div class="line">&#125;T[maxn];</div><div class="line"><span class="keyword">int</span> le=<span class="number">1</span>;<span class="comment">//当前节点数量</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">char</span> *s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>,p=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(s[i])</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> x=s[i]-<span class="string">'a'</span>;</div><div class="line">        <span class="keyword">if</span>(T[p].next[x]==<span class="number">-1</span>)<span class="comment">//创建节点</span></div><div class="line">        &#123;</div><div class="line">            T[le].init();</div><div class="line">            T[p].next[x]=le++;</div><div class="line">        &#125;</div><div class="line">        p=T[p].next[x];</div><div class="line">        T[p].cnt++;</div><div class="line">        i++</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">query</span><span class="params">(<span class="keyword">char</span> *s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>,p=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(s[i])</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> x=s[i]-<span class="string">'a'</span>;</div><div class="line">        <span class="keyword">if</span>(T[p].next[x]==<span class="number">-1</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"0\n"</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        p=T[p].next[x];</div><div class="line">        ++i;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,T[p].cnt);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Trie树/">Trie树</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -791,11 +834,11 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
 			
 		
 			
@@ -803,7 +846,15 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+				<li><a href="/tags/强化学习/" title="强化学习">强化学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
 			
 		
 			
@@ -811,7 +862,7 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
 			
 		
 			
@@ -831,10 +882,6 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
@@ -843,19 +890,15 @@ q_\pi(s, a) = {R}_s^a + \gamma \sum_{s&apos;}{P}_{ss&apos;}^a \sum_{a&apos;}\pi(
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
 			
 		
 		</ul>

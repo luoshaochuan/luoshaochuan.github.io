@@ -74,6 +74,140 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/07/13/动态规划总结(四）/" title="动态规划总结（四）：背包问题九讲笔记" itemprop="url">动态规划总结（四）：背包问题九讲笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-13T14:07:00.000Z" itemprop="datePublished"> 发表于 2017-07-13</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="01背包问题"><a href="#01背包问题" class="headerlink" title="01背包问题"></a>01背包问题</h2><blockquote>
+<p>有 N 件物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的<br>价值是 Vi。求解将哪些物品装入背包可使价值总和最大。  </p>
+</blockquote>
+<h3 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h3><p>令F[i][j]表示从前i件物品里选物品放入容量为j的背包中所能获得的最大价值。则状态转移方程为：<code>F[i][j]=max{F[i-1][j-k*Wi]+k*Vi|0&lt;=k&lt;=1}</code>。<br>该状态方程的含义是：若放入第i件物品，问题转化为从前i-1件中选物品，背包容量为j-Wi所能装入的最大价值。如不放入第i件物品，问题转化为从前i-1件中选物品，背包容量为j所能装入的最大价值。</p>
+<h3 id="初始化："><a href="#初始化：" class="headerlink" title="初始化："></a>初始化：</h3><p>F[0][0…N]=0 如果背包不需装满<br>F[0][0]=0,F[0][1…N]=-∞ 如果背包必须装满<br>如果背包必需装满，则初始情况下只有容量为0的背包恰好被0件物品装满这一合法解，其余解均为非合法解。如果背包不需装满，则初始情况下任何容量的背包均能装入0件物品获得最大价值0。</p>
+<h3 id="最大价值："><a href="#最大价值：" class="headerlink" title="最大价值："></a>最大价值：</h3><p>F[N][C]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">问题描述：</div><div class="line">给定N个物品，重量和价值分别为w1,v1,...,wn,vn.</div><div class="line">给定一个背包。容量为C。</div><div class="line">求该背包能装的最大价值的物品。</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">//O(CN)空间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> *w,<span class="keyword">int</span> *v,<span class="keyword">int</span> C,<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> **F = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((num+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num+<span class="number">1</span>; ++i)</div><div class="line">		F[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((C+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line"></div><div class="line">	<span class="comment">//初始化</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		F[<span class="number">0</span>][j] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = w[i]<span class="number">-1</span>; j &lt; C; ++j)</div><div class="line">		&#123;</div><div class="line">			F[i + <span class="number">1</span>][j + <span class="number">1</span>] = max(F[i][j + <span class="number">1</span>], F[i][j + <span class="number">1</span> - w[i]] + v[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[num][C];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num + <span class="number">1</span>; ++i)</div><div class="line">		<span class="built_in">free</span>(F[i]);</div><div class="line">	<span class="built_in">free</span>(F);</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//O(C)空间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> *w, <span class="keyword">int</span> *v, <span class="keyword">int</span> C, <span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> *F = <span class="keyword">new</span> <span class="keyword">int</span>[C + <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; C + <span class="number">1</span>; ++i)</div><div class="line">		F[i] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = C; j &gt;= w[i]; --j)</div><div class="line">			F[j] = max(F[j], F[j - w[i]] + v[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[C];</div><div class="line">	<span class="keyword">delete</span>[]F;</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"Knapsack.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"Knapsack.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line">	<span class="keyword">int</span> C, num;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; C &gt;&gt; num;</div><div class="line">	<span class="keyword">int</span> *w = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">int</span> *v = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> ww;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; ww;</div><div class="line">		w[i] = ww;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> vv;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; vv;</div><div class="line">		v[i] = vv;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; dp(w,v,C,num)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">delete</span>[]w;</div><div class="line">	<span class="keyword">delete</span>[]v;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="完全背包问题"><a href="#完全背包问题" class="headerlink" title="完全背包问题"></a>完全背包问题</h2><blockquote>
+<p>有 N 种物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的<br>价值是 Vi。在每种物品都有无限件可以选择时，求解将哪些物品装入背包可使价值总和最大。  </p>
+</blockquote>
+<h3 id="分析：-1"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h3><p>F[i][j]=max{F[i-1][j-k<em>w[i]]+k</em>v[i]|k&gt;=0}<br>=max{F[i-1][j],max{F[i-1][j-k<em>w[i]]+k</em>v[i]|k&gt;=1}}<br>=max{F[i-1][j],max{F[i-1][j-w[i]-k<em>w[i]]+k</em>v[i]|k&gt;=0}+v[i]}<br>=max{F[i-1][j],F[i][j-w[i]]+v[i]}<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">//O(VN)空间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> *w,<span class="keyword">int</span> *v,<span class="keyword">int</span> C,<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> **F = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((num+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num + <span class="number">1</span>; ++i)</div><div class="line">		F[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((C+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		F[<span class="number">0</span>][j] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (j &lt; w[i])</div><div class="line">				F[i + <span class="number">1</span>][j] = F[i][j];</div><div class="line">			<span class="keyword">else</span></div><div class="line">				F[i + <span class="number">1</span>][j] = max(F[i][j],F[i+<span class="number">1</span>][j-w[i]]+v[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[num][C];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num + <span class="number">1</span>; ++i)</div><div class="line">		<span class="built_in">free</span>(F[i]);</div><div class="line">	<span class="built_in">free</span>(F);</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//O(V)时间复杂度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> *w, <span class="keyword">int</span> *v, <span class="keyword">int</span> C, <span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> *F = <span class="keyword">new</span> <span class="keyword">int</span>[C + <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; C + <span class="number">1</span>; ++i)</div><div class="line">		F[i] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = w[i]; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">			F[j] = max(F[j],F[j-w[i]]+v[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> result = F[C];</div><div class="line">	<span class="keyword">delete</span>[] F;</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"Knapsack.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"Knapsack.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line"></div><div class="line">	<span class="keyword">int</span> C, num;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; C &gt;&gt; num;</div><div class="line">	<span class="keyword">int</span> *w = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">int</span> *v = <span class="keyword">new</span> <span class="keyword">int</span>[num];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> ww;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; ww;</div><div class="line">		w[i] = ww;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> vv;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; vv;</div><div class="line">		v[i] = vv;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; dp(w,v,C,num)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">delete</span>[]w;</div><div class="line">	<span class="keyword">delete</span>[]v;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="多重背包问题"><a href="#多重背包问题" class="headerlink" title="多重背包问题"></a>多重背包问题</h2><p>完全背包问题</p>
+<blockquote>
+<p>有 N 种物品和一个容量为C的背包。放入第 i 件物品耗费的费用是 Wi，得到的<br>价值是 Vi。在每种物品有Mi件可以选择时，求解将哪些物品装入背包可使价值总和最大。  </p>
+</blockquote>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>多重背包主要利用了二进制分解思想。对于任意物品件数Mi，可以分解为2^0^,2^1^,…,2^k-1^,Mi-2^k^+1堆物品，且 k 是满足 Mi − 2k + 1 &gt; 0 的最大整数。这些堆可以组合成任意小于等于Mi的整数。这样我们就可以把这个问题转换成01背包问题，对应着每堆物品选还是不选。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; V;</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; W;</div><div class="line"></div><div class="line"><span class="keyword">int</span> w[<span class="number">10</span>];</div><div class="line"><span class="keyword">int</span> v[<span class="number">10</span>];</div><div class="line"><span class="keyword">int</span> m[<span class="number">10</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">devide</span><span class="params">(<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> k = <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (m[i]-k&gt;=<span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			V.push_back(k*v[i]);</div><div class="line">			W.push_back(k*w[i]);</div><div class="line">			m[i] -= k;</div><div class="line">			k *= <span class="number">2</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (m[i])</div><div class="line">			V.push_back(m[i]*v[i]),W.push_back(m[i]*w[i]);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> w[],<span class="keyword">int</span> v[],<span class="keyword">int</span> m[],<span class="keyword">int</span> C,<span class="keyword">int</span> num)</span></span></div><div class="line">&#123;</div><div class="line">	devide(num);</div><div class="line">	<span class="keyword">int</span> R = V.size();</div><div class="line">	<span class="keyword">int</span> **dp = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((R+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; R + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		dp[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((C + <span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			dp[i][j] = <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; R + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; C + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			dp[i][j] = max(dp[i - <span class="number">1</span>][j], dp[i - <span class="number">1</span>][j - W[i<span class="number">-1</span>]] + V[i<span class="number">-1</span>]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[R][C];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="多重部分和问题"><a href="#多重部分和问题" class="headerlink" title="多重部分和问题"></a>多重部分和问题</h2><blockquote>
+<p>有n种不同的数字ai,每种数字有Mi个，判断是否可以从这些数字中选出若各个使它们的和恰好为K.</p>
+</blockquote>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>如果dp[i+1][j]表示前i种数字可否凑成数字j。如果使用第i种数字可以得到j,前i-1种数字必须凑出j-k<em>ai,0&lt;=k&lt;=Mi.所以dp[i+1][j]=max{0,dp[i][j-k</em>ai]|0&lt;=k&lt;=Mi}.算法复杂度为<code>O(NK∑Mi)</code><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> **dp = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((N + <span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		dp[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((K+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; K + <span class="number">1</span>; ++j)</div><div class="line">			dp[i][j] = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = A[i]; j &lt;= K; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; j - k*A[i] &gt;= <span class="number">0</span> &amp;&amp; k&lt;=M[i]; ++k)</div><div class="line">				dp[i + <span class="number">1</span>][j] = max(<span class="number">0</span>,dp[i][j-k*A[i]]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>dp[i+1][j]表示能否的话提供的信息太少了，如果另dp[i+1][j]表示前i种数字凑出j第i种最多还剩的数量，初始化为-1，dp[0][0]=0.给定i,对于数字j,只需要关心能否凑出j-ai,若凑不出j-ai，则必定凑不出j.若能凑出j-ai且第i种数字还有的话，则必定能凑出j.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">dp[i+1][j]=</div><div class="line">\left\&#123;\begin&#123;matrix&#125;</div><div class="line">Mi,dp[i][j]&gt;=0\\</div><div class="line">-1,j&lt;Ai || dp[i+1][j-Ai]&lt;=0\\ </div><div class="line">dp[i+1][j-Ai]-1</div><div class="line">\end&#123;matrix&#125;\right.</div></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span>** dp = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>((N+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N + <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		dp[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((K+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N + <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			dp[i][j] = <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = A[i]; j &lt;= K; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (dp[i][j] &gt;= <span class="number">0</span>)</div><div class="line">				dp[i + <span class="number">1</span>][j] = M[i];</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (dp[i + <span class="number">1</span>][j - A[i]] &gt; <span class="number">0</span>)</div><div class="line">			&#123;</div><div class="line">				dp[i + <span class="number">1</span>][j] = dp[i + <span class="number">1</span>][j - A[i]]<span class="number">-1</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[N][K] &gt;= <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-动态规划/">算法 动态规划</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/12/动态规划总结(三)/" title="动态规划总结（三）：划分（区间）动态规划" itemprop="url">动态规划总结（三）：划分（区间）动态规划</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-12T13:07:57.000Z" itemprop="datePublished"> 发表于 2017-07-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="划分-区间-动态规划"><a href="#划分-区间-动态规划" class="headerlink" title="划分(区间)动态规划"></a>划分(区间)动态规划</h2><p>这类动态规划通常有如下形式：<br>f(i,j)={f(i,k)+f(k+1,j)+cost(k)} i&lt;k&lt;j </p>
+<h2 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h2><blockquote>
+<p>矩阵连乘、凸多边形三角剖分、石子合并<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">有N堆石子排成一排，每堆石子有一定的数量。现要将N堆石子并成为一堆。合并的过程只能每次将相邻的两堆石子堆成一堆</div><div class="line">，每次合并花费的代价为这两堆石子的和，经过N-1次合并后成为一堆。求出总的代价最小值。</div><div class="line"></div><div class="line">分析：</div><div class="line">令f(i,j)表示从合并第i到j堆石子所需要的最小代价,sum(i,j)为第i到j堆石子总数量。</div><div class="line"></div><div class="line">则：</div><div class="line">f(i,j)=i堆石子数量，i==j</div><div class="line">f（i,j)=min&#123;f(i,k)+f(k+1,j)&#125;+sum(i,j)i&lt;k&lt;j</div><div class="line">*/</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x3f3f3f3f</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span>* a, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> s = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt;= j; ++k)</div><div class="line">		s += a[k];</div><div class="line">	<span class="keyword">return</span> s;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> len)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> **c = (<span class="keyword">int</span>**)<span class="built_in">malloc</span>(len*<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)</div><div class="line">	&#123;</div><div class="line">		c[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(len*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len; ++j)</div><div class="line">			c[i][j] = INF;</div><div class="line">		c[i][i] = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j+i&lt;len; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = j; k &lt; j + i;++k)</div><div class="line">			c[j][j + i] = min(c[j][j+i],c[j][k]+c[k+<span class="number">1</span>][j+i]+sum(a,j,j+i));</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> cost = c[<span class="number">0</span>][len - <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)</div><div class="line">		<span class="built_in">free</span>(c[i]);</div><div class="line">	<span class="built_in">free</span>(c);</div><div class="line">	<span class="keyword">return</span> cost;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	freopen(<span class="string">"Stone.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">	freopen(<span class="string">"Stone.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line">	<span class="keyword">int</span> t;</div><div class="line">	<span class="built_in">cin</span> &gt;&gt; t;</div><div class="line">	<span class="keyword">int</span> *a = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(t*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; t; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> n;</div><div class="line">		<span class="built_in">cin</span> &gt;&gt; n;</div><div class="line">		a[i] = n;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; solve(a, t) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">free</span>(a);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法-动态规划/">算法 动态规划</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/07/11/动态规划总结(二）/" title="动态规划总结（二）：前缀动态规划" itemprop="url">动态规划总结（二）：前缀动态规划</a>
   </h1>
   <p class="article-author">By
@@ -675,292 +809,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/11/05/C语言调用matplotlib绘图/" title="C语言调用matplotlib绘图" itemprop="url">C语言调用matplotlib绘图</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-11-04T16:14:53.000Z" itemprop="datePublished"> 发表于 2016-11-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>最近工作中需要花一些函数图，考虑到C语言中没有好用的作图库，决定用C语言调用Python中的matplotlib来绘制。这里是C语言调用Python的函数手册：<a href="https://docs.python.org/2/c-api/" target="_blank" rel="external">Python C-API</a>.</p>
-<h5 id="ubuntu下环境配置"><a href="#ubuntu下环境配置" class="headerlink" title="ubuntu下环境配置"></a>ubuntu下环境配置</h5><p>1.下载python库和头文件：打开终端执行sudo apt-get install python-dev即可。安装完成后头文件 在 <code>/usr/include/python2.7</code> 下，库文件在<code>/usr/lib/python2.7/config</code>下。</p>
-<p>2.安装matplotlib：打开终端执行pip install matplotlib即可</p>
-<h5 id="简单C语言调用Python"><a href="#简单C语言调用Python" class="headerlink" title="简单C语言调用Python"></a>简单C语言调用Python</h5><p>最简单的C语言调用Python代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"python2.7/Python.h"</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    Py_Initialize();<span class="comment">/*初始化Python调用环境*/</span></div><div class="line">    PyRun_SimpleString(<span class="string">"print 'Hello World'"</span> );<span class="comment">/*执行简单Python语句*/</span></div><div class="line">    Py_Finalize();<span class="comment">/*终止Python调用环境*/</span></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>打开终端，执行gcc -o simple_call_python simple_call_python.c -lpython2.7可以得到运行结果:<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">Hello World</span></div></pre></td></tr></table></figure></p>
-<h5 id="C语言调用Python示例"><a href="#C语言调用Python示例" class="headerlink" title="C语言调用Python示例"></a>C语言调用Python示例</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">c_call_python.c</div><div class="line">*/</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"python2.7/Python.h"</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">/*step1:初始化*/</span></div><div class="line">    Py_Initialize();</div><div class="line">    <span class="keyword">if</span>(!Py_IsInitialized())</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to initialize!\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/*step2:添加但前路径到搜索路径，这样你就可以把待调用的python脚本放到当前路径下*/</span></div><div class="line">    PyRun_SimpleString(<span class="string">"import sys"</span>);</div><div class="line">    PyRun_SimpleString(<span class="string">"sys.path.append('./')"</span>);</div><div class="line">    </div><div class="line">    <span class="comment">/*step3:导入待调用Python的Python脚本*/</span></div><div class="line">    PyObject *pModule = PyImport_ImportModule(<span class="string">"add_script"</span>);</div><div class="line">    <span class="keyword">if</span>(!pModule)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to import!\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/*step4:获取待调用的函数*/</span></div><div class="line">    PyObject *pFunction = PyObject_GetAttrString(pModule,<span class="string">"add_func"</span>);</div><div class="line">    <span class="keyword">if</span>(!pFunction)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to get function!\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/*step5:传入参数*/</span></div><div class="line">    PyObject *pArgs = PyTuple_New(<span class="number">2</span>);</div><div class="line">    PyTuple_SetItem(pArgs,<span class="number">0</span>,Py_BuildValue(<span class="string">"i"</span>,<span class="number">1</span>));</div><div class="line">    PyTuple_SetItem(pArgs,<span class="number">1</span>,Py_BuildValue(<span class="string">"i"</span>,<span class="number">2</span>));</div><div class="line">    </div><div class="line">    <span class="comment">/*step6：调用python*/</span></div><div class="line">    PyObject *pRetValue = PyObject_CallObject(pFunction,pArgs);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Result:%ld\n"</span>,PyInt_AsLong(pRetValue));</div><div class="line">    </div><div class="line">    <span class="comment">/*step7:解引用，释放资源*/</span></div><div class="line">    Py_DECREF(pModule);</div><div class="line">    Py_DECREF(pFunction);</div><div class="line">    Py_DECREF(pArgs);</div><div class="line">    Py_DECREF(pRetValue);</div><div class="line">    </div><div class="line">    <span class="comment">/*step8:终止Python调用环境*/</span></div><div class="line">    Py_Finalize();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>python脚本如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#add_script.py</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_func</span><span class="params">(a,b)</span>:</span></div><div class="line">    <span class="keyword">return</span> a+b;</div></pre></td></tr></table></figure></p>
-<p>打开终端，执行gcc -o c_call_python c_call_python.c -lpython2.7可以得到运行结果:<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">Result:</span><span class="number">3</span></div></pre></td></tr></table></figure></p>
-<h5 id="向Python脚本传入Numpy数组"><a href="#向Python脚本传入Numpy数组" class="headerlink" title="向Python脚本传入Numpy数组"></a>向Python脚本传入Numpy数组</h5><p>只要NumPy中的结构定义和C语言中的定义相同，NumPy就可以很方便地读取C语言的结构数组的二进制数据，转换为NumPy的结构数组。Numpy提供了基于C语言向Python中传递结构数组的API:<a href="https://docs.scipy.org/doc/numpy/reference/c-api.html" target="_blank" rel="external">Numpy C-API</a>.</p>
-<p>常用的用于从C语言中创建Numpy结构数组的函数如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">PyObject* PyArray_SimpleNewFromData(<span class="keyword">int</span> nd, npy_intp* dims, <span class="keyword">int</span> typenum, <span class="keyword">void</span>* data)</div><div class="line">参数：</div><div class="line"><span class="string">nd:</span>数组的维数</div><div class="line"><span class="string">dims:</span>每维的长度</div><div class="line"><span class="string">typenum:</span>数据类型</div><div class="line"><span class="string">data:</span>数据</div></pre></td></tr></table></figure></p>
-<p>下面是一个从C语言里传递Numpy数组给Python并使用matplotlib绘图的例子：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">c_call_matplotlib.c</div><div class="line">#include&lt;stdio.h&gt;</div><div class="line">#include "python2.7/Python.h"</div><div class="line">//Numpy</div><div class="line">#include "python2.7/numpy/arrayobject.h"</div><div class="line">#include "python2.7/numpy/ndarraytypes.h"</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    /*step1:初始化*/</div><div class="line">    Py_Initialize();</div><div class="line">	<span class="number">_</span>import_array();</div><div class="line">    <span class="keyword">if</span>(!Py_IsInitialized())</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to initialize!\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/*step2:添加但前路径到搜索路径，这样你就可以把待调用的python脚本放到当前路径下*/</span></div><div class="line">    PyRun_SimpleString(<span class="string">"import sys"</span>);</div><div class="line">    PyRun_SimpleString(<span class="string">"sys.path.append('./')"</span>);</div><div class="line">    </div><div class="line">    <span class="comment">/*step3:导入待调用Python的Python脚本*/</span></div><div class="line">    PyObject *pModule = PyImport_ImportModule(<span class="string">"plot_script"</span>);</div><div class="line">    <span class="keyword">if</span>(!pModule)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to import!\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/*step4:获取待调用的函数*/</span></div><div class="line">    PyObject *pFunction = PyObject_GetAttrString(pModule,<span class="string">"plot_func"</span>);</div><div class="line">    <span class="keyword">if</span>(!pFunction)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to get function!\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/*step5:传入参数*/</span></div><div class="line">    <span class="keyword">float</span> *x=(<span class="keyword">float</span>*)<span class="built_in">malloc</span>(<span class="number">4</span>*<span class="keyword">sizeof</span>(<span class="keyword">float</span>));</div><div class="line">	<span class="keyword">float</span> *y=(<span class="keyword">float</span>*)<span class="built_in">malloc</span>(<span class="number">4</span>*<span class="keyword">sizeof</span>(<span class="keyword">float</span>));</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;++i)</div><div class="line">	&#123;</div><div class="line">		x[i]=i+<span class="number">1</span>;</div><div class="line">		y[i]=i;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> nd=<span class="number">1</span>;</div><div class="line">	npy_intp dims[<span class="number">1</span>]=&#123;<span class="number">4</span>&#125;;</div><div class="line">    PyObject *x_arr=PyArray_SimpleNewFromData(nd,dims,NPY_FLOAT,x);</div><div class="line">    PyObject *y_arr=PyArray_SimpleNewFromData(nd,dims,NPY_FLOAT,y);</div><div class="line">    PyObject *pArgs = PyTuple_New(<span class="number">2</span>);</div><div class="line">    PyTuple_SetItem(pArgs,<span class="number">0</span>,x_arr);</div><div class="line">    PyTuple_SetItem(pArgs,<span class="number">1</span>,y_arr);</div><div class="line">    </div><div class="line">    <span class="comment">/*step6：调用python*/</span></div><div class="line">    PyObject *pRetValue = PyObject_CallObject(pFunction,pArgs);</div><div class="line">    </div><div class="line">    <span class="comment">/*step7:解引用，释放资源*/</span></div><div class="line">	<span class="built_in">free</span>(x);</div><div class="line">	<span class="built_in">free</span>(y);</div><div class="line">    Py_DECREF(pModule);</div><div class="line">    Py_DECREF(pFunction);</div><div class="line">    Py_DECREF(pArgs);</div><div class="line">    Py_DECREF(pRetValue);</div><div class="line">    Py_DECREF(x_arr);</div><div class="line">	Py_DECREF(y_arr);</div><div class="line">    <span class="comment">/*step8:终止Python调用环境*/</span></div><div class="line">    Py_Finalize();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>python脚本如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#plot_script.py</span></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_func</span><span class="params">(x,y)</span>:</span></div><div class="line">	plt.plot(x,y);</div><div class="line">	plt.show();</div></pre></td></tr></table></figure>
-<p>执行 gcc -o c_call_matplotlib c_call_matplotlib.c -lpython2.7 -std=c99,运行结果如下:<br><img src="http://oc9b84kcd.bkt.clouddn.com/pic.png" alt="image"></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/C/">C</a><a href="/tags/matplotlib/">matplotlib</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/07/Python正则表达式/" title="Python正则表达式" itemprop="url">Python正则表达式</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-07T12:45:27.000Z" itemprop="datePublished"> 发表于 2016-09-07</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="正则表达式基础"><a href="#正则表达式基础" class="headerlink" title="正则表达式基础"></a>正则表达式基础</h4><h5 id="1-正则表达式概念"><a href="#1-正则表达式概念" class="headerlink" title="1.正则表达式概念"></a>1.正则表达式概念</h5><p><code>正则表达式</code>描述了一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串做替换或者从某个串中取出符合某个条件的子串等。<br><code>正则表达式</code><strong>普通字符</strong>（例如字符 a 到 z）以及<strong>特殊字符</strong>（称为”元字符”）组成的文字模式。模式描述在搜索文本时要匹配的一个或多个字符串。正则表达式作为一个模板，将某个字符模式与所搜索的字符串进行匹配。</p>
-<h5 id="2-常用元字符"><a href="#2-常用元字符" class="headerlink" title="2.常用元字符"></a>2.常用元字符</h5><h6 id="1-字符处理"><a href="#1-字符处理" class="headerlink" title="(1).字符处理"></a>(1).字符处理</h6><table>
-<thead>
-<tr>
-<th style="text-align:center">字符</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>.</code></td>
-<td style="text-align:center">匹配换行符以外的任意字符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>\w</code></td>
-<td style="text-align:center">匹配字母或数字或下划线或汉字</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>\s</code></td>
-<td style="text-align:center">匹配任意的空白字符，包括空格、制表符、换行符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>\d</code></td>
-<td style="text-align:center">匹配数字</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>\b</code></td>
-<td style="text-align:center">匹配单词的开始或结尾</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>^</code></td>
-<td style="text-align:center">匹配字符串的开头</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>$</code></td>
-<td style="text-align:center">匹配字符串的结尾</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>[]</code></td>
-<td style="text-align:center">匹配中括号内任意一个字符</td>
-</tr>
-</tbody>
-</table>
-<p>示例：<br><code>\bhello\b</code>：匹配hello这个单词<br><code>^0\d\d-\d\d\d\d\d\d\d\d$</code>：匹配一个例如025-87654321这样的字符串<br><code>[0-9]</code>：匹配0-9中任意一个数字<br><code>[abcd]</code>：匹配a,b,c,d中任意一个字符</p>
-<h6 id="2-贪婪限定符"><a href="#2-贪婪限定符" class="headerlink" title="(2).贪婪限定符"></a>(2).贪婪限定符</h6><p><code>贪婪限定符</code>用来指定正则表达式的一个给定组件必须要出现多少次才能满足匹配。有*或+或?或{n}或{n,}或{n,m}共6种。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">字符</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>*</code></td>
-<td style="text-align:center">重复前面的子表达式至少0次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>+</code></td>
-<td style="text-align:center">重复前面的子表达式至少1次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>?</code></td>
-<td style="text-align:center">重复前面的子表达式0次或1次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>{n}</code></td>
-<td style="text-align:center">重复前面的子表达式n次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>{n,}</code></td>
-<td style="text-align:center">重复前面的子表达式至少n次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>{n,m}</code></td>
-<td style="text-align:center">重复前面的子表达式n到m次</td>
-</tr>
-</tbody>
-</table>
-<p>示例：<br><code>2\d+</code>：2后面跟至少1个数字，例如20a、201a<br><code>0\d{2}-\d{8}</code>：匹配025-87654321这样的一串数字</p>
-<h6 id="3-非贪婪限定符"><a href="#3-非贪婪限定符" class="headerlink" title="(3).非贪婪限定符"></a>(3).非贪婪限定符</h6><p><code>贪婪限定符</code>会尽可能匹配更多的字符，<code>非贪婪限定符</code>会尽可能匹配更少的字符。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">字符</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>*?</code></td>
-<td style="text-align:center">匹配任意次，但尽可能少重复</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>+?</code></td>
-<td style="text-align:center">匹配至少1次，但尽可能少重复</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>??</code></td>
-<td style="text-align:center">匹配0或1次，但尽可能少重复</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>{n,}</code></td>
-<td style="text-align:center">匹配至少n次，但尽可能少重复</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>{n.m}</code></td>
-<td style="text-align:center">匹配n到m次，但尽可能少重复</td>
-</tr>
-</tbody>
-</table>
-<h6 id="4-反义符"><a href="#4-反义符" class="headerlink" title="(4).反义符"></a>(4).反义符</h6><p>有时候需要匹配不在某一范围的字符，这时候需要用到<code>反义符</code>。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">字符</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>\W</code></td>
-<td style="text-align:center">匹配任意不是字母、数字、下划线或汉字的字符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>\S</code></td>
-<td style="text-align:center">匹配任意不是空白符的字符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>\D</code></td>
-<td style="text-align:center">匹配任意非数字的字符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>\B</code></td>
-<td style="text-align:center">匹配不是单词开头或结束的位置</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>[^x]</code></td>
-<td style="text-align:center">匹配除x外的任意字符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>[^aoeiu]</code></td>
-<td style="text-align:center">匹配除aoeiu外的字符</td>
-</tr>
-</tbody>
-</table>
-<h6 id="5-分支"><a href="#5-分支" class="headerlink" title="(5).分支"></a>(5).分支</h6><p>可以用<code>|</code>来匹配它前面或后面任意一个正则表达式</p>
-<h6 id="6-后向引用"><a href="#6-后向引用" class="headerlink" title="(6).后向引用"></a>(6).后向引用</h6><p><code>后向引用</code>用于重复搜索前面某个分组匹配的文本。使用小括号<code>()</code>括起来一个表达式后，将导致相关匹配存储到一个临时缓冲区中，后面可以用<code>\n</code>引用这个分组，n为组号，即每个分组从左到右出现的顺序。<br>你也可以用<code>?&lt;name&gt;exp</code>这种形式自己给分组命名，后面通过<code>\k&lt;name&gt;</code>后向引用即可。</p>
-<hr>
-<h4 id="Python正则表达式"><a href="#Python正则表达式" class="headerlink" title="Python正则表达式"></a>Python正则表达式</h4><p>Python提供一个re模块来处理正则表达式，常用的函数有<code>re.match</code>、<code>re.search</code>、<code>re.sub</code>等，下面分别来介绍这几个函数。</p>
-<h5 id="1-re-match"><a href="#1-re-match" class="headerlink" title="(1).re.match"></a>(1).re.match</h5><blockquote>
-<p>re.match(pattern, string, flags=0)<br>参数:<br>pattern:正则表达式<br>string:要匹配的字符串<br>flags:标志位，用于控制正则表达式的匹配方式，比如是否区分大小写，多行匹配等。<br>注意：re.match匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败。</p>
-</blockquote>
-<h5 id="2-re-search"><a href="#2-re-search" class="headerlink" title="(2).re.search"></a>(2).re.search</h5><blockquote>
-<p>re.search(pattern, string, flags=0)<br>参数：<br>pattern:正则表达式<br>string:要匹配的字符串<br>flags:标志位，用于控制正则表达式的匹配方式，比如是否区分大小写，多行匹配等。<br>注意：re.search匹配整个字符串，直到找到一个匹配。</p>
-</blockquote>
-<p>示例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line">line = <span class="string">"Cats are smarter than dogs"</span>;</div><div class="line"></div><div class="line">matchObj = re.match( <span class="string">r'dogs'</span>, line, re.M|re.I)</div><div class="line"><span class="keyword">if</span> matchObj:</div><div class="line">   <span class="keyword">print</span> (<span class="string">"match --&gt; matchObj.group() : "</span>, matchObj.group())</div><div class="line"><span class="keyword">else</span>:</div><div class="line">   <span class="keyword">print</span> (<span class="string">"No match!!"</span>)</div><div class="line"></div><div class="line">matchObj = re.search( <span class="string">r'dogs'</span>, line, re.M|re.I)</div><div class="line"><span class="keyword">if</span> matchObj:</div><div class="line">   <span class="keyword">print</span> (<span class="string">"search --&gt; matchObj.group() : "</span>, matchObj.group())</div><div class="line"><span class="keyword">else</span>:</div><div class="line">   <span class="keyword">print</span> (<span class="string">"No match!!"</span>)</div></pre></td></tr></table></figure></p>
-<p>结果：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">No match!!</div><div class="line">search --&gt; matchObj.group() :  dogs</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/正则表达式/">正则表达式</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/4/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next<span></span></a>
@@ -1027,11 +875,11 @@
 			
 		
 			
-				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
 			
 		
 			
@@ -1039,7 +887,15 @@
 			
 		
 			
-				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+				<li><a href="/tags/强化学习/" title="强化学习">强化学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
 			
 		
 			
@@ -1047,7 +903,7 @@
 			
 		
 			
-				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
 			
 		
 			
@@ -1067,10 +923,6 @@
 			
 		
 			
-				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
@@ -1079,19 +931,15 @@
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-leetcode-动态规划/" title="算法 leetcode 动态规划">算法 leetcode 动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法-挑战程序设计竞赛/" title="算法 挑战程序设计竞赛">算法 挑战程序设计竞赛<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+				<li><a href="/tags/线段树/" title="线段树">线段树<sup>1</sup></a></li>
 			
 		
 		</ul>
