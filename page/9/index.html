@@ -1,0 +1,609 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>我是小韩同学</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="洛绍川">
+    
+
+    
+    <meta name="description" content="code">
+<meta property="og:type" content="website">
+<meta property="og:title" content="我是小韩同学">
+<meta property="og:url" content="http://www.luoshaochuan.com/page/9/index.html">
+<meta property="og:site_name" content="我是小韩同学">
+<meta property="og:description" content="code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我是小韩同学">
+<meta name="twitter:description" content="code">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="我是小韩同学" title="我是小韩同学"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="我是小韩同学">我是小韩同学</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.luoshaochuan.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand intel" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/04/Studio开发环境搭建说明/" title="Intel Parallel Studio开发环境搭建说明" itemprop="url">Intel Parallel Studio开发环境搭建说明</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-04T10:04:23.000Z" itemprop="datePublished"> 发表于 2016-09-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="Intel-Parallel-Studio开发环境搭建说明"><a href="#Intel-Parallel-Studio开发环境搭建说明" class="headerlink" title="Intel Parallel Studio开发环境搭建说明"></a>Intel Parallel Studio开发环境搭建说明</h3><h4 id="安装Intel-Parallel-Studio"><a href="#安装Intel-Parallel-Studio" class="headerlink" title="安装Intel Parallel Studio"></a>安装Intel Parallel Studio</h4><ol>
+<li><p>安装visual studio 2013</p>
+</li>
+<li><p>去英特尔官网使用学校邮箱注册账号(<a href="https://software.intel.com/registration/?lang=en-us" target="_blank" rel="external">https://software.intel.com/registration/?lang=en-us</a>)</p>
+</li>
+<li><p>使用学校邮箱申请免费使用Parallel Studio(<a href="https://registrationcenter.intel.com/en/forms/?licensetype=2&amp;productid=2489" target="_blank" rel="external">https://registrationcenter.intel.com/en/forms/?licensetype=2&amp;productid=2489</a>)<br>选中所有复选框点Accept<br>填写邮箱和地区点Submit<br>获得序列号</p>
+</li>
+<li><p>下好安装文件后按照提示安装即可</p>
+</li>
+</ol>
+<h4 id="如何使用ICC和MKL"><a href="#如何使用ICC和MKL" class="headerlink" title="如何使用ICC和MKL"></a>如何使用ICC和MKL</h4><ol>
+<li><p>打开Visual Studio新建项目</p>
+</li>
+<li><p>点击上方菜单栏 项目-Intel Compiler-Use Visual C++即可切换至ICC编译器</p>
+</li>
+<li><p>使用MKL：点击菜单栏 项目-属性-配置属性，如图启用MKL库即可</p>
+</li>
+<li><p>在文件中添加<code>#include&lt;mkl.h&gt;</code>即可</p>
+</li>
+</ol>
+<h4 id="至此完成开发环境搭建，调用MKL完成后续模块即可"><a href="#至此完成开发环境搭建，调用MKL完成后续模块即可" class="headerlink" title="至此完成开发环境搭建，调用MKL完成后续模块即可"></a>至此完成开发环境搭建，调用MKL完成后续模块即可</h4>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Parallel-Studio/">Parallel Studio</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Parallel-Studio/">Parallel Studio</a><a href="/tags/ICC/">ICC</a><a href="/tags/MKL/">MKL</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/29/PAT-1061/" title="PAT 1061" itemprop="url">PAT 1061</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-29T14:49:40.000Z" itemprop="datePublished"> 发表于 2016-08-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>(<a href="https://www.patest.cn/contests/pat-a-practise/1061" target="_blank" rel="external">https://www.patest.cn/contests/pat-a-practise/1061</a>)</p>
+<p>Sherlock Holmes received a note with some strange strings: “Let’s date! 3485djDkxh4hhGE 2984akDfkkkkggEdsb s&amp;hgsfdk d&amp;Hyscvnm”. It took him only a minute to figure out that those strange strings are actually referring to the coded time “Thursday 14:04” – since the first common capital English letter (case sensitive) shared by the first two strings is the 4th capital letter ‘D’, representing the 4th day in a week; the second common character is the 5th capital letter ‘E’, representing the 14th hour (hence the hours from 0 to 23 in a day are represented by the numbers from 0 to 9 and the capital letters from A to N, respectively); and the English letter shared by the last two strings is ‘s’ at the 4th position, representing the 4th minute. Now given two pairs of strings, you are supposed to help Sherlock decode the dating time.</p>
+<p>Input Specification:</p>
+<p>Each input file contains one test case. Each case gives 4 non-empty strings of no more than 60 characters without white space in 4 lines.</p>
+<p>Output Specification:</p>
+<p>For each test case, print the decoded time in one line, in the format “DAY HH:MM”, where “DAY” is a 3-character abbreviation for the days in a week – that is, “MON” for Monday, “TUE” for Tuesday, “WED” for Wednesday, “THU” for Thursday, “FRI” for Friday, “SAT” for Saturday, and “SUN” for Sunday. It is guaranteed that the result is unique for each case.</p>
+<p>Sample Input:<br>3485djDkxh4hhGE<br>2984akDfkkkkggEdsb<br>s&amp;hgsfdk<br>d&amp;Hyscvnm  </p>
+<p>Sample Output:<br>THU 14:04</p>
+<h2 id="Python版"><a href="#Python版" class="headerlink" title="Python版"></a>Python版</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">dict = [<span class="string">"MON"</span>,<span class="string">"TUE"</span>,<span class="string">"WED"</span>,<span class="string">"THU"</span>,<span class="string">"FRI"</span>,<span class="string">"SAT"</span>,<span class="string">"SUN"</span>]</div><div class="line">params = []</div><div class="line">result = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">4</span>):</div><div class="line">    params.append(input())</div><div class="line"></div><div class="line">n = min(len(params[<span class="number">0</span>]),len(params[<span class="number">1</span>]))</div><div class="line">k = <span class="number">-1</span></div><div class="line">day =<span class="number">-1</span></div><div class="line">hour = <span class="number">-1</span></div><div class="line">minute = <span class="number">-1</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isupper() <span class="keyword">and</span> ord(params[<span class="number">0</span>][i])&lt;ord(<span class="string">'H'</span>)):</div><div class="line">        day = ord(params[<span class="number">0</span>][i])-ord(<span class="string">'A'</span>)</div><div class="line">        k=i</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k+<span class="number">1</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isdigit()):</div><div class="line">        hour = int(params[<span class="number">0</span>][i])</div><div class="line">        <span class="keyword">break</span></div><div class="line">    <span class="keyword">elif</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isupper() <span class="keyword">and</span> ord(params[<span class="number">0</span>][i])&lt;ord(<span class="string">'O'</span>)):</div><div class="line">        hour = ord(params[<span class="number">0</span>][i])-ord(<span class="string">'A'</span>)+<span class="number">10</span></div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">n = min(len(params[<span class="number">2</span>]),len(params[<span class="number">3</span>]))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">2</span>][i] == params[<span class="number">3</span>][i] <span class="keyword">and</span> (params[<span class="number">2</span>][i].isupper() <span class="keyword">or</span> params[<span class="number">2</span>][i].islower())):</div><div class="line">        minute = i</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">print(<span class="string">'%s %d%d:%d%d'</span>%(dict[day],hour/<span class="number">10</span>,hour%<span class="number">10</span>,minute/<span class="number">10</span>,minute%<span class="number">10</span>))</div></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/PAT/">PAT</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/PAT/">PAT</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/21/写在最前面的话/" title="随便聊聊" itemprop="url">随便聊聊</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-21T12:41:04.000Z" itemprop="datePublished"> 发表于 2016-08-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <blockquote>
+<p>欲将心事付瑶琴，知音少，弦断有谁听。</p>
+</blockquote>
+<p><img src="http://oc9b84kcd.bkt.clouddn.com/image/jpeg/1.jpeg1.jpeg" alt="孤独"></p>
+<p>花了半天把个人博客搭好了，原来在CSDN上的博客(<a href="http://blog.csdn.net/luoshaochuan1993" target="_blank" rel="external">http://blog.csdn.net/luoshaochuan1993</a>) 就不写了,看了下也没啥好迁移的，干脆从头开始吧，加油！</p>
+<blockquote>
+<p>他年我若为青帝，报与桃花一处开。</p>
+</blockquote>
+<p><img src="http://oc9b84kcd.bkt.clouddn.com/55adef26d0dd7.jpg" alt="桃花"></p>
+<p>这几天总是静不下心来。看到实验室师兄为了找工作到处跑，不免对自己的未来有些担忧。所谓人无远虑，必有近忧，趁现在刚入学，还是给自己定些小目标吧。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/生活随笔/">生活随笔</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/生活随笔/">生活随笔</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/page/8/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>31</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-leetcode/" title="算法 leetcode">算法 leetcode<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法-动态规划/" title="算法 动态规划">算法 动态规划<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Kickstart-Google/" title="Kickstart Google">Kickstart Google<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/笔试/" title="笔试">笔试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/强化学习/" title="强化学习">强化学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Manacher算法/" title="Manacher算法">Manacher算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ICC/" title="ICC">ICC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MKL/" title="MKL">MKL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/母函数法/" title="母函数法">母函数法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hihocoder-分治/" title="hihocoder 分治">hihocoder 分治<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="洛绍川">洛绍川</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+ </html>
