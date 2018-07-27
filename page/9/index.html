@@ -68,224 +68,241 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand intel" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/04/Studio开发环境搭建说明/" title="Intel Parallel Studio开发环境搭建说明" itemprop="url">Intel Parallel Studio开发环境搭建说明</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-04T10:04:23.000Z" itemprop="datePublished"> 发表于 2016-09-04</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="Intel-Parallel-Studio开发环境搭建说明"><a href="#Intel-Parallel-Studio开发环境搭建说明" class="headerlink" title="Intel Parallel Studio开发环境搭建说明"></a>Intel Parallel Studio开发环境搭建说明</h3><h4 id="安装Intel-Parallel-Studio"><a href="#安装Intel-Parallel-Studio" class="headerlink" title="安装Intel Parallel Studio"></a>安装Intel Parallel Studio</h4><ol>
-<li><p>安装visual studio 2013</p>
-</li>
-<li><p>去英特尔官网使用学校邮箱注册账号(<a href="https://software.intel.com/registration/?lang=en-us" target="_blank" rel="external">https://software.intel.com/registration/?lang=en-us</a>)</p>
-</li>
-<li><p>使用学校邮箱申请免费使用Parallel Studio(<a href="https://registrationcenter.intel.com/en/forms/?licensetype=2&amp;productid=2489" target="_blank" rel="external">https://registrationcenter.intel.com/en/forms/?licensetype=2&amp;productid=2489</a>)<br>选中所有复选框点Accept<br>填写邮箱和地区点Submit<br>获得序列号</p>
-</li>
-<li><p>下好安装文件后按照提示安装即可</p>
-</li>
-</ol>
-<h4 id="如何使用ICC和MKL"><a href="#如何使用ICC和MKL" class="headerlink" title="如何使用ICC和MKL"></a>如何使用ICC和MKL</h4><ol>
-<li><p>打开Visual Studio新建项目</p>
-</li>
-<li><p>点击上方菜单栏 项目-Intel Compiler-Use Visual C++即可切换至ICC编译器</p>
-</li>
-<li><p>使用MKL：点击菜单栏 项目-属性-配置属性，如图启用MKL库即可</p>
-</li>
-<li><p>在文件中添加<code>#include&lt;mkl.h&gt;</code>即可</p>
-</li>
-</ol>
-<h4 id="至此完成开发环境搭建，调用MKL完成后续模块即可"><a href="#至此完成开发环境搭建，调用MKL完成后续模块即可" class="headerlink" title="至此完成开发环境搭建，调用MKL完成后续模块即可"></a>至此完成开发环境搭建，调用MKL完成后续模块即可</h4>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Parallel-Studio/">Parallel Studio</a>
-</div>
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/Parallel-Studio/">Parallel Studio</a><a href="/tags/ICC/">ICC</a><a href="/tags/MKL/">MKL</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/08/29/PAT-1061/" title="PAT 1061" itemprop="url">PAT 1061</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-29T14:49:40.000Z" itemprop="datePublished"> 发表于 2016-08-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>(<a href="https://www.patest.cn/contests/pat-a-practise/1061" target="_blank" rel="external">https://www.patest.cn/contests/pat-a-practise/1061</a>)</p>
-<p>Sherlock Holmes received a note with some strange strings: “Let’s date! 3485djDkxh4hhGE 2984akDfkkkkggEdsb s&amp;hgsfdk d&amp;Hyscvnm”. It took him only a minute to figure out that those strange strings are actually referring to the coded time “Thursday 14:04” – since the first common capital English letter (case sensitive) shared by the first two strings is the 4th capital letter ‘D’, representing the 4th day in a week; the second common character is the 5th capital letter ‘E’, representing the 14th hour (hence the hours from 0 to 23 in a day are represented by the numbers from 0 to 9 and the capital letters from A to N, respectively); and the English letter shared by the last two strings is ‘s’ at the 4th position, representing the 4th minute. Now given two pairs of strings, you are supposed to help Sherlock decode the dating time.</p>
-<p>Input Specification:</p>
-<p>Each input file contains one test case. Each case gives 4 non-empty strings of no more than 60 characters without white space in 4 lines.</p>
-<p>Output Specification:</p>
-<p>For each test case, print the decoded time in one line, in the format “DAY HH:MM”, where “DAY” is a 3-character abbreviation for the days in a week – that is, “MON” for Monday, “TUE” for Tuesday, “WED” for Wednesday, “THU” for Thursday, “FRI” for Friday, “SAT” for Saturday, and “SUN” for Sunday. It is guaranteed that the result is unique for each case.</p>
-<p>Sample Input:<br>3485djDkxh4hhGE<br>2984akDfkkkkggEdsb<br>s&amp;hgsfdk<br>d&amp;Hyscvnm  </p>
-<p>Sample Output:<br>THU 14:04</p>
-<h2 id="Python版"><a href="#Python版" class="headerlink" title="Python版"></a>Python版</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">dict = [<span class="string">"MON"</span>,<span class="string">"TUE"</span>,<span class="string">"WED"</span>,<span class="string">"THU"</span>,<span class="string">"FRI"</span>,<span class="string">"SAT"</span>,<span class="string">"SUN"</span>]</div><div class="line">params = []</div><div class="line">result = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">4</span>):</div><div class="line">    params.append(input())</div><div class="line"></div><div class="line">n = min(len(params[<span class="number">0</span>]),len(params[<span class="number">1</span>]))</div><div class="line">k = <span class="number">-1</span></div><div class="line">day =<span class="number">-1</span></div><div class="line">hour = <span class="number">-1</span></div><div class="line">minute = <span class="number">-1</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isupper() <span class="keyword">and</span> ord(params[<span class="number">0</span>][i])&lt;ord(<span class="string">'H'</span>)):</div><div class="line">        day = ord(params[<span class="number">0</span>][i])-ord(<span class="string">'A'</span>)</div><div class="line">        k=i</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k+<span class="number">1</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isdigit()):</div><div class="line">        hour = int(params[<span class="number">0</span>][i])</div><div class="line">        <span class="keyword">break</span></div><div class="line">    <span class="keyword">elif</span>(params[<span class="number">0</span>][i] == params[<span class="number">1</span>][i] <span class="keyword">and</span> params[<span class="number">0</span>][i].isupper() <span class="keyword">and</span> ord(params[<span class="number">0</span>][i])&lt;ord(<span class="string">'O'</span>)):</div><div class="line">        hour = ord(params[<span class="number">0</span>][i])-ord(<span class="string">'A'</span>)+<span class="number">10</span></div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">n = min(len(params[<span class="number">2</span>]),len(params[<span class="number">3</span>]))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</div><div class="line">    <span class="keyword">if</span>(params[<span class="number">2</span>][i] == params[<span class="number">3</span>][i] <span class="keyword">and</span> (params[<span class="number">2</span>][i].isupper() <span class="keyword">or</span> params[<span class="number">2</span>][i].islower())):</div><div class="line">        minute = i</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">print(<span class="string">'%s %d%d:%d%d'</span>%(dict[day],hour/<span class="number">10</span>,hour%<span class="number">10</span>,minute/<span class="number">10</span>,minute%<span class="number">10</span>))</div></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/PAT/">PAT</a>
-</div>
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/PAT/">PAT</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/08/21/写在最前面的话/" title="随便聊聊" itemprop="url">随便聊聊</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="洛绍川" target="_blank" itemprop="author">洛绍川</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-21T12:41:04.000Z" itemprop="datePublished"> 发表于 2016-08-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>欲将心事付瑶琴，知音少，弦断有谁听。</p>
-</blockquote>
-<p><img src="http://oc9b84kcd.bkt.clouddn.com/image/jpeg/1.jpeg1.jpeg" alt="孤独"></p>
-<p>花了半天把个人博客搭好了，原来在CSDN上的博客(<a href="http://blog.csdn.net/luoshaochuan1993" target="_blank" rel="external">http://blog.csdn.net/luoshaochuan1993</a>) 就不写了,看了下也没啥好迁移的，干脆从头开始吧，加油！</p>
-<blockquote>
-<p>他年我若为青帝，报与桃花一处开。</p>
-</blockquote>
-<p><img src="http://oc9b84kcd.bkt.clouddn.com/55adef26d0dd7.jpg" alt="桃花"></p>
-<p>这几天总是静不下心来。看到实验室师兄为了找工作到处跑，不免对自己的未来有些担忧。所谓人无远虑，必有近忧，趁现在刚入学，还是给自己定些小目标吧。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/生活随笔/">生活随笔</a>
-</div>
-
-
-  <div class="article-tags">
+    <a href="/2017/07/12/动态规划总结(三)/" title="动态规划总结（三）：划分（区间）动态规划" itemprop="url">
   
-  <span></span> <a href="/tags/生活随笔/">生活随笔</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
+    <h1 itemprop="name">动态规划总结（三）：划分（区间）动态规划</h1>
+    
+     
+           <p itemprop="description" >划分(区间)动态规划这类动态规划通常有如下形式：f(i,j)={f(i,k)+f(k+1,j)+cost(k)} i&amp;lt;k&amp;lt;j 
+经典例题
+矩阵连乘、凸多边形三角剖分、石子合并12345678910111213141516171819202122232425262728</p>
+        
+    
+    <time datetime="2017-07-12T13:07:57.000Z" itemprop="datePublished">2017-07-12</time>
+  </a>
+</section>
 
 
 
 
 
 
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/11/动态规划总结(二）/" title="动态规划总结（二）：前缀动态规划" itemprop="url">
+  
+    <h1 itemprop="name">动态规划总结（二）：前缀动态规划</h1>
+    
+     
+           <p itemprop="description" >前缀动态规划这类动态规划的特点是：f(i)可以由f(i-1)得到，或者f(i,j)可以由f(i-1,j-1),f(i-1,j),f(i,j-1)得到。
+经典例题
+LCS:最长公共子序列123456789101112131415161718192021222324252627282</p>
+        
+    
+    <time datetime="2017-07-11T11:31:20.000Z" itemprop="datePublished">2017-07-11</time>
+  </a>
+</section>
 
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/8/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/10/动态规划总结(一)/" title="动态规划总结（一）：编号动态规划" itemprop="url">
+  
+    <h1 itemprop="name">动态规划总结（一）：编号动态规划</h1>
+    
+     
+           <p itemprop="description" >编号动态规划本类动态规划是基础，大部分动态规划都要用到他成为一个维，一般来说有两种编号的状态：
+
+
+状态i表示前i个元素决策组成的一个状态。
+状态i表示用到了第i个状态，和某些在1到i-1之间的元素，决策组成了一个状态。
+
+
+例如：F[i]：表示前i个元素XXXXF[i]:以第i</p>
+        
+    
+    <time datetime="2017-07-10T12:00:00.000Z" itemprop="datePublished">2017-07-10</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/06/leetcode546/" title="leetcode 546" itemprop="url">
+  
+    <h1 itemprop="name">leetcode 546</h1>
+    
+     
+           <p itemprop="description" >题意给定一排带颜色的盒子，用数字表示颜色，每次你能移走连续的几个相同颜色的k个盒子，并获得K^2点分数，求能获得的最大的分数。
+分析我们每次可以移走右边相同的k个盒子，也可以找到左边和右边相同颜色的盒子，移走它们中间的盒子，再一起移走这些相同颜色的盒子。令dp[i][j][k]表</p>
+        
+    
+    <time datetime="2017-07-06T02:21:00.000Z" itemprop="datePublished">2017-07-06</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/05/leetcode34/" title="leetcode 34" itemprop="url">
+  
+    <h1 itemprop="name">leetcode 34</h1>
+    
+     
+           <p itemprop="description" >题意给定一个上升数组和一个target数，求数组中值为该数的左右边界，不存在该数则为[-1,-1].
+分析看到在有序数组中查找的，首先就想到二分法。另外该题可以直接使用STL自带的lower_bound和upper_bound解决。lower_bound返回的是第一个元素值&amp;gt</p>
+        
+    
+    <time datetime="2017-07-05T05:30:59.000Z" itemprop="datePublished">2017-07-05</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/01/单调栈和单调队列/" title="单调栈和单调队列" itemprop="url">
+  
+    <h1 itemprop="name">单调栈和单调队列</h1>
+    
+     
+           <p itemprop="description" >单调栈单调栈具有如下性质：  
+
+若是单调递增栈，则从栈顶到栈底的元素是严格递增的；若是单调递减栈，则从栈顶到栈底的元素是严格递减的。  
+对于单调递增栈，若当前进栈元素比栈顶元素大(或相等)，则应将栈顶元素出栈，直至进栈元素比栈顶元素小；单调递减栈同理。  
+单调递增栈栈顶元素</p>
+        
+    
+    <time datetime="2017-07-01T01:01:59.000Z" itemprop="datePublished">2017-07-01</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/06/26/C和C++内置排序函数/" title="C和C++内置排序函数" itemprop="url">
+  
+    <h1 itemprop="name">C和C++内置排序函数</h1>
+    
+     
+           <p itemprop="description" >C和C++内置排序函数上一篇总结了常用的几种排序函数，但是笔试中我们可能并不需要自己编写排序函数，这时熟练掌握C和C++内置排序函数就非常重要了。
+1.使用qsort进行排序123void qsort (void* base, size_t num, size_t size,  </p>
+        
+    
+    <time datetime="2017-06-26T14:36:45.000Z" itemprop="datePublished">2017-06-26</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/06/21/排序算法总结/" title="排序算法总结" itemprop="url">
+  
+    <h1 itemprop="name">排序算法总结</h1>
+    
+     
+           <p itemprop="description" >排序算法小结1.插入排序(1)直接插入排序基本思想：对于未排序的数据，在已排序序列中从后向前扫描，找到相应位置插入。
+算法描述：
+
+从第一个元素开始，该元素可以被认为已排序
+取出下一个元素，在已排序的序列中从后向前扫描
+如果该元素(已排序)大于新元素，将该元素移到下一位置
+重复步</p>
+        
+    
+    <time datetime="2017-06-21T12:54:19.000Z" itemprop="datePublished">2017-06-21</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/12/11/Python快速入门/" title="Python快速入门" itemprop="url">
+  
+    <h1 itemprop="name">Python快速入门</h1>
+    
+     
+           <p itemprop="description" >Hello World
+1print(&#39;Hello World\n&#39;)
+
+基本运算
+1234除法 print(7/3)#0.233333整除 print(7//3)#2取模 print(7%3)#1乘方 print(2**3)#8
+
+格式化输出
+123456789101112&#39;&amp;</p>
+        
+    
+    <time datetime="2016-12-11T12:17:03.000Z" itemprop="datePublished">2016-12-11</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/11/05/C语言调用matplotlib绘图/" title="C语言调用matplotlib绘图" itemprop="url">
+  
+    <h1 itemprop="name">C语言调用matplotlib绘图</h1>
+    
+     
+           <p itemprop="description" >最近工作中需要花一些函数图，考虑到C语言中没有好用的作图库，决定用C语言调用Python中的matplotlib来绘制。这里是C语言调用Python的函数手册：Python C-API.
+ubuntu下环境配置1.下载python库和头文件：打开终端执行sudo apt-get </p>
+        
+    
+    <time datetime="2016-11-04T16:14:53.000Z" itemprop="datePublished">2016-11-05</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
+    <a class="extend prev" rel="prev" href="/page/8/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/10/">Next<span></span></a>
   </nav>
 
 </div>
@@ -299,45 +316,12 @@
 
 
   
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-		  
-			<li><a href="/categories/PAT/" title="PAT">PAT<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/Parallel-Studio/" title="Parallel Studio">Parallel Studio<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/hihocoder/" title="hihocoder">hihocoder<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/生活随笔/" title="生活随笔">生活随笔<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/算法/" title="算法">算法<sup>3</sup></a></li>
-		  
-		
-		</ul>
-</div>
-
-
-  
 <div class="tagslist">
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/算法/" title="算法">算法<sup>31</sup></a></li>
+				<li><a href="/tags/算法/" title="算法">算法<sup>42</sup></a></li>
 			
 		
 			
@@ -365,11 +349,11 @@
 			
 		
 			
-				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
+				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+				<li><a href="/tags/MNIST-TensorFlow/" title="MNIST TensorFlow">MNIST TensorFlow<sup>1</sup></a></li>
 			
 		
 			
@@ -377,11 +361,7 @@
 			
 		
 			
-				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
+				<li><a href="/tags/PAT/" title="PAT">PAT<sup>1</sup></a></li>
 			
 		
 			
@@ -397,7 +377,15 @@
 			
 		
 			
-				<li><a href="/tags/KMP算法/" title="KMP算法">KMP算法<sup>1</sup></a></li>
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深度学习-TensorFlow/" title="深度学习 TensorFlow">深度学习 TensorFlow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Trie树/" title="Trie树">Trie树<sup>1</sup></a></li>
 			
 		
 			
@@ -409,15 +397,18 @@
 			
 		
 			
-				<li><a href="/tags/DFA/" title="DFA">DFA<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/matplotlib/" title="matplotlib">matplotlib<sup>1</sup></a></li>
 			
 		
 		</ul>
 </div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li></ul>
+  </div>
 
 
 </aside>
